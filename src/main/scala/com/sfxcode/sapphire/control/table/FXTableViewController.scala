@@ -5,6 +5,7 @@ import javafx.scene.text.TextAlignment
 
 import com.sfxcode.sapphire.control.table.TableFilterType._
 import com.sfxcode.sapphire.core.value.FXBean
+import com.typesafe.config.ConfigFactory
 import org.controlsfx.control.textfield.TextFields
 
 import scala.collection.mutable
@@ -20,6 +21,8 @@ import scalafx.scene.layout.Pane
 
 
 case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], values: ObservableList[FXBean[S]], searchPane: Pane = null)(implicit ct: ClassTag[S]) {
+  val conf = ConfigFactory.load()
+
   val filterMap = new mutable.HashMap[Control, Any]()
   val valueMap = new mutable.HashMap[String, Any]()
   val controlNameMapping = new mutable.HashMap[Control, String]()
@@ -48,7 +51,7 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
     updateMapping(name, searchField).asInstanceOf[TextField]
   }
 
-  def addSearchBox(name: String, propertyKey: String, noSelection: String = "alle", searchBox: ComboBox[String] = new ComboBox[String]()): ComboBox[String] = {
+  def addSearchBox(name: String, propertyKey: String, noSelection: String = conf.getString("sapphire.control.searchBox.noSelection"), searchBox: ComboBox[String] = new ComboBox[String]()): ComboBox[String] = {
     if (searchPane != null)
       searchPane.getChildren.add(searchBox)
     val distinctList = values.filter(b => b.getValue(propertyKey) != null).map(b => b.getValue(propertyKey).toString).distinct
@@ -131,7 +134,7 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
     b => b.getValue(property).toString.toLowerCase.equals(valueMap(valueKey).toString.toLowerCase)
   }
 
-  def addCollumns[T]() {
+  def addColumns[T]() {
     val symbols = members.collect({ case x if x.isTerm => x.asTerm}).filter(t => t.isVal || t.isVar).map(_.asTerm)
     symbols.foreach(symbol => {
       val name = symbol.name.toString.trim
@@ -168,9 +171,13 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
 
   def showColumn(name: String) = getColumn(name).foreach(c => c.setVisible(true))
 
-  def setColumText(name: String, text: String) = getColumn(name).foreach(c => c.setText(text))
+  def setColumnText(name: String, text: String) = getColumn(name).foreach(c => c.setText(text))
 
-  def setColumPrefWidth(name: String, value: Double) = getColumn(name).foreach(c => c.setPrefWidth(value))
+  def setColumnProperty(name: String, property: String) = getColumn(name).foreach(c => {
+    c.cellValueFactory.asInstanceOf[FXValueFactory].setProperty(property)
+  })
+
+  def setColumnPrefWidth(name: String, value: Double) = getColumn(name).foreach(c => c.setPrefWidth(value))
 
   def selectedBean: FXBean[S] = table.selectionModel().selectedItemProperty().get()
 
