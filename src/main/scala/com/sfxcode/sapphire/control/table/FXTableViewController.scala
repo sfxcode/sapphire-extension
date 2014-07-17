@@ -174,7 +174,7 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
   def setColumnText(name: String, text: String) = getColumn(name).foreach(c => c.setText(text))
 
   def setColumnProperty(name: String, property: String) = getColumn(name).foreach(c => {
-    c.cellValueFactory.asInstanceOf[FXValueFactory].setProperty(property)
+    c.cellValueFactory.asInstanceOf[FXValueFactory[FXBean[S], _]].setProperty(property)
   })
 
   def setColumnPrefWidth(name: String, value: Double) = getColumn(name).foreach(c => c.setPrefWidth(value))
