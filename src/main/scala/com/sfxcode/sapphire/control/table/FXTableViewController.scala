@@ -6,6 +6,7 @@ import javafx.scene.text.TextAlignment
 import com.sfxcode.sapphire.control.table.TableFilterType._
 import com.sfxcode.sapphire.core.value.FXBean
 import com.typesafe.config.ConfigFactory
+import com.typesafe.scalalogging.slf4j.LazyLogging
 import org.controlsfx.control.textfield.TextFields
 
 import scala.collection.mutable
@@ -20,7 +21,7 @@ import scalafx.scene.layout.Pane
 
 
 
-case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], values: ObservableList[FXBean[S]], searchPane: Pane = null)(implicit ct: ClassTag[S]) {
+case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], values: ObservableList[FXBean[S]], searchPane: Pane = null)(implicit ct: ClassTag[S]) extends LazyLogging  {
   val conf = ConfigFactory.load()
 
   val filterMap = new mutable.HashMap[Control, Any]()
@@ -28,6 +29,9 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
   val controlNameMapping = new mutable.HashMap[Control, String]()
   val nameControlMapping = new mutable.HashMap[String, Control]()
   val columnMapping = new mutable.HashMap[String, TableColumn[FXBean[S], _]]()
+
+  val columnPropertyMap = new mutable.HashMap[String, String]()
+  val columnHeaderMap = new mutable.HashMap[String, String]()
 
   val filterResult = ObservableBuffer(values)
   val filteredSize = IntegerProperty(values.size())
@@ -37,7 +41,7 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
   val members = mirror.classSymbol(ct.runtimeClass).asType.typeSignature.members.toList.reverse
 
   table.setItems(values)
-  println(members.collect({ case x if x.isTerm => x.asTerm}).filter(t => t.isVal || t.isVar).map(m => m.name.toString))
+  logger.debug(members.collect({ case x if x.isTerm => x.asTerm}).filter(t => t.isVal || t.isVar).map(m => m.name.toString).toString())
 
   def addSearchField(name: String, propertyKey: String, filterType: FilterValue = TableFilterType.FilterContainsIgnoreCase, searchField: TextField = TextFields.createClearableTextField()): TextField = {
     addCustomSearchField(name, filterFunction(filterType, propertyKey, name), searchField)
@@ -92,7 +96,7 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
           val item = model.getSelectedItem
           valueMap.put(controlNameMapping(searchBox), item)
           filtered = filtered.filter(filterMap(searchBox).asInstanceOf[FXBean[S] => Boolean])
-          println(item)
+          logger.debug(item)
         }
       case _ =>
     }
@@ -102,7 +106,7 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
     filterResult.setAll(filtered)
     filteredSize.set(filtered.size())
     table.sort()
-    println("filtered (%d) in %d ms".format(filteredSize.get, System.currentTimeMillis() - start))
+    logger.debug("filtered (%d) in %d ms".format(filteredSize.get, System.currentTimeMillis() - start))
   }
 
   private def filterFunction(function: FilterValue, property: String, valueKey: String): (FXBean[S] => Boolean) = {
@@ -143,8 +147,8 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
       if (s.contains("Date"))
         cellFactory.setAlignment(TextAlignment.RIGHT)
       val valueFactory = new FXValueFactory[FXBean[S], T]()
-      valueFactory.setProperty(name)
-      addColumn(name, valueFactory, Some(cellFactory))
+      valueFactory.setProperty(columnPropertyMap.getOrElse(name, name))
+      addColumn(columnHeaderMap.getOrElse(name,name), valueFactory, Some(cellFactory))
     })
   }
 
@@ -172,10 +176,6 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
   def showColumn(name: String) = getColumn(name).foreach(c => c.setVisible(true))
 
   def setColumnText(name: String, text: String) = getColumn(name).foreach(c => c.setText(text))
-
-  def setColumnProperty(name: String, property: String) = getColumn(name).foreach(c => {
-    c.cellValueFactory.asInstanceOf[FXValueFactory[FXBean[S], _]].setProperty(property)
-  })
 
   def setColumnPrefWidth(name: String, value: Double) = getColumn(name).foreach(c => c.setPrefWidth(value))
 
