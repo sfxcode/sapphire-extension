@@ -6,7 +6,7 @@ import javafx.scene.text.TextAlignment
 import com.sfxcode.sapphire.control.table.TableFilterType._
 import com.sfxcode.sapphire.core.value.FXBean
 import com.typesafe.config.ConfigFactory
-import com.typesafe.scalalogging.slf4j.LazyLogging
+import com.typesafe.scalalogging.LazyLogging
 import org.controlsfx.control.textfield.TextFields
 
 import scala.collection.mutable
