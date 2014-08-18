@@ -2,9 +2,9 @@ name := "sapphire-control"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.9.2"
+version := "0.9.3"
 
-scalaVersion := "2.11.1"
+scalaVersion := "2.11.2"
 
 scalacOptions += "-deprecation"
 
@@ -34,7 +34,7 @@ libraryDependencies += "org.specs2" %% "specs2" % "2.3.12" % "test"
 libraryDependencies += "org.json4s" %% "json4s-native" % "3.2.9" % "test"
 
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "0.9.2"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "0.9.3"
 
 libraryDependencies += "org.controlsfx" % "controlsfx" % "8.0.6"
 

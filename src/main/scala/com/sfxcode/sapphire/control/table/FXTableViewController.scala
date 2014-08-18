@@ -4,7 +4,7 @@ import javafx.collections.ObservableList
 import javafx.scene.text.TextAlignment
 
 import com.sfxcode.sapphire.control.table.TableFilterType._
-import com.sfxcode.sapphire.core.value.FXBean
+import com.sfxcode.sapphire.core.value.{ConverterFactory, FXBean}
 import com.typesafe.config.ConfigFactory
 import com.typesafe.scalalogging.LazyLogging
 import org.controlsfx.control.textfield.TextFields
@@ -21,10 +21,11 @@ import scalafx.scene.layout.Pane
 
 
 
-case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], values: ObservableList[FXBean[S]], searchPane: Pane = null)(implicit ct: ClassTag[S]) extends LazyLogging  {
+case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], values: ObservableList[FXBean[S]], searchPane: Pane = null)(implicit ct: ClassTag[S]) extends LazyLogging {
   val conf = ConfigFactory.load()
 
   val filterMap = new mutable.HashMap[Control, Any]()
+  val filterPropertyMap = new mutable.HashMap[Control, String]()
   val valueMap = new mutable.HashMap[String, Any]()
   val controlNameMapping = new mutable.HashMap[Control, String]()
   val nameControlMapping = new mutable.HashMap[String, Control]()
@@ -58,15 +59,21 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
   def addSearchBox(name: String, propertyKey: String, noSelection: String = conf.getString("sapphire.control.searchBox.noSelection"), searchBox: ComboBox[String] = new ComboBox[String]()): ComboBox[String] = {
     if (searchPane != null)
       searchPane.getChildren.add(searchBox)
+
+    updateSearchBoxValues(searchBox, noSelection, propertyKey)
+    filterPropertyMap.put(searchBox, propertyKey)
+    filterMap.put(searchBox, equalsFunction(propertyKey, name))
+    searchBox.onAction = (event: ActionEvent) => filter()
+    updateMapping(name, searchBox).asInstanceOf[ComboBox[String]]
+  }
+
+  def updateSearchBoxValues( searchBox: ComboBox[String], noSelection: String, propertyKey:String): Unit = {
     val distinctList = values.filter(b => b.getValue(propertyKey) != null).map(b => b.getValue(propertyKey).toString).distinct
     val valueBuffer = new ObservableBuffer[String]()
     valueBuffer.+=(noSelection)
     valueBuffer.++=(distinctList)
     searchBox.items.set(valueBuffer)
     searchBox.getSelectionModel.select(0)
-    filterMap.put(searchBox, equalsFunction(propertyKey, name))
-    searchBox.onAction = (event: ActionEvent) => filter()
-    updateMapping(name, searchBox).asInstanceOf[ComboBox[String]]
   }
 
   def getSearchField(name: String): TextField = {
@@ -77,6 +84,26 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
     controlNameMapping.put(control, name)
     nameControlMapping.put(name, control)
     control
+  }
+
+  def insert(item:FXBean[S]) {
+    values.add(item)
+    reset()
+  }
+
+  def remove(item:FXBean[S]) {
+    values.remove(item)
+    reset()
+  }
+
+  def reset() {
+    filterMap.keySet.foreach {
+      case textField: TextField =>  textField.setText("")
+      case searchBox: ComboBox[String] =>
+        updateSearchBoxValues(searchBox, searchBox.getItems.get(0), filterPropertyMap(searchBox))
+      case _ =>
+    }
+    filter()
   }
 
   private def filter() {
@@ -143,20 +170,31 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
     symbols.foreach(symbol => {
       val name = symbol.name.toString.trim
       val cellFactory = new FXTextFieldCellFactory[FXBean[S], T]()
-      val s = symbol.typeSignature.toString
-      if (s.contains("Date"))
+      val signature = symbol.typeSignature.toString
+      if (table.isEditable)
+        cellFactory.setConverter(ConverterFactory.guessConverterName(signature))
+      if (signature.contains("Date"))
         cellFactory.setAlignment(TextAlignment.RIGHT)
+
       val valueFactory = new FXValueFactory[FXBean[S], T]()
       valueFactory.setProperty(columnPropertyMap.getOrElse(name, name))
-      addColumn(columnHeaderMap.getOrElse(name,name), valueFactory, Some(cellFactory))
+      addColumnFromFactories(columnHeaderMap.getOrElse(name, propertyToHeader(name)), valueFactory, Some(cellFactory))
     })
   }
 
-  def addColumn[T](header: String, valueFactory: FXValueFactory[FXBean[S], T], cellFactory: Option[FXCellFactory[FXBean[S], T]] = None, pw: Double = 80.0): TableColumn[FXBean[S], T] = {
+  def addColumn[T](header: String, property: String, alignment: TextAlignment = TextAlignment.LEFT, pw: Double = 80.0): TableColumn[FXBean[S], T] = {
+    val valueFactory = new FXValueFactory[FXBean[S], T]()
+    valueFactory.setProperty(columnPropertyMap.getOrElse(property, property))
+    val cellFactory = new FXTextFieldCellFactory[FXBean[S], T]()
+    cellFactory.setAlignment(alignment)
+    addColumnFromFactories(header, valueFactory, Some(cellFactory), pw)
+  }
+
+  def addColumnFromFactories[T](header: String, valueFactory: FXValueFactory[FXBean[S], T], cellFactory: Option[FXCellFactory[FXBean[S], T]] = None, pw: Double = 80.0): TableColumn[FXBean[S], T] = {
 
     val newColumn = new TableColumn[FXBean[S], T]() {
       text = header
-      prefWidth = pw
+      minWidth = pw
     }
     newColumn.setCellValueFactory(valueFactory)
     if (cellFactory.isDefined)
@@ -182,6 +220,21 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
   def selectedBean: FXBean[S] = table.selectionModel().selectedItemProperty().get()
 
   def selectedItem = table.selectionModel().selectedItemProperty()
+
+  def propertyToHeader(property:String):String = {
+    if (property.size ==1)
+      return property.toUpperCase
+    val firstUpper = property.charAt(0).toUpper + property.substring(1)
+    var result = new mutable.StringBuilder()
+    result.append(property.charAt(0).toUpper)
+    property.substring(1).toCharArray.foreach(c => {
+      if (c.isUpper)
+        result.append(" " + c)
+      else
+        result.append(c)
+    })
+    result.toString()
+  }
 
 }
 
