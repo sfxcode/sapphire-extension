@@ -2,7 +2,7 @@ name := "sapphire-control"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.9.3"
+version := "0.9.4"
 
 scalaVersion := "2.11.2"
 
@@ -31,12 +31,12 @@ resolvers ++= Seq(
 
 libraryDependencies += "org.specs2" %% "specs2" % "2.3.12" % "test"
 
-libraryDependencies += "org.json4s" %% "json4s-native" % "3.2.9" % "test"
+libraryDependencies += "org.json4s" %% "json4s-native" % "3.2.10" % "test"
 
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "0.9.3"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "0.9.4"
 
-libraryDependencies += "org.controlsfx" % "controlsfx" % "8.0.6"
+libraryDependencies += "org.controlsfx" % "controlsfx" % "8.0.6_20"
 
 publishTo := {
   if (version.value.trim.endsWith("SNAPSHOT"))
