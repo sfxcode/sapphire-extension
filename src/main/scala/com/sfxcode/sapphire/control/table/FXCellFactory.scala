@@ -3,28 +3,29 @@ package com.sfxcode.sapphire.control.table
 import javafx.util.{StringConverter, Callback}
 import javafx.scene.control.{TableCell, TableColumn}
 import javafx.scene.control.cell.{TextFieldTableCell, CheckBoxTableCell}
-import javafx.scene.text.TextAlignment
-import javafx.geometry.Pos
 import beans.BeanProperty
 import com.sfxcode.sapphire.core.value.ConverterFactory
+
+import scalafx.geometry.Pos
+import scalafx.scene.text.TextAlignment
 
 abstract class FXCellFactory[S, T] extends Callback[TableColumn[S, T], TableCell[S, T]] {
 
   @BeanProperty
-  var alignment = TextAlignment.LEFT
+  var alignment = TextAlignment.Left
 
   @BeanProperty
   var converter: String = _
 
   def updateCell(column: TableColumn[S, T], cell: TableCell[S, T]): TableCell[S, T] = {
-    if (alignment == TextAlignment.CENTER) {
-      cell.setAlignment(Pos.CENTER)
+    if (alignment == TextAlignment.Center) {
+      cell.setAlignment(Pos.Center)
     }
-    else if (alignment == TextAlignment.RIGHT) {
-      cell.setAlignment(Pos.CENTER_RIGHT)
+    else if (alignment == TextAlignment.Right) {
+      cell.setAlignment(Pos.CenterRight)
     }
     else
-      cell.setAlignment(Pos.CENTER_LEFT)
+      cell.setAlignment(Pos.CenterLeft)
 
     if (converter != null) {
       cell match {

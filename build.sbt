@@ -2,7 +2,7 @@ name := "sapphire-control"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.9.5"
+version := "0.9.6"
 
 scalaVersion := "2.11.2"
 
@@ -12,9 +12,9 @@ parallelExecution in Test := false
 
 (testOptions in Test) += Tests.Argument(TestFrameworks.Specs2, "html")
 
-javacOptions ++= Seq("-source", "1.7")
+javacOptions ++= Seq("-source", "1.8")
 
-javacOptions ++= Seq("-target", "1.7")
+javacOptions ++= Seq("-target", "1.8")
 
 scalacOptions += "-target:jvm-1.7"
 
@@ -35,11 +35,13 @@ libraryDependencies += "org.specs2" %% "specs2" % "2.3.12" % "test"
 libraryDependencies += "org.json4s" %% "json4s-native" % "3.2.10" % "test"
 
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "0.9.5"
-
-libraryDependencies += "org.controlsfx" % "controlsfx" % "8.20.7"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "0.9.6"
 
 libraryDependencies += "org.scalafx" %% "scalafxml-core" % "0.2.1"
+
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.6"
+
+libraryDependencies += "org.controlsfx" % "controlsfx" % "8.20.7"
 
 
 publishTo := {
