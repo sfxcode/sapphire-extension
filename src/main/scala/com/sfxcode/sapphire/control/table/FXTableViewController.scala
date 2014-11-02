@@ -207,9 +207,9 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
     columnMapping.get(property)
   }
 
-  def hideColumn(name: String) = getColumn(name).foreach(c => c.setVisible(false))
+  def hideColumn(name: String*) = name.foreach(name => getColumn(name).foreach(c => c.setVisible(false)))
 
-  def showColumn(name: String) = getColumn(name).foreach(c => c.setVisible(true))
+  def showColumn(name: String*) = name.foreach(name =>  getColumn(name).foreach(c => c.setVisible(true)))
 
   def setColumnText(name: String, text: String) = getColumn(name).foreach(c => c.setText(text))
 

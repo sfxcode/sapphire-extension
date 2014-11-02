@@ -2,9 +2,9 @@ name := "sapphire-control"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.9.6"
+version := "0.9.6.6"
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.4"
 
 scalacOptions += "-deprecation"
 
@@ -35,13 +35,13 @@ libraryDependencies += "org.specs2" %% "specs2" % "2.3.12" % "test"
 libraryDependencies += "org.json4s" %% "json4s-native" % "3.2.10" % "test"
 
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "0.9.6"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "0.9.6.6"
 
 libraryDependencies += "org.scalafx" %% "scalafxml-core" % "0.2.1"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.6"
 
-libraryDependencies += "org.controlsfx" % "controlsfx" % "8.20.7"
+libraryDependencies += "org.controlsfx" % "controlsfx" % "8.20.8"
 
 
 publishTo := {
