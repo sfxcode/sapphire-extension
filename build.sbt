@@ -2,7 +2,7 @@ name := "sapphire-control"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.9.7"
+version := "0.9.8"
 
 scalaVersion := "2.11.4"
 
@@ -30,16 +30,16 @@ resolvers ++= Seq(
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2" % "2.3.12" % "test"
+libraryDependencies += "org.specs2" %% "specs2" % "2.4.14" % "test"
 
-libraryDependencies += "org.json4s" %% "json4s-native" % "3.2.10" % "test"
+libraryDependencies += "org.json4s" %% "json4s-native" % "3.2.11" % "test"
 
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "0.9.7"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "0.9.8"
 
 libraryDependencies += "org.scalafx" %% "scalafxml-core" % "0.2.1"
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.6"
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.7"
 
 libraryDependencies += "org.controlsfx" % "controlsfx" % "8.20.8"
 
