@@ -2,7 +2,7 @@ name := "sapphire-control"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.9.8"
+version := "0.9.9"
 
 scalaVersion := "2.11.4"
 
@@ -35,7 +35,7 @@ libraryDependencies += "org.specs2" %% "specs2" % "2.4.14" % "test"
 libraryDependencies += "org.json4s" %% "json4s-native" % "3.2.11" % "test"
 
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "0.9.8.1"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "0.9.9"
 
 libraryDependencies += "org.scalafx" %% "scalafxml-core" % "0.2.1"
 

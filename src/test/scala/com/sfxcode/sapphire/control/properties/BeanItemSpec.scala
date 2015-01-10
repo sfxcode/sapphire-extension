@@ -1,6 +1,6 @@
 package com.sfxcode.sapphire.control.properties
 
-import com.sfxcode.sapphire.control.test.{Friend, PersonDatabase}
+import com.sfxcode.sapphire.control.test.{Person, Friend, PersonDatabase}
 import com.sfxcode.sapphire.core.value.FXBean
 import com.typesafe.scalalogging.LazyLogging
 import org.specs2.mutable.Specification
@@ -13,14 +13,22 @@ class BeanItemSpec extends Specification with LazyLogging {
   "BeanItem" should {
 
     "be created from name" in {
-      val friend: FXBean[Friend] = PersonDatabase.testFriend(1)
-      friend.bean.name must be equalTo "Black Whitaker"
+      val person: FXBean[Person] = PersonDatabase.testPerson(1)
+      person.bean.name must be equalTo "Bowen Leon"
 
-      val nameItem = BeanItem(friend, "name")
+      val nameItem = BeanItem(person, "name")
 
       nameItem.setValue("ABC")
 
-      friend.bean.name must be equalTo "ABC"
+      person.bean.name must be equalTo "ABC"
+
+      nameItem.getType.toString must be equalTo "class java.lang.String"
+
+      val ageItem = BeanItem(person, "age")
+      ageItem.getType.toString must be equalTo "class java.lang.Integer"
+
+      val activeItem = BeanItem(person, "isActive")
+      activeItem.getType.toString must be equalTo "class java.lang.Boolean"
 
     }
 

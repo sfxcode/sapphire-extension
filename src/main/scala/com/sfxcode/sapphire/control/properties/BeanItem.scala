@@ -1,35 +1,66 @@
 package com.sfxcode.sapphire.control.properties
 
-import com.sfxcode.sapphire.core.value.{FXBean, ReflectionTools}
+import java.time.{ZoneId, LocalDateTime, Instant, LocalDate}
+import java.util.Date
+
+import com.sfxcode.sapphire.core.value.{FXBean, FXBeanClassRegistry, PropertyType, ReflectionTools}
 import org.controlsfx.control.PropertySheet.Item
 
 import scala.reflect.runtime.universe._
 import scalafx.collections.ObservableBuffer
 
-class BeanItem(bean:FXBean[_ <:AnyRef], name:String, category:String, description:String) extends Item {
+class BeanItem(var bean: FXBean[_ <: AnyRef], name: String, category: String, description: String) extends Item {
 
   override def getType: Class[_] = {
-    bean.memberInfo(name).javaClass
+    val memberInfo = FXBeanClassRegistry.memberInfo(bean.bean, name)
+    if (isDateType)
+      classOf[LocalDate]
+    else
+      memberInfo.javaClass
   }
 
-  override def getValue: AnyRef = bean.getValue(name).asInstanceOf[AnyRef]
+  def isDateType = FXBeanClassRegistry.memberInfo(bean.bean, name).signature == PropertyType.TypeDate
 
-  override def setValue(value: Any): Unit = bean.updateValue(name, value)
+  override def getValue: AnyRef = {
+    if (isDateType)
+      asLocalDate(bean.getValue(name).asInstanceOf[Date])
+    else
+      bean.getValue(name).asInstanceOf[AnyRef]
+  }
+
+  override def setValue(value: Any): Unit = {
+    if (isDateType)
+      bean.updateValue(name, asDate(value.asInstanceOf[LocalDate]))
+    else
+      bean.updateValue(name, value)
+  }
 
   override def getCategory = category
 
   override def getName = name
 
   override def getDescription = description
-}
 
-object BeanItem  {
+  override def isEditable = true
 
-  def apply(bean:FXBean[_ <:AnyRef], name:String, category:String="Basic", description:String=""):BeanItem = {
-    new BeanItem(bean, name, category,description)
+  def asLocalDate(date:java.util.Date): LocalDate =  {
+    val instant = Instant.ofEpochMilli(date.getTime)
+    LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate
   }
 
-  def beanItems[T<:AnyRef](bean:FXBean[T])(implicit t: TypeTag[T]): ObservableBuffer[Item] = {
+  def asDate(date:LocalDate):java.util.Date = {
+    val instant = date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant
+    Date.from(instant)
+  }
+}
+
+object BeanItem {
+
+  def apply(bean: FXBean[_ <: AnyRef], name: String, category: String = "Basic", description: String = ""): BeanItem = {
+    new BeanItem(bean, name, category, description)
+  }
+
+  def beanItems[T <: AnyRef](bean: FXBean[T])(implicit t: TypeTag[T]): ObservableBuffer[Item] = {
     val result = new ObservableBuffer[Item]()
     val symbols = ReflectionTools.getMembers[T]()
     symbols.foreach(s => {
