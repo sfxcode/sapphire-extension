@@ -1,6 +1,7 @@
 package com.sfxcode.sapphire.control.properties
 
-import com.sfxcode.sapphire.control.test.{Person, Friend, PersonDatabase}
+import com.sfxcode.sapphire.control.test.{Friend, Person, PersonDatabase}
+import com.sfxcode.sapphire.core.cdi.CDILauncher
 import com.sfxcode.sapphire.core.value.FXBean
 import com.typesafe.scalalogging.LazyLogging
 import org.specs2.mutable.Specification
@@ -8,11 +9,15 @@ import org.specs2.mutable.Specification
 
 class BeanItemSpec extends Specification with LazyLogging {
 
+  sequential
 
+  step {
+    CDILauncher.init()
+  }
 
   "BeanItem" should {
 
-    "be created from name" in {
+    "be created with key property" in {
       val person: FXBean[Person] = PersonDatabase.testPerson(1)
       person.bean.name must be equalTo "Bowen Leon"
 
@@ -48,5 +53,25 @@ class BeanItemSpec extends Specification with LazyLogging {
 
     }
   }
+
+  "BeanItem" should {
+    "be created from bean" in {
+      val friend: FXBean[Friend] = PersonDatabase.testFriend(2)
+      val beanItems = BeanItems(friend)
+
+      beanItems.addItem("id")
+      beanItems.addItem("name")
+
+      val items = beanItems.getItems
+
+      items must have size 2
+
+
+
+
+    }
+
+  }
+
 
 }

@@ -3,41 +3,53 @@ package com.sfxcode.sapphire.control.properties
 import java.time.{ZoneId, LocalDateTime, Instant, LocalDate}
 import java.util.Date
 
-import com.sfxcode.sapphire.core.value.{FXBean, FXBeanClassRegistry, PropertyType, ReflectionTools}
+import com.sfxcode.sapphire.core.value._
+import com.typesafe.config.ConfigFactory
 import org.controlsfx.control.PropertySheet.Item
 
 import scala.reflect.runtime.universe._
 import scalafx.collections.ObservableBuffer
 
-class BeanItem(var bean: FXBean[_ <: AnyRef], name: String, category: String, description: String) extends Item {
+class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name:String="", category: String="", description: String="") extends Item {
+  val conf = ConfigFactory.load()
 
   override def getType: Class[_] = {
-    val memberInfo = FXBeanClassRegistry.memberInfo(bean.bean, name)
+    val memberInfo = FXBeanClassRegistry.memberInfo(bean.bean, key)
     if (isDateType)
       classOf[LocalDate]
     else
       memberInfo.javaClass
   }
 
-  def isDateType = FXBeanClassRegistry.memberInfo(bean.bean, name).signature == PropertyType.TypeDate
+  def isDateType = FXBeanClassRegistry.memberInfo(bean.bean, key).signature == PropertyType.TypeDate
 
   override def getValue: AnyRef = {
     if (isDateType)
-      asLocalDate(bean.getValue(name).asInstanceOf[Date])
+      asLocalDate(bean.getValue(key).asInstanceOf[Date])
     else
-      bean.getValue(name).asInstanceOf[AnyRef]
+      bean.getValue(key).asInstanceOf[AnyRef]
   }
 
   override def setValue(value: Any): Unit = {
     if (isDateType)
-      bean.updateValue(name, asDate(value.asInstanceOf[LocalDate]))
+      bean.updateValue(key, asDate(value.asInstanceOf[LocalDate]))
     else
-      bean.updateValue(name, value)
+      bean.updateValue(key, value)
   }
 
-  override def getCategory = category
+  override def getCategory = {
+    if (category.isEmpty)
+      conf.getString("sapphire.control.properties.beanItem.defaultCategory")
+    else
+      category
+  }
 
-  override def getName = name
+  override def getName = {
+    if (name.isEmpty)
+      key
+    else
+      name
+  }
 
   override def getDescription = description
 
@@ -56,18 +68,48 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], name: String, category: String, de
 
 object BeanItem {
 
-  def apply(bean: FXBean[_ <: AnyRef], name: String, category: String = "Basic", description: String = ""): BeanItem = {
-    new BeanItem(bean, name, category, description)
+  def apply(bean: FXBean[_ <: AnyRef], key: String, name:String="", category: String = "", description: String = ""): BeanItem = {
+    new BeanItem(bean, key, name, category, description)
   }
 
   def beanItems[T <: AnyRef](bean: FXBean[T])(implicit t: TypeTag[T]): ObservableBuffer[Item] = {
     val result = new ObservableBuffer[Item]()
     val symbols = ReflectionTools.getMembers[T]()
     symbols.foreach(s => {
-      val name = s.name.toString
-      result.add(BeanItem(bean, name))
+      val key = s.name.toString
+      result.add(BeanItem(bean, key))
     })
     result
   }
 
 }
+
+class BeanItems {
+  private val itemBuffer = new ObservableBuffer[BeanItem]()
+
+  private var bean: FXBean[_ <: AnyRef] = _
+
+  def getItems = itemBuffer
+
+  def addItem(key: String, name:String="", category: String = "", description: String = ""): Unit = {
+    itemBuffer.add(BeanItem(bean, key, name, category, description))
+  }
+
+  def updateBean(bean: FXBean[_ <: AnyRef]) {
+    itemBuffer.foreach(item => item.bean = bean)
+  }
+
+}
+
+object BeanItems {
+
+  def apply():BeanItems = new BeanItems()
+
+  def apply(bean: FXBean[_ <: AnyRef]):BeanItems = {
+    val result = new BeanItems()
+    result.updateBean(bean)
+    result
+  }
+}
+
+
