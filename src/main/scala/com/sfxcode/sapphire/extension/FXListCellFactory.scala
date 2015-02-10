@@ -1,4 +1,4 @@
-package com.sfxcode.sapphire.control
+package com.sfxcode.sapphire.extension
 
 import javafx.util.Callback
 import javafx.scene.control._

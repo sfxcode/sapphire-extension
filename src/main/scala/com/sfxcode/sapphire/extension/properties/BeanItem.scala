@@ -1,4 +1,4 @@
-package com.sfxcode.sapphire.control.properties
+package com.sfxcode.sapphire.extension.properties
 
 import java.time.{ZoneId, LocalDateTime, Instant, LocalDate}
 import java.util.Date

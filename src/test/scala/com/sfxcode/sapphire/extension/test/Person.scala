@@ -1,4 +1,4 @@
-package com.sfxcode.sapphire.control.test
+package com.sfxcode.sapphire.extension.test
 
 import java.text.SimpleDateFormat
 import java.util.Date

@@ -1,4 +1,4 @@
-package com.sfxcode.sapphire.control.table
+package com.sfxcode.sapphire.extension.table
 
 import javafx.util.Callback
 import javafx.scene.control.TableColumn

@@ -1,11 +1,11 @@
-sapphire-control
+sapphire-extensions
 ================
 
 sapphire controls framework adds some support for controls to sapphire-core.
 
 ## Version
 
-Actual Version is 0.9.9.7.
+Actual Version is 0.3.0.
 
 Scala Version is 2.11.5.
 
@@ -13,7 +13,7 @@ Scala Version is 2.11.5.
 
 This Framework is actually work in progress.
 
-Feel free to use it on top of sapphire-control, but it is less tested and not as stable as sapphire core.
+Feel free to use it on top of sapphire-extensions, but it is less tested and not as stable as sapphire core.
 
 ## Licence
 

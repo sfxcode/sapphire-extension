@@ -1,4 +1,4 @@
-package com.sfxcode.sapphire.control.table
+package com.sfxcode.sapphire.extension.table
 
 object TableFilterType extends Enumeration {
 

@@ -1,7 +1,7 @@
-package com.sfxcode.sapphire.control.table
+package com.sfxcode.sapphire.extension.table
 
 
-import com.sfxcode.sapphire.control.table.TableFilterType._
+import com.sfxcode.sapphire.extension.table.TableFilterType._
 import com.sfxcode.sapphire.core.value.FXBean
 import com.typesafe.config.ConfigFactory
 import com.typesafe.scalalogging.LazyLogging

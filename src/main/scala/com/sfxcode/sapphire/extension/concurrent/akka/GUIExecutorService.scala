@@ -1,4 +1,4 @@
-package com.sfxcode.sapphire.control.concurrent.akka
+package com.sfxcode.sapphire.extension.concurrent.akka
 
 import java.util.Collections
 import java.util.concurrent.{AbstractExecutorService, TimeUnit}

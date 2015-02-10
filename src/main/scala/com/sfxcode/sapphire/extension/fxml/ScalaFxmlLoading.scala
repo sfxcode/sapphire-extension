@@ -1,4 +1,4 @@
-package com.sfxcode.sapphire.control.fxml
+package com.sfxcode.sapphire.extension.fxml
 
 import javafx.{util => jfxu}
 

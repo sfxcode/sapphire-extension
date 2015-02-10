@@ -1,4 +1,4 @@
-package com.sfxcode.sapphire.control.controller
+package com.sfxcode.sapphire.extension.controller
 
 import javafx.scene.Node
 import javafx.scene.control.Control

@@ -1,4 +1,4 @@
-name := "sapphire-control"
+name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 

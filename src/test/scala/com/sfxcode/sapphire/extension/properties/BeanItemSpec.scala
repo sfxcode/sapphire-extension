@@ -1,6 +1,6 @@
-package com.sfxcode.sapphire.control.properties
+package com.sfxcode.sapphire.extension.properties
 
-import com.sfxcode.sapphire.control.test.{Friend, Person, PersonDatabase}
+import com.sfxcode.sapphire.extension.test.{Friend, Person, PersonDatabase}
 import com.sfxcode.sapphire.core.cdi.CDILauncher
 import com.sfxcode.sapphire.core.value.FXBean
 import com.typesafe.scalalogging.LazyLogging

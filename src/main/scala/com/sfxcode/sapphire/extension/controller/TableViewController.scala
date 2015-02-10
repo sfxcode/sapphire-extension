@@ -1,4 +1,4 @@
-package com.sfxcode.sapphire.control.controller
+package com.sfxcode.sapphire.extension.controller
 
 
 import javafx.collections.ObservableList
@@ -6,7 +6,7 @@ import javafx.fxml.FXML
 import javafx.scene.control.TableView
 import javafx.scene.layout.HBox
 
-import com.sfxcode.sapphire.control.table.FXTableViewController
+import com.sfxcode.sapphire.extension.table.FXTableViewController
 import com.sfxcode.sapphire.core.controller.ViewController
 import com.sfxcode.sapphire.core.value.FXBean
 import com.typesafe.scalalogging.LazyLogging
