@@ -1,7 +1,7 @@
-sapphire-extensions
+sapphire-extension
 ================
 
-sapphire controls framework adds some support for controls to sapphire-core.
+sapphire extension framework adds additional features to sapphire-core.
 
 ## Version
 
@@ -13,7 +13,7 @@ Scala Version is 2.11.5.
 
 This Framework is actually work in progress.
 
-Feel free to use it on top of sapphire-extensions, but it is less tested and not as stable as sapphire core.
+Feel free to use it on top of sapphire-extension, but it is less tested and not as stable as sapphire core.
 
 ## Licence
 
@@ -22,6 +22,8 @@ Apache 2 License.
 ## Technology Stack
 
 ###sapphire-core
+
+
 
 
 ###ControlsFX Dependency
