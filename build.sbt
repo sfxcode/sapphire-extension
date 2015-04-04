@@ -2,9 +2,9 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.3.0"
+version := "0.3.4.3"
 
-scalaVersion := "2.11.5"
+scalaVersion := "2.11.6"
 
 scalacOptions += "-deprecation"
 
@@ -30,21 +30,17 @@ resolvers ++= Seq(
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2" % "2.4.16" % "test"
+libraryDependencies += "org.specs2" %% "specs2-core" % "3.3.1" % "test"
 
 libraryDependencies += "org.json4s" %% "json4s-native" % "3.2.11" % "test"
 
-
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "0.9.9.6"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.0.0.RC1"
 
 libraryDependencies += "org.scalafx" %% "scalafxml-core-sfx8" % "0.2.2"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.9"
 
-libraryDependencies += "org.controlsfx" % "controlsfx" % "8.20.8"
-
-
-
+libraryDependencies += "org.controlsfx" % "controlsfx" % "8.20.8" intransitive()
 
 publishTo := {
   if (version.value.trim.endsWith("SNAPSHOT"))

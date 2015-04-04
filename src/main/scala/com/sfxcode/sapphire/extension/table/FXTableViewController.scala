@@ -148,19 +148,31 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
   }
 
   private def containsFunction(property: String, valueKey: String): (FXBean[S] => Boolean) = {
-    b => b.getValue(property).toString.contains(valueMap(valueKey).toString)
+    b => getFilterString(b, property).contains(valueMap(valueKey).toString)
   }
 
   private def containsLowerCaseFunction(property: String, valueKey: String): (FXBean[S] => Boolean) = {
-    b => b.getValue(property).toString.toLowerCase.contains(valueMap(valueKey).toString.toLowerCase)
+    b => getFilterString(b, property).toLowerCase.contains(valueMap(valueKey).toString.toLowerCase)
   }
 
   private def equalsFunction(property: String, valueKey: String): (FXBean[S] => Boolean) = {
-    b => b.getValue(property).equals(valueMap(valueKey))
+    b => getFilterString(b, property).equals(valueMap(valueKey))
   }
 
   private def equalsLowerCaseFunction(property: String, valueKey: String): (FXBean[S] => Boolean) = {
-    b => b.getValue(property).toString.toLowerCase.equals(valueMap(valueKey).toString.toLowerCase)
+    b => getFilterString(b, property).toLowerCase.equals(valueMap(valueKey).toString.toLowerCase)
+  }
+
+  private def getFilterString(bean:FXBean[S], property: String):String = {
+    val value = bean.getValue(property)
+    value match {
+      case d: java.util.Date => FXBean.defaultDateConverter.toString(d)
+      case c: java.util.Calendar => FXBean.defaultDateConverter.toString(c.getTime)
+      case c: javax.xml.datatype.XMLGregorianCalendar => FXBean.defaultDateConverter.toString(c.toGregorianCalendar.getTime)
+      case v:Any => v.toString
+      case _ => ""
+    }
+
   }
 
   def addColumns[T]() {
@@ -171,7 +183,7 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
       val signature = symbol.typeSignature.toString
       if (table.isEditable)
         cellFactory.setConverter(signature.replace("Int", "Integer"))
-      if (signature.contains("Date"))
+      if (shouldAlignRight(signature))
         cellFactory.setAlignment(TextAlignment.Right)
 
       val valueFactory = new FXValueFactory[FXBean[S], T]()
@@ -179,6 +191,17 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
       addColumnFromFactories(columnHeaderMap.getOrElse(name, propertyToHeader(name)), valueFactory, Some(cellFactory))
     })
   }
+
+  private def shouldAlignRight(signature:String):Boolean = {
+    rightAlignmentList.foreach(s=> {
+      if (signature.contains(s))
+        return true
+    })
+    false
+  }
+
+  def rightAlignmentList = List("Date", "Calendar", "Int", "Long", "Double", "Float")
+
 
   def addColumn[T](header: String, property: String, alignment: TextAlignment = TextAlignment.Left, pw: Double = 80.0): TableColumn[FXBean[S], T] = {
     val valueFactory = new FXValueFactory[FXBean[S], T]()
@@ -218,6 +241,8 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
   def selectedBean: FXBean[S] = table.selectionModel().selectedItemProperty().get()
 
   def selectedItem = table.selectionModel().selectedItemProperty()
+
+  def selectedItems = table.selectionModel().selectedItems
 
   def propertyToHeader(property: String): String = {
     if (property.size == 1)
