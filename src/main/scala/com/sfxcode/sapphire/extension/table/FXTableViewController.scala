@@ -188,6 +188,10 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
 
       val valueFactory = new FXValueFactory[FXBean[S], T]()
       valueFactory.setProperty(columnPropertyMap.getOrElse(name, name))
+      if (signature.contains("Int") || signature.contains("Long"))
+        valueFactory.format = numberFormat()
+      else  if (signature.contains("Double") || signature.contains("Float"))
+        valueFactory.format = decimalFormat()
       addColumnFromFactories(columnHeaderMap.getOrElse(name, propertyToHeader(name)), valueFactory, Some(cellFactory))
     })
   }
@@ -199,6 +203,9 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
     })
     false
   }
+
+  def numberFormat() = "#,##0"
+  def decimalFormat() = "#,##0.00"
 
   def rightAlignmentList = List("Date", "Calendar", "Int", "Long", "Double", "Float")
 

@@ -2,7 +2,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.3.4.3"
+version := "0.3.5"
 
 scalaVersion := "2.11.6"
 
@@ -34,7 +34,7 @@ libraryDependencies += "org.specs2" %% "specs2-core" % "3.3.1" % "test"
 
 libraryDependencies += "org.json4s" %% "json4s-native" % "3.2.11" % "test"
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.0.0.RC1"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.0.0.RC2"
 
 libraryDependencies += "org.scalafx" %% "scalafxml-core-sfx8" % "0.2.2"
 
