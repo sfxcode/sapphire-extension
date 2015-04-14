@@ -39,7 +39,7 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name:String="", categ
 
   override def getCategory = {
     if (category.isEmpty)
-      conf.getString("sapphire.control.properties.beanItem.defaultCategory")
+      conf.getString("sapphire.extension.properties.beanItem.defaultCategory")
     else
       category
   }

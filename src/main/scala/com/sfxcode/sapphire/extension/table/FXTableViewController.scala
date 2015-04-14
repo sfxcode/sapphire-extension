@@ -54,7 +54,7 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
     updateMapping(name, searchField).asInstanceOf[TextField]
   }
 
-  def addSearchBox(name: String, propertyKey: String, noSelection: String = conf.getString("sapphire.control.searchBox.noSelection"), searchBox: ComboBox[String] = new ComboBox[String]()): ComboBox[String] = {
+  def addSearchBox(name: String, propertyKey: String, noSelection: String = conf.getString("sapphire.extension.searchBox.noSelection"), searchBox: ComboBox[String] = new ComboBox[String]()): ComboBox[String] = {
     if (searchPane != null)
       searchPane.getChildren.add(searchBox)
 
@@ -102,6 +102,16 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
       case _ =>
     }
     filter()
+  }
+
+  def reload(shouldReset:Boolean = false): Unit = {
+    table.setItems(null)
+    table.layout()
+    table.setItems(values)
+    if (shouldReset)
+      reset()
+    else
+      filter()
   }
 
   private def filter() {
