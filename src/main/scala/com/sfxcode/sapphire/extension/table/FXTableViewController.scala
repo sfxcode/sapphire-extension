@@ -66,7 +66,7 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
   }
 
   def updateSearchBoxValues(searchBox: ComboBox[String], noSelection: String, propertyKey: String): Unit = {
-    val distinctList = values.filter(b => b.getValue(propertyKey) != null).map(b => b.getValue(propertyKey).toString).distinct
+    val distinctList = values.filter(b => b.getValue(propertyKey) != null).map(b => b.getValue(propertyKey).toString).distinct.sorted
     val valueBuffer = new ObservableBuffer[String]()
     valueBuffer.+=(noSelection)
     valueBuffer.++=(distinctList)
@@ -193,15 +193,19 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
       val signature = symbol.typeSignature.toString
       if (table.isEditable)
         cellFactory.setConverter(signature.replace("Int", "Integer"))
+
       if (shouldAlignRight(signature))
         cellFactory.setAlignment(TextAlignment.Right)
 
       val valueFactory = new FXValueFactory[FXBean[S], T]()
       valueFactory.setProperty(columnPropertyMap.getOrElse(name, name))
-      if (signature.contains("Int") || signature.contains("Long"))
-        valueFactory.format = numberFormat()
-      else  if (signature.contains("Double") || signature.contains("Float"))
-        valueFactory.format = decimalFormat()
+      if (!table.isEditable) {
+        if (signature.contains("Int") || signature.contains("Long"))
+          valueFactory.format = numberFormat()
+        else  if (signature.contains("Double") || signature.contains("Float"))
+          valueFactory.format = decimalFormat()
+      }
+
       addColumnFromFactories(columnHeaderMap.getOrElse(name, propertyToHeader(name)), valueFactory, Some(cellFactory))
     })
   }

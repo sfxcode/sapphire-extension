@@ -34,6 +34,8 @@ abstract class TableViewController extends ViewController with LazyLogging {
   override def didGainVisibilityFirstTime() {
     super.didGainVisibilityFirstTime()
     tableController = FXTableViewController[R](table, records, searchBox)(ct)
+
+    if (shouldAddColunns)
     tableController.addColumns()
 
     initTable(tableController)
@@ -43,6 +45,10 @@ abstract class TableViewController extends ViewController with LazyLogging {
       selectedItemsDidChange(source, changes)
     })
   }
+
+  def shouldAddColunns = true
+
+
 
   def initTable(tableController: FXTableViewController[R]): Unit = {
 
