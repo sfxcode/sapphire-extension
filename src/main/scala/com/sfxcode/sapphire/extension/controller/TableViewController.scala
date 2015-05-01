@@ -36,7 +36,7 @@ abstract class TableViewController extends ViewController with LazyLogging {
     tableController = FXTableViewController[R](table, records, searchBox)(ct)
 
     if (shouldAddColunns)
-    tableController.addColumns()
+      tableController.addColumns()
 
     initTable(tableController)
 

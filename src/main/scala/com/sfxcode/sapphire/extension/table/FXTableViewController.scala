@@ -2,7 +2,7 @@ package com.sfxcode.sapphire.extension.table
 
 
 import com.sfxcode.sapphire.core.value.FXBean
-import com.sfxcode.sapphire.extension.filter.Filterable
+import com.sfxcode.sapphire.extension.filter.DataListFilter
 import com.typesafe.scalalogging.LazyLogging
 
 import scala.collection.mutable
@@ -15,8 +15,11 @@ import scalafx.scene.layout.Pane
 import scalafx.scene.text.TextAlignment
 
 
-case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], values: ObservableBuffer[FXBean[S]], searchPane: Pane = null)(implicit ct: ClassTag[S]) extends LazyLogging with Filterable[S] {
+case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], values: ObservableBuffer[FXBean[S]], searchPane: Pane = null)(implicit ct: ClassTag[S]) extends LazyLogging {
 
+  val filter = DataListFilter(values, searchPane)
+
+  // columns
   val columnMapping = new mutable.HashMap[String, TableColumn[FXBean[S], _]]()
 
   val columnPropertyMap = new mutable.HashMap[String, String]()
@@ -25,102 +28,46 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
   // reflection
   val mirror = ru.runtimeMirror(ct.runtimeClass.getClassLoader)
   val members = mirror.classSymbol(ct.runtimeClass).asType.typeSignature.members.toList.reverse
+  logger.debug(members.collect({ case x if x.isTerm => x.asTerm }).filter(t => t.isVal || t.isVar).map(m => m.name.toString).toString())
 
-  table.setItems(values)
-  logger.debug(members.collect({ case x if x.isTerm => x.asTerm}).filter(t => t.isVal || t.isVar).map(m => m.name.toString).toString())
+  table.setItems(filter.filterResult)
 
-  override def unfilteredValues: ObservableBuffer[FXBean[S]] = values
-
-  override def filterControlPane: Pane = searchPane
-
-  def insert(item: FXBean[S]) {
-    values.add(item)
-    reset()
-  }
-
-  def remove(item: FXBean[S]) {
-    values.remove(item)
-    reset()
-  }
-
-
-  def reload(shouldReset:Boolean = false): Unit = {
-    table.setItems(null)
-    table.layout()
-    table.setItems(values)
-    if (shouldReset)
-      reset()
-    else
-      filter()
-  }
-
-  def filteredValuesHasChanged(values:ObservableBuffer[FXBean[S]]): Unit = {
-    table.setItems(values)
+  filter.filterResult.onChange {
+    table.setItems(filter.filterResult)
     table.sort()
   }
 
-
-
-  def addColumns[T]() {
-    val symbols = members.collect({ case x if x.isTerm => x.asTerm}).filter(t => t.isVal || t.isVar).map(_.asTerm)
-    symbols.foreach(symbol => {
-      val name = symbol.name.toString.trim
-      val cellFactory = new FXTextFieldCellFactory[FXBean[S], T]()
-      val signature = symbol.typeSignature.toString
-      if (table.isEditable)
-        cellFactory.setConverter(signature.replace("Int", "Integer"))
-
-      if (shouldAlignRight(signature))
-        cellFactory.setAlignment(TextAlignment.Right)
-
-      val valueFactory = new FXValueFactory[FXBean[S], T]()
-      valueFactory.setProperty(columnPropertyMap.getOrElse(name, name))
-      if (!table.isEditable) {
-        if (signature.contains("Int") || signature.contains("Long"))
-          valueFactory.format = numberFormat()
-        else  if (signature.contains("Double") || signature.contains("Float"))
-          valueFactory.format = decimalFormat()
-      }
-
-      addColumnFromFactories(columnHeaderMap.getOrElse(name, propertyToHeader(name)), valueFactory, Some(cellFactory))
-    })
+  def reload(shouldReset: Boolean = false): Unit = {
+    table.setItems(null)
+    table.layout()
+    if (shouldReset)
+      filter.reset()
+    else
+      filter.filter()
   }
 
-  private def shouldAlignRight(signature:String):Boolean = {
-    rightAlignmentList.foreach(s=> {
-      if (signature.contains(s))
-        return true
-    })
-    false
+  def addColumn(key: String, column: TableColumn[FXBean[S], _]): Unit = {
+    table.columns.+=(column)
+    columnMapping.put(key, column)
   }
 
-  def numberFormat() = "#,##0"
-  def decimalFormat() = "#,##0.00"
+  def addColumns[T](editable: Boolean = false, numberFormat: String = "#,##0", decimalFormat: String = "#,##0.00") {
+    val columnMap = TableColumnFactory.columnListFromMembers[S, T](members, columnHeaderMap.toMap,
+      columnPropertyMap.toMap, editable, numberFormat, decimalFormat)
 
-  def rightAlignmentList = List("Date", "Calendar", "Int", "Long", "Double", "Float")
+    columnMap.keys.foreach(key => addColumn(key, columnMap(key)))
 
+  }
 
-  def addColumn[T](header: String, property: String, alignment: TextAlignment = TextAlignment.Left, pw: Double = 80.0): TableColumn[FXBean[S], T] = {
+  def addColumn[T](header: String, property: String, alignment: TextAlignment = TextAlignment.Left): TableColumn[FXBean[S], T] = {
     val valueFactory = new FXValueFactory[FXBean[S], T]()
     valueFactory.setProperty(columnPropertyMap.getOrElse(property, property))
     val cellFactory = new FXTextFieldCellFactory[FXBean[S], T]()
     cellFactory.setAlignment(alignment)
-    addColumnFromFactories(header, valueFactory, Some(cellFactory), pw)
-  }
 
-  def addColumnFromFactories[T](header: String, valueFactory: FXValueFactory[FXBean[S], T], cellFactory: Option[FXCellFactory[FXBean[S], T]] = None, pw: Double = 80.0): TableColumn[FXBean[S], T] = {
-
-    val newColumn = new TableColumn[FXBean[S], T]() {
-      text = header
-      minWidth = pw
-    }
-    newColumn.setCellValueFactory(valueFactory)
-    if (cellFactory.isDefined)
-      newColumn.setCellFactory(cellFactory.get)
-
-    table.columns.+=(newColumn)
-    columnMapping.put(valueFactory.getProperty, newColumn)
-    newColumn
+    val result = TableColumnFactory.columnFromFactories[S, T](header, valueFactory, Some(cellFactory))
+    addColumn(header, result)
+    result
   }
 
   def getColumn[T](property: String) = {
@@ -129,7 +76,7 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
 
   def hideColumn(name: String*) = name.foreach(name => getColumn(name).foreach(c => c.setVisible(false)))
 
-  def showColumn(name: String*) = name.foreach(name =>  getColumn(name).foreach(c => c.setVisible(true)))
+  def showColumn(name: String*) = name.foreach(name => getColumn(name).foreach(c => c.setVisible(true)))
 
   def setColumnText(name: String, text: String) = getColumn(name).foreach(c => c.setText(text))
 
@@ -140,22 +87,6 @@ case class FXTableViewController[S <: AnyRef](table: TableView[FXBean[S]], value
   def selectedItem = table.selectionModel().selectedItemProperty()
 
   def selectedItems = table.selectionModel().selectedItems
-
-  def propertyToHeader(property: String): String = {
-    if (property.size == 1)
-      return property.toUpperCase
-    val firstUpper = property.charAt(0).toUpper + property.substring(1)
-    var result = new mutable.StringBuilder()
-    result.append(property.charAt(0).toUpper)
-    property.substring(1).toCharArray.foreach(c => {
-      if (c.isUpper)
-        result.append(" " + c)
-      else
-        result.append(c)
-    })
-    result.toString()
-  }
-
 
 }
 

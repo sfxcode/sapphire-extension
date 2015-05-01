@@ -1,5 +1,7 @@
 package com.sfxcode.sapphire.extension.filter
 
+import javafx.scene.Node
+
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.filter.FilterType._
 import com.typesafe.config.ConfigFactory
@@ -7,28 +9,35 @@ import com.typesafe.scalalogging.LazyLogging
 import org.controlsfx.control.textfield.TextFields
 
 import scala.collection.mutable
-import scalafx.beans.property.IntegerProperty
+import scalafx.Includes._
+import scalafx.beans.property.ObjectProperty
 import scalafx.collections.ObservableBuffer
 import scalafx.event.ActionEvent
-import scalafx.scene.control.{ComboBox, TextField, Control}
+import scalafx.scene.control.{ComboBox, Control, TextField}
 import scalafx.scene.layout.Pane
-import scalafx.Includes._
 
-trait Filterable[S <: AnyRef] extends LazyLogging {
+class DataListFilter[S <: AnyRef](values: ObservableBuffer[FXBean[S]]) extends LazyLogging {
   val conf = ConfigFactory.load()
 
-  val filterResult = ObservableBuffer(unfilteredValues)
-  val filteredSize = IntegerProperty(unfilteredValues.size)
+  val pane = ObjectProperty[Pane](this, "filterPane")
+  val filterResult = ObservableBuffer(values)
 
-  private val filterMap = new mutable.HashMap[Control, Any]()
-  private val filterPropertyMap = new mutable.HashMap[Control, String]()
+  private val controlList = ObservableBuffer[Node]()
+  private val controlFilterMap = new mutable.HashMap[Control, Any]()
+  private val controlFilterPropertyMap = new mutable.HashMap[Control, String]()
   private val valueMap = new mutable.HashMap[String, Any]()
 
   private val filterControlNameMapping = new mutable.HashMap[Control, String]()
   private val filterNameControlMapping = new mutable.HashMap[String, Control]()
+
+  pane.onChange((_, oldValue, newValue) => itemUpdated(oldValue, newValue))
+
+  def itemUpdated(oldPane:Pane, newPane:Pane): Unit = {
+    oldPane.children.clear()
+    newPane.children.addAll(controlList)
+  }
   
-  def unfilteredValues:ObservableBuffer[FXBean[S]]
-  def filterControlPane:Pane
+  def filterControlPane:Pane = pane.value
 
   def addSearchField(name: String, propertyKey: String, filterType: FilterValue = FilterType.FilterContainsIgnoreCase, searchField: TextField = TextFields.createClearableTextField()): TextField = {
     addCustomSearchField(name, filterFunction(filterType, propertyKey, name), searchField)
@@ -38,7 +47,8 @@ trait Filterable[S <: AnyRef] extends LazyLogging {
     if (filterControlPane != null)
       filterControlPane.getChildren.add(searchField)
     searchField.textProperty().onChange((_, oldValue, newValue) => filter())
-    filterMap.put(searchField, p)
+    controlList.add(searchField)
+    controlFilterMap.put(searchField, p)
     updateMapping(name, searchField).asInstanceOf[TextField]
   }
 
@@ -47,14 +57,15 @@ trait Filterable[S <: AnyRef] extends LazyLogging {
       filterControlPane.getChildren.add(searchBox)
 
     updateSearchBoxValues(searchBox, noSelection, propertyKey)
-    filterPropertyMap.put(searchBox, propertyKey)
-    filterMap.put(searchBox, equalsFunction(propertyKey, name))
+    controlList.add(searchBox)
+    controlFilterPropertyMap.put(searchBox, propertyKey)
+    controlFilterMap.put(searchBox, equalsFunction(propertyKey, name))
     searchBox.onAction = (event: ActionEvent) => filter()
     updateMapping(name, searchBox).asInstanceOf[ComboBox[String]]
   }
 
   def updateSearchBoxValues(searchBox: ComboBox[String], noSelection: String, propertyKey: String): Unit = {
-    val distinctList = unfilteredValues.filter(b => b.getValue(propertyKey) != null).map(b => b.getValue(propertyKey).toString).distinct.sorted
+    val distinctList = values.filter(b => b.getValue(propertyKey) != null).map(b => b.getValue(propertyKey).toString).distinct.sorted
     val valueBuffer = new ObservableBuffer[String]()
     valueBuffer.+=(noSelection)
     valueBuffer.++=(distinctList)
@@ -78,43 +89,37 @@ trait Filterable[S <: AnyRef] extends LazyLogging {
 
   def filter() {
     val start = System.currentTimeMillis()
-    var filtered = unfilteredValues
+    var filtered = values
 
-    filterMap.keySet.foreach {
+    controlFilterMap.keySet.foreach {
       case textField: TextField =>
         val filter = textField.getText
         if (filter.length > 0) {
           valueMap.put(filterControlNameMapping(textField), filter)
-          filtered = filtered.filter(filterMap(textField).asInstanceOf[FXBean[S] => Boolean])
+          filtered = filtered.filter(controlFilterMap(textField).asInstanceOf[FXBean[S] => Boolean])
         }
       case searchBox: ComboBox[String] =>
         val model = searchBox.getSelectionModel
         if (model.selectedIndexProperty().get() > 0) {
           val item = model.getSelectedItem
           valueMap.put(filterControlNameMapping(searchBox), item)
-          filtered = filtered.filter(filterMap(searchBox).asInstanceOf[FXBean[S] => Boolean])
+          filtered = filtered.filter(controlFilterMap(searchBox).asInstanceOf[FXBean[S] => Boolean])
           logger.debug(item)
         }
       case _ =>
     }
 
-    filteredValuesHasChanged(filtered)
-
     filterResult.clear()
     filterResult.setAll(filtered)
-    filteredSize.set(filtered.size)
 
-    logger.debug("filtered (%d) in %d ms".format(filteredSize.get, System.currentTimeMillis() - start))
+    logger.debug("filtered (%d) in %d ms".format(filtered.size, System.currentTimeMillis() - start))
   }
 
-  def filteredValuesHasChanged(values:ObservableBuffer[FXBean[S]])
-
-
   def reset() {
-    filterMap.keySet.foreach {
+    controlFilterMap.keySet.foreach {
       case textField: TextField => textField.setText("")
       case searchBox: ComboBox[String] =>
-        updateSearchBoxValues(searchBox, searchBox.getItems.get(0), filterPropertyMap(searchBox))
+        updateSearchBoxValues(searchBox, searchBox.getItems.get(0), controlFilterPropertyMap(searchBox))
       case _ =>
     }
     filter()
@@ -159,5 +164,14 @@ trait Filterable[S <: AnyRef] extends LazyLogging {
       case v: Any => v.toString
       case _ => ""
     }
+  }
+}
+
+object DataListFilter {
+
+  def apply[S <: AnyRef](values: ObservableBuffer[FXBean[S]], pane:Pane):DataListFilter[S] = {
+    val result = new DataListFilter[S](values)
+    result.pane.value = pane
+    result
   }
 }
