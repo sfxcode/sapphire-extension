@@ -1,6 +1,6 @@
-package com.sfxcode.sapphire.extension.table
+package com.sfxcode.sapphire.extension.filter
 
-object TableFilterType extends Enumeration {
+object FilterType extends Enumeration {
 
   type FilterValue = Value
   val FilterEquals, FilterEqualsIgnoreCase, FilterContains, FilterContainsIgnoreCase = Value

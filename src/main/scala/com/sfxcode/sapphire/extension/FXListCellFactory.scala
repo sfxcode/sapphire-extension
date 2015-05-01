@@ -10,7 +10,7 @@ class FXListCellFactory[S] extends Callback[ListView[S], ListCell[S]] {
   var property = ""
 
   def call(column: ListView[S]): ListCell[S] = {
-    // FXListCell[S](property)
+    // FXListCell[S](property)Con
     new FXListCell[S](property)
   }
 
