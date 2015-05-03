@@ -3,7 +3,6 @@ package com.sfxcode.sapphire.extension.skin
 import javafx.beans.binding.Bindings
 import javafx.scene.control.SkinBase
 
-import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.control.DataListView
 import org.controlsfx.control.textfield.TextFields
 
@@ -12,14 +11,14 @@ import scalafx.scene.control._
 import scalafx.scene.layout.VBox
 
 
-class DataListViewSkin[T <: FXBean[_]](view: DataListView[T]) extends SkinBase[DataListView[T]](view) {
+class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[DataListView[S]](view) {
 
-  implicit def objectPropertyToValue[S <: Any](property: ObjectProperty[S]):S = property.get
+  implicit def objectPropertyToValue[T <: Any](property: ObjectProperty[T]):T = property.get
 
   val box = new VBox() {
     spacing = 5
   }
-  val listView = new ListView[T]()
+  val listView = new ListView[S]()
 
   val filterField = TextFields.createClearableTextField()
   filterField.setPrefWidth(60)

@@ -1,9 +1,11 @@
-package com.sfxcode.sapphire.extension
+package com.sfxcode.sapphire.extension.control.list
 
-import javafx.util.Callback
 import javafx.scene.control._
-import scala.beans.BeanProperty
+import javafx.util.Callback
+
 import com.sfxcode.sapphire.core.value.FXBean
+
+import scala.beans.BeanProperty
 
 class FXListCellFactory[S] extends Callback[ListView[S], ListCell[S]] {
   @BeanProperty

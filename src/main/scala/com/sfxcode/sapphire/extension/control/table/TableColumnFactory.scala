@@ -1,4 +1,4 @@
-package com.sfxcode.sapphire.extension.table
+package com.sfxcode.sapphire.extension.control.table
 
 import com.sfxcode.sapphire.core.value.FXBean
 
@@ -14,7 +14,7 @@ object TableColumnFactory {
   def columnFromFactories[S <: AnyRef, T](header: String, valueFactory: FXValueFactory[FXBean[S], T], cellFactory: Option[FXCellFactory[FXBean[S], T]] = None): TableColumn[FXBean[S], T] = {
     val column = new TableColumn[FXBean[S], T]() {
       text = header
-      minWidth = 80
+      prefWidth = 80
     }
     column.setCellValueFactory(valueFactory)
     if (cellFactory.isDefined)

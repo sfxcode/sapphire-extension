@@ -9,6 +9,7 @@ import com.typesafe.scalalogging.LazyLogging
 import org.controlsfx.control.textfield.TextFields
 
 import scala.collection.mutable
+import scala.reflect.runtime.{universe => ru}
 import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
 import scalafx.collections.ObservableBuffer
@@ -16,11 +17,9 @@ import scalafx.event.ActionEvent
 import scalafx.scene.control.{ComboBox, Control, TextField}
 import scalafx.scene.layout.Pane
 
-class DataListFilter[S <: AnyRef](values: ObservableBuffer[FXBean[S]]) extends LazyLogging {
+class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]], pane:ObjectProperty[Pane]) extends LazyLogging {
   val conf = ConfigFactory.load()
-
-  val pane = ObjectProperty[Pane](this, "filterPane")
-  val filterResult = ObservableBuffer(values)
+  implicit def objectPropertyToValue[T <: Any](property: ObjectProperty[T]):T = property.get
 
   private val controlList = ObservableBuffer[Node]()
   private val controlFilterMap = new mutable.HashMap[Control, Any]()
@@ -30,6 +29,8 @@ class DataListFilter[S <: AnyRef](values: ObservableBuffer[FXBean[S]]) extends L
   private val filterControlNameMapping = new mutable.HashMap[Control, String]()
   private val filterNameControlMapping = new mutable.HashMap[String, Control]()
 
+  val filterResult = ObservableBuffer(items.value)
+
   pane.onChange((_, oldValue, newValue) => itemUpdated(oldValue, newValue))
 
   def itemUpdated(oldPane:Pane, newPane:Pane): Unit = {
@@ -38,6 +39,8 @@ class DataListFilter[S <: AnyRef](values: ObservableBuffer[FXBean[S]]) extends L
   }
   
   def filterControlPane:Pane = pane.value
+
+  //def itemValues:ObservableBuffer[FXBean[S]] = items.value
 
   def addSearchField(name: String, propertyKey: String, filterType: FilterValue = FilterType.FilterContainsIgnoreCase, searchField: TextField = TextFields.createClearableTextField()): TextField = {
     addCustomSearchField(name, filterFunction(filterType, propertyKey, name), searchField)
@@ -65,7 +68,7 @@ class DataListFilter[S <: AnyRef](values: ObservableBuffer[FXBean[S]]) extends L
   }
 
   def updateSearchBoxValues(searchBox: ComboBox[String], noSelection: String, propertyKey: String): Unit = {
-    val distinctList = values.filter(b => b.getValue(propertyKey) != null).map(b => b.getValue(propertyKey).toString).distinct.sorted
+    val distinctList = items.value.filter(b => b.getValue(propertyKey) != null).map(b => b.getValue(propertyKey).toString).distinct.sorted
     val valueBuffer = new ObservableBuffer[String]()
     valueBuffer.+=(noSelection)
     valueBuffer.++=(distinctList)
@@ -89,7 +92,7 @@ class DataListFilter[S <: AnyRef](values: ObservableBuffer[FXBean[S]]) extends L
 
   def filter() {
     val start = System.currentTimeMillis()
-    var filtered = values
+    var filtered:ObservableBuffer[FXBean[S]] = items
 
     controlFilterMap.keySet.foreach {
       case textField: TextField =>
@@ -167,11 +170,10 @@ class DataListFilter[S <: AnyRef](values: ObservableBuffer[FXBean[S]]) extends L
   }
 }
 
-object DataListFilter {
+object DataFilter {
 
-  def apply[S <: AnyRef](values: ObservableBuffer[FXBean[S]], pane:Pane):DataListFilter[S] = {
-    val result = new DataListFilter[S](values)
-    result.pane.value = pane
-    result
+  def apply[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]], pane:ObjectProperty[Pane]):DataFilter[S] = {
+    new DataFilter[S](items, pane)
+
   }
 }

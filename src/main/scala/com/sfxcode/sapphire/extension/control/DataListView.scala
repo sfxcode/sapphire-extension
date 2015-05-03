@@ -1,17 +1,16 @@
 package com.sfxcode.sapphire.extension.control
 
 import javafx.scene.Node
-import javafx.scene.control.{Skin, Control}
+import javafx.scene.control.{Control, Skin}
 
-import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.skin.DataListViewSkin
 
 import scalafx.beans.property._
 import scalafx.collections.ObservableBuffer
 
-class DataListView[T <: FXBean[_]] extends Control{
+class DataListView[S <: AnyRef] extends Control{
 
-  val items =  ObjectProperty[ObservableBuffer[T]](this, "listViewItems", ObservableBuffer[T]())
+  val items =  ObjectProperty[ObservableBuffer[S]](this, "listViewItems", ObservableBuffer[S]())
 
   val header =  ObjectProperty[Node](this, "listViewFooter")
   val footer =  ObjectProperty[Node](this, "listViewFooter")
@@ -19,8 +18,8 @@ class DataListView[T <: FXBean[_]] extends Control{
 
   val cellProperty = StringProperty("${_self.toString()}")
 
-  protected override def createDefaultSkin: Skin[DataListView[T]] = {
-    new DataListViewSkin[T](this)
+  protected override def createDefaultSkin: Skin[DataListView[S]] = {
+    new DataListViewSkin[S](this)
   }
 
 }

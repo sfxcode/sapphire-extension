@@ -2,7 +2,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.3.6.10"
+version := "0.3.6.15"
 
 scalaVersion := "2.11.6"
 

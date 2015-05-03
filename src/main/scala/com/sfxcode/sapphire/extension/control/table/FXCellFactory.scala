@@ -1,4 +1,4 @@
-package com.sfxcode.sapphire.extension.table
+package com.sfxcode.sapphire.extension.control.table
 
 import javafx.util.{StringConverter, Callback}
 import javafx.scene.control.{TableCell, TableColumn}
