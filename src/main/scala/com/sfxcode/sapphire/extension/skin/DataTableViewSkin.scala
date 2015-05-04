@@ -5,7 +5,6 @@ import javafx.scene.control.SkinBase
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.control.DataTableView
 
-import scala.reflect.runtime.{universe => ru}
 import scalafx.geometry.Insets
 import scalafx.scene.control.TableView
 import scalafx.scene.layout.{BorderPane, HBox}

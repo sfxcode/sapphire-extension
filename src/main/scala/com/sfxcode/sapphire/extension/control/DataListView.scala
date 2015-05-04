@@ -22,4 +22,8 @@ class DataListView[S <: AnyRef] extends Control{
     new DataListViewSkin[S](this)
   }
 
+  def setItems(values:List[S]): Unit = {
+    items.value = ObservableBuffer[S](values)
+  }
+
 }

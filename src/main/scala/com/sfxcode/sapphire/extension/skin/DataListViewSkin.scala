@@ -3,33 +3,38 @@ package com.sfxcode.sapphire.extension.skin
 import javafx.beans.binding.Bindings
 import javafx.scene.control.SkinBase
 
-import com.sfxcode.sapphire.extension.control.DataListView
-import org.controlsfx.control.textfield.TextFields
-
-import scalafx.beans.property.ObjectProperty
 import scalafx.scene.control._
 import scalafx.scene.layout.VBox
+
+import com.sfxcode.sapphire.core.value.FXBean
+import com.sfxcode.sapphire.extension.Includes._
+import com.sfxcode.sapphire.extension.control.DataListView
+import com.sfxcode.sapphire.extension.control.list.FXListCellFactory
+
+
 
 
 class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[DataListView[S]](view) {
 
-  implicit def objectPropertyToValue[T <: Any](property: ObjectProperty[T]):T = property.get
-
   val box = new VBox() {
     spacing = 5
   }
-  val listView = new ListView[S]()
-
-  val filterField = TextFields.createClearableTextField()
-  filterField.setPrefWidth(60)
-  filterField.setMaxWidth(100)
+  val listView = new ListView[FXBean[S]]()
 
   val label = new Label {
     text = "Test"
   }
 
-  view.header.set(filterField)
   view.footer.set(label)
+
+  updateListViewItems()
+  view.items.onChange(updateListViewItems())
+
+  updateCellFactory()
+  view.cellProperty.onChange(updateCellFactory())
+
+  view.header.onChange(updateView())
+  view.footer.onChange(updateView())
 
   getChildren.add(box)
 
@@ -39,7 +44,24 @@ class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[Data
 
   def updateView(): Unit = {
     box.children.clear()
-    box.children.addAll(getSkinnable.header, listView, getSkinnable.footer)
+    if (view.header)
+      box.children.add(view.header)
+    box.children.add(listView)
+    if (view.footer)
+      box.children.add(view.footer)
+  }
+
+  def updateListViewItems(): Unit = {
+    listView.getItems.clear()
+    view.items.value.foreach(v => {
+      listView.getItems.add(FXBean(v))
+    })
+  }
+
+  def updateCellFactory(): Unit = {
+    val cellFactory = new FXListCellFactory[FXBean[S]]
+    cellFactory.setProperty(view.cellProperty.value)
+    listView.setCellFactory(cellFactory)
   }
 
 

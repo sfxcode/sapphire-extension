@@ -1,4 +1,4 @@
-package com.sfxcode.sapphire.extension.properties
+package com.sfxcode.sapphire.extension.property
 
 import com.sfxcode.sapphire.extension.test.{Friend, Person, PersonDatabase}
 import com.sfxcode.sapphire.core.cdi.CDILauncher
