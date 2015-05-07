@@ -11,21 +11,18 @@ import com.sfxcode.sapphire.extension.Includes._
 import com.sfxcode.sapphire.extension.control.DataListView
 import com.sfxcode.sapphire.extension.control.list.FXListCellFactory
 
-
-
-
 class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[DataListView[S]](view) {
 
   val box = new VBox() {
     spacing = 5
   }
-  val listView = new ListView[FXBean[S]]()
 
   val label = new Label {
     text = "Test"
   }
 
   view.footer.set(label)
+  //view.header.set(box)
 
   updateListViewItems()
   view.items.onChange(updateListViewItems())
@@ -46,23 +43,19 @@ class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[Data
     box.children.clear()
     if (view.header)
       box.children.add(view.header)
-    box.children.add(listView)
+    box.children.add(view.listView)
     if (view.footer)
       box.children.add(view.footer)
   }
 
   def updateListViewItems(): Unit = {
-    listView.getItems.clear()
-    view.items.value.foreach(v => {
-      listView.getItems.add(FXBean(v))
-    })
+    view.listView.items = view.items
   }
 
   def updateCellFactory(): Unit = {
     val cellFactory = new FXListCellFactory[FXBean[S]]
     cellFactory.setProperty(view.cellProperty.value)
-    listView.setCellFactory(cellFactory)
+    view.listView.setCellFactory(cellFactory)
   }
-
 
 }

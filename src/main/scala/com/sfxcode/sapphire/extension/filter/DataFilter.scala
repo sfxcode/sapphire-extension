@@ -1,6 +1,7 @@
 package com.sfxcode.sapphire.extension.filter
 
 import javafx.scene.Node
+import javafx.scene.layout.Pane
 
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.filter.FilterType._
@@ -15,7 +16,6 @@ import scalafx.beans.property.ObjectProperty
 import scalafx.collections.ObservableBuffer
 import scalafx.event.ActionEvent
 import scalafx.scene.control.{ComboBox, Control, TextField}
-import scalafx.scene.layout.Pane
 
 class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]], pane:ObjectProperty[Pane]) extends LazyLogging {
   val conf = ConfigFactory.load()
@@ -34,7 +34,8 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
   pane.onChange((_, oldValue, newValue) => itemUpdated(oldValue, newValue))
 
   def itemUpdated(oldPane:Pane, newPane:Pane): Unit = {
-    oldPane.children.clear()
+    if (oldPane != null)
+      oldPane.children.clear()
     newPane.children.addAll(controlList)
   }
   
@@ -42,7 +43,10 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
 
   //def itemValues:ObservableBuffer[FXBean[S]] = items.value
 
-  def addSearchField(name: String, propertyKey: String, filterType: FilterValue = FilterType.FilterContainsIgnoreCase, searchField: TextField = TextFields.createClearableTextField()): TextField = {
+  def addSearchField(propertyKey: String): TextField = addSearchField(propertyKey, propertyKey)
+
+  def addSearchField(name: String, propertyKey: String, filterType: FilterValue = FilterType.FilterContainsIgnoreCase,
+                     searchField: TextField = TextFields.createClearableTextField()): TextField = {
     addCustomSearchField(name, filterFunction(filterType, propertyKey, name), searchField)
   }
 

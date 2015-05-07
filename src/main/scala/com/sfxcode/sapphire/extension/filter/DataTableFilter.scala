@@ -10,8 +10,8 @@ import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.control.{TableView, _}
-import scalafx.scene.layout.Pane
 import scalafx.scene.text.TextAlignment
+import javafx.scene.layout.Pane
 
 class DataTableFilter[ S <: AnyRef](table: TableView[FXBean[S]],items: ObjectProperty[ObservableBuffer[FXBean[S]]], pane:ObjectProperty[Pane])
                                        (implicit ct: ClassTag[S]) extends DataFilter[S](items, pane) {
