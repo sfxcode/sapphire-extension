@@ -1,5 +1,6 @@
 package com.sfxcode.sapphire.extension.control.table
 
+import com.sfxcode.sapphire.core.control.FXValueFactory
 import com.sfxcode.sapphire.core.value.FXBean
 
 import scala.collection.mutable

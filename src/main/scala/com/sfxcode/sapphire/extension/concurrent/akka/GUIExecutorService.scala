@@ -3,10 +3,7 @@ package com.sfxcode.sapphire.extension.concurrent.akka
 import java.util.Collections
 import java.util.concurrent.{AbstractExecutorService, TimeUnit}
 
-/**
- * Created by tom on 11.10.14.
- */
-// First we wrap invokeLater/runLater as an ExecutorService
+
 abstract class GUIExecutorService extends AbstractExecutorService {
   def execute(command: Runnable): Unit
 

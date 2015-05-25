@@ -5,15 +5,15 @@ sapphire extension framework adds additional features to sapphire-core.
 
 ## Version
 
-Actual Version is 0.3.0.
+Actual Version is 0.4.0.
 
-Scala Version is 2.11.5.
+Scala Version is 2.11.6.
 
 ## About
 
 This Framework is actually work in progress.
 
-Feel free to use it on top of sapphire-extension, but it is less tested and not as stable as sapphire core.
+Feel free to use it on top of sapphire-core, but it is less tested and not as stable as sapphire core.
 
 ## Licence
 
@@ -22,8 +22,6 @@ Apache 2 License.
 ## Technology Stack
 
 ###sapphire-core
-
-
 
 
 ###ControlsFX Dependency

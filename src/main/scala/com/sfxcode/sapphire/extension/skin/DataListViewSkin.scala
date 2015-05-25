@@ -3,13 +3,12 @@ package com.sfxcode.sapphire.extension.skin
 import javafx.beans.binding.Bindings
 import javafx.scene.control.SkinBase
 
-import scalafx.scene.control._
-import scalafx.scene.layout.VBox
-
-import com.sfxcode.sapphire.core.value.FXBean
+import com.sfxcode.sapphire.core.control.FXListCellFactory
 import com.sfxcode.sapphire.extension.Includes._
 import com.sfxcode.sapphire.extension.control.DataListView
-import com.sfxcode.sapphire.extension.control.list.FXListCellFactory
+
+import scalafx.scene.control._
+import scalafx.scene.layout.VBox
 
 class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[DataListView[S]](view) {
 
@@ -22,7 +21,6 @@ class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[Data
   }
 
   view.footer.set(label)
-  //view.header.set(box)
 
   updateListViewItems()
   view.items.onChange(updateListViewItems())
@@ -53,7 +51,7 @@ class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[Data
   }
 
   def updateCellFactory(): Unit = {
-    val cellFactory = new FXListCellFactory[FXBean[S]]
+    val cellFactory = new FXListCellFactory[S]
     cellFactory.setProperty(view.cellProperty.value)
     view.listView.setCellFactory(cellFactory)
   }

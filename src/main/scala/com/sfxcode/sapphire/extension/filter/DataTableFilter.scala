@@ -1,7 +1,8 @@
 package com.sfxcode.sapphire.extension.filter
 
+import com.sfxcode.sapphire.core.control.FXValueFactory
 import com.sfxcode.sapphire.core.value.FXBean
-import com.sfxcode.sapphire.extension.control.table.{FXTextFieldCellFactory, FXValueFactory, TableColumnFactory}
+import com.sfxcode.sapphire.extension.control.table.{FXTextFieldCellFactory, TableColumnFactory}
 
 import scala.collection.mutable
 import scala.reflect.ClassTag
@@ -71,6 +72,10 @@ class DataTableFilter[ S <: AnyRef](table: TableView[FXBean[S]],items: ObjectPro
   def getColumn[T](property: String) = {
     columnMapping.get(property)
   }
+
+  def getTable:TableView[FXBean[S]] = table
+
+  def getItems:ObservableBuffer[FXBean[S]] = items.value
 
   def hideColumn(name: String*) = name.foreach(name => getColumn(name).foreach(c => c.setVisible(false)))
 
