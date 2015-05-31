@@ -34,21 +34,12 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
 
   getChildren.add(box)
 
-
-  updateCellFactory()
-  view.cellProperty.onChange(updateCellFactory())
-
   updateView()
 
   def updateView(): Unit = {
     box.children.add(view.leftDataListView)
     box.children.add(buttonBox)
     box.children.add(view.rightDataListView)
-  }
-
-  def updateCellFactory(): Unit = {
-   view.leftDataListView.cellProperty.set(view.cellProperty.get)
-   view.rightDataListView.cellProperty.set(view.cellProperty.get)
   }
 
 }

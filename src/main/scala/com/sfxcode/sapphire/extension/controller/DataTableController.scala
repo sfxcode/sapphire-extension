@@ -20,8 +20,10 @@ import com.sfxcode.sapphire.core.Includes._
 
 abstract class DataTableController extends ViewController with LazyLogging {
 
-  implicit def listToProperty(list:Seq[R]):ObjectProperty[ObservableBuffer[FXBean[R]]] = {
-    ObjectProperty(this,"dataTableItems", list)
+  implicit def listToProperty(seq:Seq[R]):ObservableBuffer[FXBean[R]] = {
+     val result =ObservableBuffer[FXBean[R]]()
+    seq.foreach(v => result.+=(v))
+    result
   }
 
   type R <: AnyRef
@@ -41,11 +43,13 @@ abstract class DataTableController extends ViewController with LazyLogging {
 
   var tableFilter: DataTableFilter[R] = _
 
-  def items: ObjectProperty[ObservableBuffer[FXBean[R]]]
+  def items: ObservableBuffer[FXBean[R]]
 
   override def didGainVisibilityFirstTime() {
     super.didGainVisibilityFirstTime()
-    tableFilter = new  DataTableFilter[R](table, items, ObjectProperty(this,"",searchBox))(ct)
+    table.setItems(items)
+
+    tableFilter = new  DataTableFilter[R](table, ObjectProperty(this,"",searchBox))(ct)
 
     if (shouldAddColunns)
       tableFilter.addColumns()

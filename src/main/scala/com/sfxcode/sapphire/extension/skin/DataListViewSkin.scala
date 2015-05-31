@@ -30,10 +30,11 @@ class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[Data
 
   view.header.onChange(updateView())
   view.footer.onChange(updateView())
+  view.showFooter.onChange(updateView())
 
   getChildren.add(box)
 
-  label.text <== Bindings.format(view.footerTextProperty.get, Bindings.size(view.items.get))
+  updateListViewItems()
 
   updateView()
 
@@ -42,12 +43,13 @@ class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[Data
     if (view.header)
       box.children.add(view.header)
     box.children.add(view.listView)
-    if (view.footer)
+    if (view.showFooter.get && view.footer)
       box.children.add(view.footer)
   }
 
   def updateListViewItems(): Unit = {
     view.listView.items = view.items
+    label.text <== Bindings.format(view.footerTextProperty.get, Bindings.size(view.items.get))
   }
 
   def updateCellFactory(): Unit = {

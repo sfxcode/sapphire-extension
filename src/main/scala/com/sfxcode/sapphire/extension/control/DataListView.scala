@@ -22,6 +22,8 @@ class DataListView[S <: AnyRef] extends Control{
   val footerTextProperty = StringProperty("%d elements")
   val cellProperty = StringProperty("${_self.toString()}")
 
+  val showFooter = BooleanProperty(false)
+
   protected override def createDefaultSkin: Skin[DataListView[S]] = {
     new DataListViewSkin[S](this)
   }

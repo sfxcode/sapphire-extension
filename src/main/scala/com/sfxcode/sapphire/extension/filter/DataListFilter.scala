@@ -7,19 +7,24 @@ import com.sfxcode.sapphire.extension.control.DataListView
 
 import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
-import scalafx.collections.ObservableBuffer
 import scalafx.scene.layout.HBox
 
-class DataListFilter[ S <: AnyRef](dataList: DataListView[S],items: ObjectProperty[ObservableBuffer[FXBean[S]]], searchFieldPropepertyKey:String = "")
-                                        extends DataFilter[S](items, dataList.header.asInstanceOf[ObjectProperty[Pane]]) {
+class DataListFilter[ S <: AnyRef](dataList: DataListView[S], searchFieldPropepertyKey:String = "")
+                                        extends DataFilter[S](dataList.header.asInstanceOf[ObjectProperty[Pane]]) {
   val box = new HBox(5)
   dataList.header.value = box
   if (!searchFieldPropepertyKey.isEmpty)
     addSearchField(searchFieldPropepertyKey)
 
+  originalData = dataList.items.value.toList
+
+  dataList.items.onChange {
+    originalData = dataList.items.value.toList
+  }
+
   filterResult.onChange {
-    listView.getItems.clear()
-    filterResult.foreach(v => dataList.getItems.add(v.asInstanceOf[FXBean[S]]))
+    dataList.getItems.clear()
+    filterResult.foreach(v => dataList.getItems.add(v))
   }
 
   filter()
