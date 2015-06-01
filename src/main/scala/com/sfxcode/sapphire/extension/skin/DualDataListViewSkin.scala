@@ -72,13 +72,12 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
   }
 
   private def move(source:  DataListView[S], target:  DataListView[S], items: ObservableBuffer[FXBean[S]]) {
-
     items.foreach(item => {
       source.getItems.remove(item)
       target.getItems.add(item)
     })
-    source.setItems(source.getItems)
-    target.setItems(target.getItems)
+   source.setItems(source.getItems)
+   target.setItems(target.getItems)
   }
 
 }

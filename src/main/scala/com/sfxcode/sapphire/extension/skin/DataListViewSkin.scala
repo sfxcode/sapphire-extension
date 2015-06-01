@@ -13,6 +13,7 @@ import scalafx.scene.layout.VBox
 
 class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[DataListView[S]](view) {
 
+
   val box = new VBox() {
     spacing = 5
   }
@@ -31,7 +32,6 @@ class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[Data
     }
     updateListViewItems()
   }
-
 
   updateCellFactory()
   view.cellProperty.onChange(updateCellFactory())

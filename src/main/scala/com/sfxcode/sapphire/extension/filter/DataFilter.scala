@@ -31,6 +31,11 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
 
   var filterResult = ObservableBuffer[FXBean[S]]()
 
+  items.onChange({
+    items.value.onChange(filter())
+    filter()
+  })
+
   pane.onChange((_, oldValue, newValue) => itemUpdated(oldValue, newValue))
 
   def itemUpdated(oldPane:Pane, newPane:Pane): Unit = {
@@ -120,7 +125,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
     filterResult.setAll(filtered)
 
 
-    logger.debug("filtered (%d) in %d ms".format(filtered.size, System.currentTimeMillis() - start))
+    logger.debug("filtered [%s] (new size %d) in %d ms".format(this.hashCode(), filtered.size, System.currentTimeMillis() - start))
   }
 
   def reset() {

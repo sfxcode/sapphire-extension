@@ -9,16 +9,18 @@ import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
 import scalafx.scene.layout.HBox
 
-class DataListFilter[ S <: AnyRef](dataList: DataListView[S], searchFieldPropepertyKey:String = "")
-                                        extends DataFilter[S](dataList.items, dataList.header.asInstanceOf[ObjectProperty[Pane]]) {
+class DataListFilter[S <: AnyRef](dataList: DataListView[S], searchFieldPropertyKey: String = "")
+  extends DataFilter[S](dataList.items, dataList.header.asInstanceOf[ObjectProperty[Pane]]) {
+  var sortFiltered = true
   val box = new HBox(5)
   dataList.header.value = box
-  if (!searchFieldPropepertyKey.isEmpty)
-    addSearchField(searchFieldPropepertyKey)
+  if (!searchFieldPropertyKey.isEmpty)
+    addSearchField(searchFieldPropertyKey)
 
   filterResult.onChange {
     dataList.listView.getItems.clear()
-    filterResult.foreach(v => dataList.listView.getItems.add(v))
+    if (filterResult.nonEmpty)
+      filterResult.foreach(v => dataList.listView.getItems.add(v))
   }
 
   filter()

@@ -2,7 +2,6 @@ package com.sfxcode.sapphire.extension.control
 
 import javafx.scene.control.{Control, Skin}
 
-import com.sfxcode.sapphire.extension.filter.DataListFilter
 import com.sfxcode.sapphire.extension.skin.DualDataListViewSkin
 
 
@@ -23,11 +22,11 @@ class DualDataListView [S<:AnyRef] extends Control {
   }
 
   def addLeftFilter() = {
-    val filter = new DataListFilter[S](leftDataListView, leftDataListView.cellProperty.value)
+    leftDataListView.addFilter()
   }
 
   def addRightFilter() = {
-    val filter = new DataListFilter[S](rightDataListView, rightDataListView.cellProperty.value)
+    rightDataListView.addFilter()
   }
 
   def addFilter() ={
