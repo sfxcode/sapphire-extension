@@ -16,7 +16,7 @@ import scalafx.collections.ObservableBuffer
 import scalafx.event.ActionEvent
 import scalafx.scene.control.{ComboBox, Control, TextField}
 
-class DataFilter[S <: AnyRef](pane:ObjectProperty[Pane]) extends LazyLogging {
+class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]], pane:ObjectProperty[Pane]) extends LazyLogging {
   val conf = ConfigFactory.load()
   implicit def objectPropertyToValue[T <: Any](property: ObjectProperty[T]):T = property.get
 
@@ -28,7 +28,7 @@ class DataFilter[S <: AnyRef](pane:ObjectProperty[Pane]) extends LazyLogging {
   private val filterControlNameMapping = new mutable.HashMap[Control, String]()
   private val filterNameControlMapping = new mutable.HashMap[String, Control]()
 
-  var originalData = List[FXBean[S]]()
+
   var filterResult = ObservableBuffer[FXBean[S]]()
 
   pane.onChange((_, oldValue, newValue) => itemUpdated(oldValue, newValue))
@@ -72,7 +72,7 @@ class DataFilter[S <: AnyRef](pane:ObjectProperty[Pane]) extends LazyLogging {
   }
 
   def updateSearchBoxValues(searchBox: ComboBox[String], noSelection: String, propertyKey: String): Unit = {
-    val distinctList = originalData.filter(b => b.getValue(propertyKey) != null).map(b => b.getValue(propertyKey).toString).distinct.sorted
+    val distinctList = items.value.filter(b => b.getValue(propertyKey) != null).map(b => b.getValue(propertyKey).toString).distinct.sorted
     val valueBuffer = new ObservableBuffer[String]()
     valueBuffer.+=(noSelection)
     valueBuffer.++=(distinctList)
@@ -96,7 +96,7 @@ class DataFilter[S <: AnyRef](pane:ObjectProperty[Pane]) extends LazyLogging {
 
   def filter() {
     val start = System.currentTimeMillis()
-    var filtered = ObservableBuffer[FXBean[S]](originalData)
+    var filtered = ObservableBuffer[FXBean[S]](items.value)
 
     controlFilterMap.keySet.foreach {
       case textField: TextField =>
@@ -177,8 +177,8 @@ class DataFilter[S <: AnyRef](pane:ObjectProperty[Pane]) extends LazyLogging {
 
 object DataFilter {
 
-  def apply[S <: AnyRef](items:ObservableBuffer[FXBean[S]], pane:ObjectProperty[Pane]):DataFilter[S] = {
-    new DataFilter[S](pane)
+  def apply[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]], pane:ObjectProperty[Pane]):DataFilter[S] = {
+    new DataFilter[S](items, pane)
 
   }
 }

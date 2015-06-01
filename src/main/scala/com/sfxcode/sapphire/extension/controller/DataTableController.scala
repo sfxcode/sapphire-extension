@@ -49,7 +49,7 @@ abstract class DataTableController extends ViewController with LazyLogging {
     super.didGainVisibilityFirstTime()
     table.setItems(items)
 
-    tableFilter = new  DataTableFilter[R](table, ObjectProperty(this,"",searchBox))(ct)
+    tableFilter = new  DataTableFilter[R](table, ObjectProperty[ObservableBuffer[FXBean[R]]](this,"",items),ObjectProperty(this,"",searchBox))(ct)
 
     if (shouldAddColunns)
       tableFilter.addColumns()

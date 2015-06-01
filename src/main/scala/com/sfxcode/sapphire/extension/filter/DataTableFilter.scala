@@ -14,8 +14,8 @@ import scalafx.scene.control.{TableView, _}
 import scalafx.scene.text.TextAlignment
 import javafx.scene.layout.Pane
 
-class DataTableFilter[ S <: AnyRef](table: TableView[FXBean[S]], pane:ObjectProperty[Pane])
-                                       (implicit ct: ClassTag[S]) extends DataFilter[S](pane) {
+class DataTableFilter[ S <: AnyRef] (table: TableView[FXBean[S]],items: ObjectProperty[ObservableBuffer[FXBean[S]]], pane:ObjectProperty[Pane])
+                                       (implicit ct: ClassTag[S]) extends DataFilter[S](items, pane) {
 
     // columns
   val columnMapping = new mutable.HashMap[String, TableColumn[FXBean[S], _]]()
@@ -28,11 +28,11 @@ class DataTableFilter[ S <: AnyRef](table: TableView[FXBean[S]], pane:ObjectProp
   val members = mirror.classSymbol(ct.runtimeClass).asType.typeSignature.members.toList.reverse
   logger.debug(members.collect({ case x if x.isTerm => x.asTerm }).filter(t => t.isVal || t.isVar).map(m => m.name.toString).toString())
 
-  originalData = table.items.value.toList
-
-  table.items.onChange {
-    originalData = table.items.value.toList
-  }
+//  originalData = table.items.value.toList
+//
+//  table.items.onChange {
+//    originalData = table.items.value.toList
+//  }
 
   filterResult.onChange {
     table.getItems.clear()

@@ -7,6 +7,7 @@ import com.sfxcode.sapphire.core.control.FXListCellFactory
 import com.sfxcode.sapphire.extension.Includes._
 import com.sfxcode.sapphire.extension.control.DataListView
 
+import scalafx.collections.ObservableBuffer
 import scalafx.scene.control._
 import scalafx.scene.layout.VBox
 
@@ -23,7 +24,14 @@ class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[Data
   view.footer.set(label)
 
   updateListViewItems()
-  view.items.onChange(updateListViewItems())
+
+  view.items.onChange {
+    view.items.value.onChange {
+      updateListViewItems()
+    }
+    updateListViewItems()
+  }
+
 
   updateCellFactory()
   view.cellProperty.onChange(updateCellFactory())
@@ -48,8 +56,8 @@ class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[Data
   }
 
   def updateListViewItems(): Unit = {
-    view.listView.items = view.items
-    label.text <== Bindings.format(view.footerTextProperty.get, Bindings.size(view.items.get))
+    view.listView.items = ObservableBuffer(view.items.value)
+    label.text <== Bindings.format(view.footerTextProperty.get, Bindings.size(view.listView.items.get))
   }
 
   def updateCellFactory(): Unit = {
