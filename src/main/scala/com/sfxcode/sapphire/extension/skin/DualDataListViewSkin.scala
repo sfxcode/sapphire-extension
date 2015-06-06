@@ -9,7 +9,9 @@ import de.jensd.fx.glyphs.GlyphsDude
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
 
 import scalafx.Includes._
+import javafx.beans.binding.Bindings
 import scalafx.collections.ObservableBuffer
+import scalafx.event.ActionEvent
 import scalafx.scene.control.Button
 import scalafx.scene.input.MouseEvent
 import scalafx.scene.layout.Priority._
@@ -34,8 +36,54 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
   val buttonMoveToSource: Button = GlyphsDude.createIconButton(FontAwesomeIcon.ANGLE_LEFT)
   val buttonMoveToSourceAll: Button = GlyphsDude.createIconButton(FontAwesomeIcon.ANGLE_DOUBLE_LEFT)
 
-  view.leftDataListView.listView.selectionModel().setSelectionMode(MULTIPLE)
-  view.rightDataListView.listView.selectionModel().setSelectionMode(MULTIPLE)
+  buttonMoveToTarget.onAction= (e: ActionEvent) =>  moveToTarget()
+  buttonMoveToSource.onAction = (e: ActionEvent) => moveToSource()
+
+//  buttonMoveToTargetAll.onAction = (e: ActionEvent) => {
+//    move(view.leftDataListView, view.rightDataListView, leftItems)
+//    //leftSelectionModel.clearSelection()
+//  }
+//
+//
+//  buttonMoveToSourceAll.onAction = (e: ActionEvent) => {
+//    move(view.rightDataListView, view.leftDataListView, rightItems)
+//   //rightSelectionModel.clearSelection()
+//  }
+
+
+  def leftItems = view.leftDataListView.getItems
+  def leftSelectionModel = view.leftDataListView.listView.selectionModel()
+  def rightItems = view.rightDataListView.getItems
+  def rightSelectionModel =  view.rightDataListView.listView.selectionModel()
+
+  leftSelectionModel.setSelectionMode(MULTIPLE)
+  rightSelectionModel.setSelectionMode(MULTIPLE)
+
+  leftItems.onChange {
+    bindMoveAllButtonsToDataModel()
+  }
+
+  rightItems.onChange {
+    bindMoveAllButtonsToDataModel()
+  }
+
+  leftSelectionModel.getSelectedItems.onChange {
+    bindMoveButtonsToSelectionModel()
+  }
+
+  rightSelectionModel.getSelectedItems.onChange {
+    bindMoveButtonsToSelectionModel()
+  }
+
+  def bindMoveAllButtonsToDataModel() {
+    buttonMoveToTargetAll.disableProperty.bind(Bindings.isEmpty(leftItems))
+    buttonMoveToSourceAll.disableProperty.bind(Bindings.isEmpty(rightItems))
+  }
+
+  def bindMoveButtonsToSelectionModel() {
+    buttonMoveToTarget.disableProperty.bind(Bindings.isEmpty(leftSelectionModel.getSelectedItems))
+    buttonMoveToSource.disableProperty.bind(Bindings.isEmpty(rightSelectionModel.getSelectedItems))
+  }
 
   view.leftDataListView.listView.onMouseClicked = (e: MouseEvent) => if (e.clickCount == 2) moveToTarget()
   view.rightDataListView.listView.onMouseClicked = (e: MouseEvent) => if (e.clickCount == 2) moveToSource()
@@ -48,6 +96,8 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
 
   getChildren.add(box)
 
+  bindMoveAllButtonsToDataModel()
+  bindMoveButtonsToSelectionModel()
   updateView()
 
   def updateView(): Unit = {
@@ -58,12 +108,12 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
 
   def moveToTarget() {
     move(view.leftDataListView, view.rightDataListView)
-    view.leftDataListView.listView.getSelectionModel.clearSelection()
+    leftSelectionModel.clearSelection()
   }
 
   private def moveToSource() {
     move(view.rightDataListView, view.leftDataListView)
-    view.rightDataListView.listView.getSelectionModel.clearSelection()
+    rightSelectionModel.clearSelection()
   }
 
   private def move(source: DataListView[S], target: DataListView[S]) {

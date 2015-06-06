@@ -2,7 +2,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.4.0"
+version := "0.4.1-SNAPSHOT"
 
 scalaVersion := "2.11.6"
 
@@ -38,7 +38,7 @@ libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.0.0"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.11"
 
-libraryDependencies += "org.controlsfx" % "controlsfx" % "8.20.8" intransitive()
+libraryDependencies += "org.controlsfx" % "controlsfx" % "8.40.9" intransitive()
 
 libraryDependencies += "de.jensd" % "fontawesomefx" % "8.4"
 
