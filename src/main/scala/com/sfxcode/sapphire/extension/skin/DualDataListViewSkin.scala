@@ -1,5 +1,6 @@
 package com.sfxcode.sapphire.extension.skin
 
+import javafx.beans.binding.Bindings
 import javafx.scene.control.SelectionMode._
 import javafx.scene.control.SkinBase
 
@@ -9,9 +10,9 @@ import de.jensd.fx.glyphs.GlyphsDude
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
 
 import scalafx.Includes._
-import javafx.beans.binding.Bindings
 import scalafx.collections.ObservableBuffer
 import scalafx.event.ActionEvent
+import scalafx.geometry.Pos
 import scalafx.scene.control.Button
 import scalafx.scene.input.MouseEvent
 import scalafx.scene.layout.Priority._
@@ -20,10 +21,9 @@ import scalafx.scene.layout.{HBox, VBox}
 
 class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinBase[DualDataListView[S]](view) {
 
-  implicit def observableBufferToList[T <:AnyRef](buffer:ObservableBuffer[FXBean[T]]):Seq[T] = {
-    buffer.map(item =>item.bean).toSeq
+  implicit def observableBufferToList[T <: AnyRef](buffer: ObservableBuffer[FXBean[T]]): Seq[T] = {
+    buffer.map(item => item.bean).toSeq
   }
-
 
   val box = new HBox() {
     spacing = 5
@@ -36,51 +36,42 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
   val buttonMoveToSource: Button = GlyphsDude.createIconButton(FontAwesomeIcon.ANGLE_LEFT)
   val buttonMoveToSourceAll: Button = GlyphsDude.createIconButton(FontAwesomeIcon.ANGLE_DOUBLE_LEFT)
 
-  buttonMoveToTarget.onAction= (e: ActionEvent) =>  moveToTarget()
+  buttonMoveToTarget.onAction = (e: ActionEvent) => moveToTarget()
   buttonMoveToSource.onAction = (e: ActionEvent) => moveToSource()
-
-//  buttonMoveToTargetAll.onAction = (e: ActionEvent) => {
-//    move(view.leftDataListView, view.rightDataListView, leftItems)
-//    //leftSelectionModel.clearSelection()
-//  }
-//
-//
-//  buttonMoveToSourceAll.onAction = (e: ActionEvent) => {
-//    move(view.rightDataListView, view.leftDataListView, rightItems)
-//   //rightSelectionModel.clearSelection()
-//  }
-
+  buttonMoveToTargetAll.onAction = (e: ActionEvent) => moveAllToTarget()
+  buttonMoveToSourceAll.onAction = (e: ActionEvent) => moveAllToSource()
 
   def leftItems = view.leftDataListView.getItems
+
   def leftSelectionModel = view.leftDataListView.listView.selectionModel()
+
   def rightItems = view.rightDataListView.getItems
-  def rightSelectionModel =  view.rightDataListView.listView.selectionModel()
+
+  def rightSelectionModel = view.rightDataListView.listView.selectionModel()
 
   leftSelectionModel.setSelectionMode(MULTIPLE)
   rightSelectionModel.setSelectionMode(MULTIPLE)
 
   leftItems.onChange {
-    bindMoveAllButtonsToDataModel()
+    bindButtons()
   }
 
   rightItems.onChange {
-    bindMoveAllButtonsToDataModel()
+    bindButtons()
   }
 
   leftSelectionModel.getSelectedItems.onChange {
-    bindMoveButtonsToSelectionModel()
+    bindButtons()
   }
 
   rightSelectionModel.getSelectedItems.onChange {
-    bindMoveButtonsToSelectionModel()
+    bindButtons()
   }
 
-  def bindMoveAllButtonsToDataModel() {
-    buttonMoveToTargetAll.disableProperty.bind(Bindings.isEmpty(leftItems))
-    buttonMoveToSourceAll.disableProperty.bind(Bindings.isEmpty(rightItems))
-  }
+  def bindButtons() {
+    buttonMoveToTargetAll.disableProperty.bind(Bindings.isEmpty(leftSelectionModel.getSelectedItems))
+    buttonMoveToSourceAll.disableProperty.bind(Bindings.isEmpty(rightSelectionModel.getSelectedItems))
 
-  def bindMoveButtonsToSelectionModel() {
     buttonMoveToTarget.disableProperty.bind(Bindings.isEmpty(leftSelectionModel.getSelectedItems))
     buttonMoveToSource.disableProperty.bind(Bindings.isEmpty(rightSelectionModel.getSelectedItems))
   }
@@ -89,6 +80,7 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
   view.rightDataListView.listView.onMouseClicked = (e: MouseEvent) => if (e.clickCount == 2) moveToSource()
 
   val buttonBox = new VBox {
+    alignment = Pos.Center
     spacing = 5
     fillWidth = true
     children = List(buttonMoveToTarget, buttonMoveToTargetAll, buttonMoveToSource, buttonMoveToSourceAll)
@@ -96,8 +88,7 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
 
   getChildren.add(box)
 
-  bindMoveAllButtonsToDataModel()
-  bindMoveButtonsToSelectionModel()
+  bindButtons()
   updateView()
 
   def updateView(): Unit = {
@@ -107,27 +98,32 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
   }
 
   def moveToTarget() {
-    move(view.leftDataListView, view.rightDataListView)
+    move(view.leftDataListView, view.rightDataListView, ObservableBuffer(leftSelectionModel.getSelectedItem))
     leftSelectionModel.clearSelection()
   }
 
   private def moveToSource() {
-    move(view.rightDataListView, view.leftDataListView)
+    move(view.rightDataListView, view.leftDataListView, ObservableBuffer(rightSelectionModel.getSelectedItem))
     rightSelectionModel.clearSelection()
   }
 
-  private def move(source: DataListView[S], target: DataListView[S]) {
-    val selectedItems:ObservableBuffer[FXBean[S]] = source.listView.getSelectionModel.getSelectedItems
-    move(source, target, selectedItems)
+  def moveAllToTarget() {
+    move(view.leftDataListView, view.rightDataListView, leftSelectionModel.getSelectedItems)
+    leftSelectionModel.clearSelection()
   }
 
-  private def move(source:  DataListView[S], target:  DataListView[S], items: ObservableBuffer[FXBean[S]]) {
-    items.foreach(item => {
-      source.getItems.remove(item)
-      target.getItems.add(item)
-    })
-   source.setItems(source.getItems)
-   target.setItems(target.getItems)
+  private def moveAllToSource() {
+    move(view.rightDataListView, view.leftDataListView, rightSelectionModel.getSelectedItems)
+    rightSelectionModel.clearSelection()
+  }
+
+  private def move(source: DataListView[S], target: DataListView[S], items: ObservableBuffer[FXBean[S]]) {
+    val sourceItems = ObservableBuffer(source.getItems)
+    sourceItems.removeAll(items)
+    val targetItems = ObservableBuffer(target.getItems)
+    targetItems.addAll(items)
+    source.setItems(sourceItems)
+    target.setItems(targetItems)
   }
 
 }
