@@ -15,16 +15,10 @@ import scala.reflect.runtime.{universe => ru}
 import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
 import scalafx.collections.ObservableBuffer
-import com.sfxcode.sapphire.core.Includes._
 
 
 abstract class DataTableController extends ViewController with LazyLogging {
 
-  implicit def listToProperty(seq:Seq[R]):ObservableBuffer[FXBean[R]] = {
-     val result =ObservableBuffer[FXBean[R]]()
-    seq.foreach(v => result.+=(v))
-    result
-  }
 
   type R <: AnyRef
 
