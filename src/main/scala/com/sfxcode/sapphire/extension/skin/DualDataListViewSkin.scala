@@ -97,7 +97,7 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
     box.children.add(view.rightDataListView)
   }
 
-  def moveToTarget() {
+  private def moveToTarget() {
     move(view.leftDataListView, view.rightDataListView, ObservableBuffer(leftSelectionModel.getSelectedItem))
     leftSelectionModel.clearSelection()
   }
@@ -107,7 +107,7 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
     rightSelectionModel.clearSelection()
   }
 
-  def moveAllToTarget() {
+  private def moveAllToTarget() {
     move(view.leftDataListView, view.rightDataListView, leftSelectionModel.getSelectedItems)
     leftSelectionModel.clearSelection()
   }
@@ -117,7 +117,7 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
     rightSelectionModel.clearSelection()
   }
 
-  private def move(source: DataListView[S], target: DataListView[S], items: ObservableBuffer[FXBean[S]]) {
+  def move(source: DataListView[S], target: DataListView[S], items: ObservableBuffer[FXBean[S]]) {
     val sourceItems = ObservableBuffer(source.getItems)
     sourceItems.removeAll(items)
     val targetItems = ObservableBuffer(target.getItems)

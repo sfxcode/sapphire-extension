@@ -4,6 +4,7 @@ import com.sfxcode.sapphire.core.control.FXValueFactory
 import com.sfxcode.sapphire.core.value.FXBean
 
 import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
 import scala.reflect.runtime.{universe => ru}
 import scalafx.scene.control.TableColumn
 import scalafx.scene.text.TextAlignment
@@ -27,11 +28,13 @@ object TableColumnFactory {
   def columnListFromMembers[S <: AnyRef, T](members:List[ru.Symbol],columnHeaderMap:Map[String,String]
                                             ,columnPropertyMap:Map[String,String], editable:Boolean=false
                                            ,numberFormat:String ="#,##0", decimalFormat:String="#,##0.00"
-                                             ):Map[String, TableColumn[FXBean[S], T]] = {
-    val result = mutable.HashMap[String, TableColumn[FXBean[S], T]]()
+                                             ):(List[String],Map[String, TableColumn[FXBean[S], T]]) = {
+    val buffer = new ArrayBuffer[String]()
+    val map = mutable.HashMap[String, TableColumn[FXBean[S], T]]()
     val symbols = members.collect({ case x if x.isTerm => x.asTerm}).filter(t => t.isVal || t.isVar).map(_.asTerm)
     symbols.foreach(symbol => {
       val name = symbol.name.toString.trim
+      buffer.+=(name)
       val cellFactory = new FXTextFieldCellFactory[FXBean[S], T]()
       val signature = symbol.typeSignature.toString
       if (editable)
@@ -51,10 +54,10 @@ object TableColumnFactory {
           valueFactory.format = decimalFormat
       }
 
-      result.put(property, columnFromFactories[S,T](columnHeaderMap.getOrElse(name, propertyToHeader(name)), valueFactory, Some(cellFactory)))
+      map.put(property, columnFromFactories[S,T](columnHeaderMap.getOrElse(name, propertyToHeader(name)), valueFactory, Some(cellFactory)))
 
     })
-    result.toMap
+    (buffer.toList, map.toMap)
   }
 
   private def propertyToHeader(property: String): String = {

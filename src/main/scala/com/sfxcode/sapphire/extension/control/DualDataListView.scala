@@ -16,9 +16,10 @@ class DualDataListView [S<:AnyRef] extends Control {
     new DualDataListViewSkin[S](this)
   }
 
-  def setItems(values:Iterable[S]): Unit = {
-    leftDataListView.setItems(values)
-    rightDataListView.setItems(List[S]())
+
+  def setItems(left:Iterable[S], right:Iterable[S]=List[S]()): Unit = {
+    leftDataListView.setItems(left)
+    rightDataListView.setItems(right)
   }
 
   def addLeftFilter() = {
@@ -32,6 +33,11 @@ class DualDataListView [S<:AnyRef] extends Control {
   def addFilter() ={
     addLeftFilter()
     addRightFilter()
+  }
+
+  def setCellProperty(value:String): Unit =  {
+    leftDataListView.cellProperty.set(value)
+    rightDataListView.cellProperty.set(value)
   }
 
 

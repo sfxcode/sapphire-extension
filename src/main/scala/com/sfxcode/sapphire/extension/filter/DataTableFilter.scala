@@ -28,12 +28,6 @@ class DataTableFilter[ S <: AnyRef] (table: TableView[FXBean[S]],items: ObjectPr
   val members = mirror.classSymbol(ct.runtimeClass).asType.typeSignature.members.toList.reverse
   logger.debug(members.collect({ case x if x.isTerm => x.asTerm }).filter(t => t.isVal || t.isVar).map(m => m.name.toString).toString())
 
-//  originalData = table.items.value.toList
-//
-//  table.items.onChange {
-//    originalData = table.items.value.toList
-//  }
-
   filterResult.onChange {
     table.getItems.clear()
     table.getItems.addAll(filterResult)
@@ -57,11 +51,10 @@ class DataTableFilter[ S <: AnyRef] (table: TableView[FXBean[S]],items: ObjectPr
   }
 
   def addColumns[T](editable: Boolean = false, numberFormat: String = "#,##0", decimalFormat: String = "#,##0.00") {
-    val columnMap = TableColumnFactory.columnListFromMembers[S, T](members, columnHeaderMap.toMap,
+    val columnList = TableColumnFactory.columnListFromMembers[S, T](members, columnHeaderMap.toMap,
       columnPropertyMap.toMap, editable, numberFormat, decimalFormat)
 
-    columnMap.keys.foreach(key => addColumn(key, columnMap(key)))
-
+    columnList._1.foreach(key => addColumn(key, columnList._2(key)))
   }
 
   def addColumn[T](header: String, property: String, alignment: TextAlignment = TextAlignment.Left): TableColumn[FXBean[S], T] = {
