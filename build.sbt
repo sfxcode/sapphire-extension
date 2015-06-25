@@ -2,9 +2,9 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.4.1"
+version := "0.4.3-SNAPSHOT"
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.7"
 
 scalacOptions += "-deprecation"
 
@@ -16,7 +16,7 @@ javacOptions ++= Seq("-source", "1.8")
 
 javacOptions ++= Seq("-target", "1.8")
 
-scalacOptions += "-target:jvm-1.7"
+scalacOptions += "-target:jvm-1.8"
 
 
 // resolvers
@@ -30,11 +30,11 @@ resolvers ++= Seq(
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "3.6" % "test"
+libraryDependencies += "org.specs2" %% "specs2-core" % "3.6.1" % "test"
 
 libraryDependencies += "org.json4s" %% "json4s-native" % "3.2.11" % "test"
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.0.0"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.0.1"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.3.11"
 
