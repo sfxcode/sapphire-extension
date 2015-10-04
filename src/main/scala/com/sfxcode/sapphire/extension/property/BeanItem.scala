@@ -1,7 +1,8 @@
 package com.sfxcode.sapphire.extension.property
 
 import java.time.{ZoneId, LocalDateTime, Instant, LocalDate}
-import java.util.Date
+import java.util.{Optional, Date}
+import javafx.beans.value.ObservableValue
 
 import com.sfxcode.sapphire.core.value._
 import com.typesafe.config.ConfigFactory
@@ -64,6 +65,8 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name:String="", categ
     val instant = date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant
     Date.from(instant)
   }
+
+  override def getObservableValue: Optional[ObservableValue[_]] = Optional.of(bean.getProperty(key).delegate.asInstanceOf[ObservableValue[_]])
 }
 
 object BeanItem {

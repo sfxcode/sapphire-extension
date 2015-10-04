@@ -1,19 +1,12 @@
 package com.sfxcode.sapphire.extension.property
 
-import com.sfxcode.sapphire.extension.test.{Friend, Person, PersonDatabase}
-import com.sfxcode.sapphire.core.cdi.CDILauncher
 import com.sfxcode.sapphire.core.value.FXBean
+import com.sfxcode.sapphire.extension.test.{Friend, Person, PersonDatabase}
 import com.typesafe.scalalogging.LazyLogging
 import org.specs2.mutable.Specification
 
 
 class BeanItemSpec extends Specification with LazyLogging {
-
-  sequential
-
-  step {
-    CDILauncher.init()
-  }
 
   "BeanItem" should {
 
@@ -65,9 +58,6 @@ class BeanItemSpec extends Specification with LazyLogging {
       val items = beanItems.getItems
 
       items must have size 2
-
-
-
 
     }
 
