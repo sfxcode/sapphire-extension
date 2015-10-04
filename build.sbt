@@ -43,6 +43,7 @@ libraryDependencies += "org.controlsfx" % "controlsfx" % "8.40.10-SNAPSHOT" intr
 
 libraryDependencies += "de.jensd" % "fontawesomefx" % "8.6"
 
+licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
 bintrayReleaseOnPublish in ThisBuild := false
 
