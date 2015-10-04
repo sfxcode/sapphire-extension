@@ -9,6 +9,10 @@ Actual Version is 0.4.5.
 
 Scala Version is 2.11.7.
 
+## Download
+
+[ ![Download](https://api.bintray.com/packages/sfxcode/maven/sapphire-extension/images/download.svg) ](https://bintray.com/sfxcode/maven/sapphire-extension/_latestVersion)
+
 ## About
 
 This Framework is actually work in progress.
