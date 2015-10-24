@@ -4,7 +4,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.4.5"
+version := "0.4.6-SNAPSHOT"
 
 scalaVersion := "2.11.7"
 
@@ -33,20 +33,18 @@ libraryDependencies += "org.specs2" %% "specs2-core" % "3.6.4" % "test"
 
 libraryDependencies += "org.specs2" %% "specs2-html" % "3.6.4" % "test"
 
-libraryDependencies += "org.json4s" %% "json4s-native" % "3.2.11" % "test"
+libraryDependencies += "org.json4s" %% "json4s-native" % "3.3.0" % "test"
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.0.2"
+// Compile
+
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.0.5"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.0"
 
-libraryDependencies += "org.controlsfx" % "controlsfx" % "8.40.10-SNAPSHOT" intransitive()
+libraryDependencies += "org.controlsfx" % "controlsfx" % "8.40.10" intransitive()
 
 libraryDependencies += "de.jensd" % "fontawesomefx" % "8.6"
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
 bintrayReleaseOnPublish in ThisBuild := false
-
-
-
-
