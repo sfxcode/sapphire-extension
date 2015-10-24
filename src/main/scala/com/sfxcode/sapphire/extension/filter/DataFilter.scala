@@ -132,7 +132,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
     controlFilterMap.keySet.foreach {
       case textField: TextField => textField.setText("")
       case searchBox: ComboBox[String] =>
-        updateSearchBoxValues(searchBox, searchBox.getItems.get(0), controlFilterPropertyMap(searchBox))
+        updateSearchBoxValues(searchBox, searchBox.getItems.head, controlFilterPropertyMap(searchBox))
       case _ =>
     }
     filter()

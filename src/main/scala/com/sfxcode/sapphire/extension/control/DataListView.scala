@@ -1,7 +1,7 @@
 package com.sfxcode.sapphire.extension.control
 
-import javafx.scene.Node
 import javafx.scene.control.{Control, Skin}
+import javafx.scene.layout.Pane
 
 import com.sfxcode.sapphire.core.Includes._
 import com.sfxcode.sapphire.core.value.FXBean
@@ -14,12 +14,16 @@ import scalafx.scene.control.ListView
 
 class DataListView[S <: AnyRef] extends Control {
 
+  lazy val css = getClass.getResource("datalistview.css").toExternalForm
+
+  getStyleClass.add("data-list-view")
+
   val items = ObjectProperty[ObservableBuffer[FXBean[S]]](this, "listViewItems", ObservableBuffer[FXBean[S]]())
   val filter = ObjectProperty[DataFilter[S]](this, "listFilter")
 
 
-  val header = ObjectProperty[Node](this, "listViewFooter")
-  val footer = ObjectProperty[Node](this, "listViewFooter")
+  val header = ObjectProperty[Pane](this, "listViewheader")
+  val footer = ObjectProperty[Pane](this, "listViewFooter")
   val listView = new ListView[FXBean[S]]()
 
   val footerTextProperty = StringProperty("%d elements")
@@ -33,6 +37,8 @@ class DataListView[S <: AnyRef] extends Control {
   protected override def createDefaultSkin: Skin[DataListView[S]] = {
     new DataListViewSkin[S](this)
   }
+
+  override def getUserAgentStylesheet: String = css
 
   def setItems(values: Iterable[S]): Unit = {
     setItemValues(values)

@@ -9,20 +9,26 @@ import com.sfxcode.sapphire.extension.control.DataListView
 
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.control._
-import scalafx.scene.layout.VBox
+import scalafx.scene.layout.{HBox, VBox}
 
 class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[DataListView[S]](view) {
 
 
-  val box = new VBox() {
+  val contentBox = new VBox() {
     spacing = 5
+    styleClass.+=("content-box")
   }
 
   val label = new Label {
     text = "Test"
+    styleClass.+=("footer-label")
   }
 
-  view.footer.set(label)
+  val footerBox = new HBox {
+    label
+    styleClass.+=("footer-box")
+  }
+  view.footer.set(footerBox)
 
   updateListViewItems()
 
@@ -40,19 +46,19 @@ class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[Data
   view.footer.onChange(updateView())
   view.showFooter.onChange(updateView())
 
-  getChildren.add(box)
+  getChildren.add(contentBox)
 
   updateListViewItems()
 
   updateView()
 
   def updateView(): Unit = {
-    box.children.clear()
+    contentBox.children.clear()
     if (view.header)
-      box.children.add(view.header)
-    box.children.add(view.listView)
+      contentBox.children.add(view.header)
+    contentBox.children.add(view.listView)
     if (view.showFooter.get && view.footer)
-      box.children.add(view.footer)
+      contentBox.children.add(view.footer)
   }
 
   def updateListViewItems(): Unit = {

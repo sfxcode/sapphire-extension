@@ -1,16 +1,13 @@
 package com.sfxcode.sapphire.extension.filter
 
-import javafx.scene.layout.Pane
-
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.control.DataListView
 
 import scalafx.Includes._
-import scalafx.beans.property.ObjectProperty
 import scalafx.scene.layout.HBox
 
 class DataListFilter[S <: AnyRef](dataList: DataListView[S], searchFieldPropertyKey: String = "")
-  extends DataFilter[S](dataList.items, dataList.header.asInstanceOf[ObjectProperty[Pane]]) {
+  extends DataFilter[S](dataList.items, dataList.header) {
   var sortFiltered = true
   val box = new HBox(5)
   dataList.header.value = box

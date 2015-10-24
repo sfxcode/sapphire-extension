@@ -3,13 +3,15 @@ package com.sfxcode.sapphire.extension.control.table
 import javafx.util.{StringConverter, Callback}
 import javafx.scene.control.{TableCell, TableColumn}
 import javafx.scene.control.cell.{TextFieldTableCell, CheckBoxTableCell}
+import com.sfxcode.sapphire.core.cdi.BeanResolver
+import com.sfxcode.sapphire.core.cdi.provider.ConverterProvider
+
 import beans.BeanProperty
-import com.sfxcode.sapphire.core.value.ConverterFactory
 
 import scalafx.geometry.Pos
 import scalafx.scene.text.TextAlignment
 
-abstract class FXCellFactory[S, T] extends Callback[TableColumn[S, T], TableCell[S, T]] {
+abstract class FXCellFactory[S, T] extends Callback[TableColumn[S, T], TableCell[S, T]] with BeanResolver {
 
   @BeanProperty
   var alignment = TextAlignment.Left
@@ -34,7 +36,8 @@ abstract class FXCellFactory[S, T] extends Callback[TableColumn[S, T], TableCell
     }
 
     def getConverterForName(name:String):StringConverter[T] = {
-      ConverterFactory.getConverterByName(name)
+      val converterProvider = getBean[ConverterProvider]()
+      converterProvider.getConverterByName(name)
     }
 
     cell
