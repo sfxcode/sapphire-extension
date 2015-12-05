@@ -4,7 +4,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.4.6-SNAPSHOT"
+version := "0.4.7-SNAPSHOT"
 
 scalaVersion := "2.11.7"
 
@@ -29,21 +29,21 @@ resolvers ++= Seq(
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "3.6.4" % "test"
+libraryDependencies += "org.specs2" %% "specs2-core" % "3.6.6" % "test"
 
-libraryDependencies += "org.specs2" %% "specs2-html" % "3.6.4" % "test"
+libraryDependencies += "org.specs2" %% "specs2-html" % "3.6.6" % "test"
 
 libraryDependencies += "org.json4s" %% "json4s-native" % "3.3.0" % "test"
 
 // Compile
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.0.5"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.0.8-SNAPSHOT"
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.0"
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.1"
 
 libraryDependencies += "org.controlsfx" % "controlsfx" % "8.40.10" intransitive()
 
-libraryDependencies += "de.jensd" % "fontawesomefx" % "8.6"
+libraryDependencies += "de.jensd" % "fontawesomefx" % "8.7"
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 

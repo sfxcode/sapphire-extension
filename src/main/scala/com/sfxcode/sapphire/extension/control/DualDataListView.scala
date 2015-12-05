@@ -7,6 +7,10 @@ import com.sfxcode.sapphire.extension.skin.DualDataListViewSkin
 
 class DualDataListView [S<:AnyRef] extends Control {
 
+  lazy val css = getClass.getResource("dualdatalistview.css").toExternalForm
+
+  getStyleClass.add("dual-data-list-view")
+
   val leftDataListView = new DataListView[S]()
 
   val rightDataListView = new DataListView[S]()
@@ -16,6 +20,7 @@ class DualDataListView [S<:AnyRef] extends Control {
     new DualDataListViewSkin[S](this)
   }
 
+  override def getUserAgentStylesheet: String = css
 
   def setItems(left:Iterable[S], right:Iterable[S]=List[S]()): Unit = {
     leftDataListView.setItems(left)

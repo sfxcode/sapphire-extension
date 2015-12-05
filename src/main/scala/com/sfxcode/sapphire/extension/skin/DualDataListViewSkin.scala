@@ -16,7 +16,7 @@ import scalafx.geometry.Pos
 import scalafx.scene.control.Button
 import scalafx.scene.input.MouseEvent
 import scalafx.scene.layout.Priority._
-import scalafx.scene.layout.{HBox, VBox}
+import scalafx.scene.layout._
 
 
 class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinBase[DualDataListView[S]](view) {
@@ -25,9 +25,8 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
     buffer.map(item => item.bean).toSeq
   }
 
-  val box = new HBox() {
-    spacing = 5
-    hgrow = Always
+  val contentGridPane = new GridPane() {
+    styleClass += "content-grid"
   }
 
   val buttonMoveToTarget: Button = GlyphsDude.createIconButton(FontAwesomeIcon.ANGLE_RIGHT)
@@ -80,21 +79,51 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
   view.rightDataListView.listView.onMouseClicked = (e: MouseEvent) => if (e.clickCount == 2) moveToSource()
 
   val buttonBox = new VBox {
+    styleClass += "button-box"
     alignment = Pos.Center
     spacing = 5
     fillWidth = true
     children = List(buttonMoveToTarget, buttonMoveToTargetAll, buttonMoveToSource, buttonMoveToSourceAll)
   }
 
-  getChildren.add(box)
+  getChildren.add(contentGridPane)
 
   bindButtons()
   updateView()
 
   def updateView(): Unit = {
-    box.children.add(view.leftDataListView)
-    box.children.add(buttonBox)
-    box.children.add(view.rightDataListView)
+    addGridPaneConstraints()
+    contentGridPane.add(view.leftDataListView, 0, 0)
+    contentGridPane.add(buttonBox, 1, 0)
+    contentGridPane.add(view.rightDataListView, 2, 0)
+  }
+
+  def addGridPaneConstraints(): Unit =  {
+    val row = new RowConstraints()
+    row.setFillHeight(true)
+    row.setVgrow(Priority.Never)
+    contentGridPane.getRowConstraints.add(row)
+
+    val col1 = new ColumnConstraints
+
+    col1.setFillWidth(true)
+    col1.setHgrow(Priority.Always)
+    col1.setMaxWidth(Double.MaxValue)
+    col1.setPrefWidth(200)
+
+    val col2 = new ColumnConstraints
+    col2.setFillWidth(true)
+    col2.setHgrow(Priority.Never)
+    col2.setMaxWidth(50)
+    col2.setMinWidth(50)
+
+    val col3 = new ColumnConstraints
+    col3.setFillWidth(true)
+    col3.setHgrow(Priority.Always)
+    col3.setMaxWidth(Double.MaxValue)
+    col3.setPrefWidth(200)
+
+    contentGridPane.getColumnConstraints.addAll(col1, col2, col3)
   }
 
   private def moveToTarget() {
