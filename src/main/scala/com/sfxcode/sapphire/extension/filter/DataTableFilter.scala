@@ -1,5 +1,7 @@
 package com.sfxcode.sapphire.extension.filter
 
+import javafx.scene.layout.Pane
+
 import com.sfxcode.sapphire.core.control.FXValueFactory
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.control.table.{FXTextFieldCellFactory, TableColumnFactory}
@@ -12,12 +14,11 @@ import scalafx.beans.property.ObjectProperty
 import scalafx.collections.ObservableBuffer
 import scalafx.scene.control.{TableView, _}
 import scalafx.scene.text.TextAlignment
-import javafx.scene.layout.Pane
 
 class DataTableFilter[ S <: AnyRef] (table: TableView[FXBean[S]],items: ObjectProperty[ObservableBuffer[FXBean[S]]], pane:ObjectProperty[Pane])
                                        (implicit ct: ClassTag[S]) extends DataFilter[S](items, pane) {
 
-    // columns
+  // columns
   val columnMapping = new mutable.HashMap[String, TableColumn[FXBean[S], _]]()
 
   val columnPropertyMap = new mutable.HashMap[String, String]()
@@ -35,6 +36,13 @@ class DataTableFilter[ S <: AnyRef] (table: TableView[FXBean[S]],items: ObjectPr
   }
 
   filter()
+
+  override def itemsChanged(oldItems:ObservableBuffer[FXBean[S]], newItems:ObservableBuffer[FXBean[S]]): Unit = {
+    items.value.onChange(filter())
+    reset()
+    table.autosize()
+  }
+
 
   def reload(shouldReset: Boolean = false): Unit = {
     table.setItems(null)

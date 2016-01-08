@@ -27,19 +27,6 @@ class DualDataListView [S<:AnyRef] extends Control {
     rightDataListView.setItems(right)
   }
 
-  def addLeftFilter() = {
-    leftDataListView.addFilter()
-  }
-
-  def addRightFilter() = {
-    rightDataListView.addFilter()
-  }
-
-  def addFilter() ={
-    addLeftFilter()
-    addRightFilter()
-  }
-
   def setCellProperty(value:String): Unit =  {
     leftDataListView.cellProperty.set(value)
     rightDataListView.cellProperty.set(value)

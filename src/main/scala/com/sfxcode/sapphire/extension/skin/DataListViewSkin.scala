@@ -1,13 +1,11 @@
 package com.sfxcode.sapphire.extension.skin
 
-import javafx.beans.binding.Bindings
 import javafx.scene.control.SkinBase
 
 import com.sfxcode.sapphire.core.control.FXListCellFactory
 import com.sfxcode.sapphire.extension.Includes._
 import com.sfxcode.sapphire.extension.control.DataListView
 
-import scalafx.collections.ObservableBuffer
 import scalafx.scene.control._
 import scalafx.scene.layout.{HBox, VBox}
 
@@ -20,50 +18,44 @@ class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[Data
   }
 
   val label = new Label {
-    text = "Test"
+    text = "Footer Label"
     styleClass.+=("footer-label")
   }
+  view.footerLabel.set(label)
+
+  val headerBox = new HBox {
+    styleClass.+=("header-box")
+  }
+  view.header.set(headerBox)
 
   val footerBox = new HBox {
-    label
     styleClass.+=("footer-box")
   }
+  footerBox.children.add(label)
   view.footer.set(footerBox)
-
-  updateListViewItems()
-
-  view.items.onChange {
-    view.items.value.onChange {
-      updateListViewItems()
-    }
-    updateListViewItems()
-  }
 
   updateCellFactory()
   view.cellProperty.onChange(updateCellFactory())
 
   view.header.onChange(updateView())
+  view.showHeader.onChange(updateView())
+
   view.footer.onChange(updateView())
   view.showFooter.onChange(updateView())
 
   getChildren.add(contentBox)
 
-  updateListViewItems()
-
   updateView()
 
   def updateView(): Unit = {
     contentBox.children.clear()
-    if (view.header)
+    if (view.showHeader.get && view.header)
       contentBox.children.add(view.header)
+
     contentBox.children.add(view.listView)
+
     if (view.showFooter.get && view.footer)
       contentBox.children.add(view.footer)
-  }
-
-  def updateListViewItems(): Unit = {
-    view.listView.items = ObservableBuffer(view.items.value)
-    label.text <== Bindings.format(view.footerTextProperty.get, Bindings.size(view.listView.items.get))
   }
 
   def updateCellFactory(): Unit = {

@@ -4,7 +4,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.4.7-SNAPSHOT"
+version := "0.4.8"
 
 scalaVersion := "2.11.7"
 
@@ -37,7 +37,7 @@ libraryDependencies += "org.json4s" %% "json4s-native" % "3.3.0" % "test"
 
 // Compile
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.0.8-SNAPSHOT"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.1.0"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.1"
 

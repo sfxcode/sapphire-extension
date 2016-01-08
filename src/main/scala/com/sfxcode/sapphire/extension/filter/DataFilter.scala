@@ -20,33 +20,46 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
   val conf = ConfigFactory.load()
   implicit def objectPropertyToValue[T <: Any](property: ObjectProperty[T]):T = property.get
 
-  private val controlList = ObservableBuffer[Node]()
-  private val controlFilterMap = new mutable.HashMap[Control, Any]()
-  private val controlFilterPropertyMap = new mutable.HashMap[Control, String]()
-  private val valueMap = new mutable.HashMap[String, Any]()
+  protected val controlList = ObservableBuffer[Node]()
+  protected val controlFilterMap = new mutable.HashMap[Control, Any]()
+  protected val controlFilterPropertyMap = new mutable.HashMap[Control, String]()
+  protected val valueMap = new mutable.HashMap[String, Any]()
 
-  private val filterControlNameMapping = new mutable.HashMap[Control, String]()
-  private val filterNameControlMapping = new mutable.HashMap[String, Control]()
+  protected val filterControlNameMapping = new mutable.HashMap[Control, String]()
+  protected val filterNameControlMapping = new mutable.HashMap[String, Control]()
 
+  val filterResult = ObservableBuffer[FXBean[S]]()
 
-  var filterResult = ObservableBuffer[FXBean[S]]()
+  itemValues.onChange(
+    filter()
+  )
 
   items.onChange({
-    items.value.onChange(filter())
+    itemValues.onChange(filter())
     filter()
   })
 
-  pane.onChange((_, oldValue, newValue) => itemUpdated(oldValue, newValue))
+  items.onChange((_, oldValue, newValue) => itemsChanged(oldValue, newValue))
 
-  def itemUpdated(oldPane:Pane, newPane:Pane): Unit = {
+  def itemsChanged(oldItems:ObservableBuffer[FXBean[S]], newItems:ObservableBuffer[FXBean[S]]): Unit = {
+    items.value.onChange(filter())
+    filter()
+  }
+
+  pane.onChange((_, oldValue, newValue) => paneChanged(oldValue, newValue))
+
+  def paneChanged(oldPane:Pane, newPane:Pane): Unit = {
     if (oldPane != null)
       oldPane.children.clear()
     newPane.children.addAll(controlList)
   }
-  
+
+
   def filterControlPane:Pane = pane.value
 
-  //def itemValues:ObservableBuffer[FXBean[S]] = items.value
+  def itemsProperty = items
+
+  def itemValues:ObservableBuffer[FXBean[S]] = items.value
 
   def addSearchField(propertyKey: String): TextField = addSearchField(propertyKey, propertyKey)
 
