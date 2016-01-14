@@ -71,6 +71,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
   def addCustomSearchField(name: String, p: FXBean[S] => Boolean, searchField: TextField = new TextField()): TextField = {
     if (filterControlPane != null)
       filterControlPane.getChildren.add(searchField)
+    searchField.setId(name)
     searchField.textProperty().onChange((_, oldValue, newValue) => filter())
     controlList.add(searchField)
     controlFilterMap.put(searchField, p)
@@ -80,7 +81,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
   def addSearchBox(name: String, propertyKey: String, noSelection: String = conf.getString("sapphire.extension.searchBox.noSelection"), searchBox: ComboBox[String] = new ComboBox[String]()): ComboBox[String] = {
     if (filterControlPane != null)
       filterControlPane.getChildren.add(searchBox)
-
+    searchBox.setId(name)
     updateSearchBoxValues(searchBox, noSelection, propertyKey)
     controlList.add(searchBox)
     controlFilterPropertyMap.put(searchBox, propertyKey)
@@ -104,6 +105,27 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
 
   def getSearchBox(name: String): ComboBox[String] = {
     filterNameControlMapping(name).asInstanceOf[ComboBox[String]]
+  }
+
+  def removeFilterControl(control:Control): Unit =  {
+    filterControlNameMapping.get(control).foreach(s=>removeFilterControl(s))
+  }
+
+  def removeFilterControl(identifier:String): Unit =  {
+    val control = filterNameControlMapping.get(identifier)
+
+    control.foreach(c=> {
+      filterNameControlMapping.remove(identifier)
+      filterControlNameMapping.remove(c)
+      controlFilterMap.remove(c)
+      controlFilterPropertyMap.remove(c)
+      controlList.remove(c)
+      pane.getChildren.remove(c)
+    })
+  }
+
+  def removeAllControls(): Unit = {
+    filterNameControlMapping.keys.foreach(key => removeFilterControl(key))
   }
 
   private def updateMapping(name: String, control: Control): Control = {
