@@ -8,6 +8,7 @@ import org.specs2.mutable.Specification
 
 class BeanItemSpec extends Specification with LazyLogging {
 
+
   "BeanItem" should {
 
     "be created with key property" in {
@@ -45,10 +46,8 @@ class BeanItemSpec extends Specification with LazyLogging {
       idItem.getValue.asInstanceOf[Long] must be equalTo 2
 
     }
-  }
 
-  "BeanItem" should {
-    "be created from bean" in {
+    "also be created from bean" in {
       val friend: FXBean[Friend] = PersonDatabase.testFriend(2)
       val beanItems = BeanItems(friend)
 
