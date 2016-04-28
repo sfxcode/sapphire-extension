@@ -10,6 +10,8 @@ scalaVersion := "2.11.8"
 
 scalacOptions += "-deprecation"
 
+javacOptions += "-Dorg.apache.deltaspike.ProjectStage=Test"
+
 parallelExecution in Test := false
 
 (testOptions in Test) += Tests.Argument(TestFrameworks.Specs2, "html")
@@ -44,6 +46,13 @@ libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.4"
 libraryDependencies += "org.controlsfx" % "controlsfx" % "8.40.10" intransitive()
 
 libraryDependencies += "de.jensd" % "fontawesomefx" % "8.9"
+
+val DeltaspikeVersion = "1.6.1"
+
+dependencyOverrides += "org.apache.deltaspike.cdictrl" % "deltaspike-cdictrl-api" % DeltaspikeVersion intransitive()
+
+dependencyOverrides += "org.apache.deltaspike.cdictrl" % "deltaspike-cdictrl-owb" % DeltaspikeVersion intransitive()
+
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 

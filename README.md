@@ -13,10 +13,6 @@ Scala Version is 2.11.8.
 
 [ ![Download](https://api.bintray.com/packages/sfxcode/maven/sapphire-extension/images/download.svg) ](https://bintray.com/sfxcode/maven/sapphire-extension/_latestVersion)
 
-## Travis
-
-[![Build Status](https://travis-ci.org/sfxcode/sapphire-extension.svg?branch=master)](https://travis-ci.org/sfxcode/sapphire-extension)
-
 
 ## About
 
