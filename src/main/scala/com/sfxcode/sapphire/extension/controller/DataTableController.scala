@@ -64,7 +64,7 @@ abstract class DataTableController extends ViewController with LazyLogging {
 
   }
 
-  def selectedItemsDidChange(source:ObservableBuffer[FXBean[R]], changes:Seq[ObservableBuffer.Change]): Unit = {
+  def selectedItemsDidChange(source:ObservableBuffer[FXBean[R]], changes:Seq[ObservableBuffer.Change[FXBean[R]]]): Unit = {
     logger.debug("new values count: %s".format(source.size))
   }
 
