@@ -25,6 +25,7 @@ scalacOptions += "-target:jvm-1.8"
 resolvers += "sonatype-snapshots" at "http://oss.sonatype.org/content/repositories/snapshots"
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
+resolvers += "bintray" at "https://jcenter.bintray.com"
 
 // Test
 
