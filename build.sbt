@@ -10,7 +10,7 @@ scalaVersion := "2.11.8"
 
 scalacOptions += "-deprecation"
 
-parallelExecution in Test := true
+parallelExecution in Test := false
 
 (testOptions in Test) += Tests.Argument(TestFrameworks.Specs2, "html")
 

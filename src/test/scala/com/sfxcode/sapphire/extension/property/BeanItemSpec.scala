@@ -7,7 +7,6 @@ import org.specs2.mutable.Specification
 
 
 class BeanItemSpec extends Specification with LazyLogging {
-  sequential
 
   "BeanItem" should {
 
