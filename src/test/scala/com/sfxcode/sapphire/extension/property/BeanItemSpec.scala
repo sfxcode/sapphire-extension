@@ -1,13 +1,16 @@
 package com.sfxcode.sapphire.extension.property
 
+import javafx.embed.swing.JFXPanel
+
+import com.sfxcode.sapphire.core.cdi.CDILauncher
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.test.{Friend, Person, PersonDatabase}
 import com.typesafe.scalalogging.LazyLogging
-import org.specs2.mutable.Specification
+import org.specs2.mutable.{Before, Specification}
 
 
-class BeanItemSpec extends Specification with LazyLogging {
-
+class BeanItemSpec extends Specification with LazyLogging with Before {
+  sequential
 
   "BeanItem" should {
 
@@ -48,6 +51,7 @@ class BeanItemSpec extends Specification with LazyLogging {
     }
 
     "also be created from bean" in {
+
       val friend: FXBean[Friend] = PersonDatabase.testFriend(2)
       val beanItems = BeanItems(friend)
 
@@ -62,5 +66,9 @@ class BeanItemSpec extends Specification with LazyLogging {
 
   }
 
+  override def before: Any = {
+    new JFXPanel(); // trick: create empty panel to initialize toolkit
+    CDILauncher.init()
+  }
 
 }
