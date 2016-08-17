@@ -26,7 +26,8 @@ Apache 2 License.
 
 ###sapphire-core
 
-Version is 1.1.2
+
+[ ![Download](https://api.bintray.com/packages/sfxcode/maven/sapphire-core/images/download.svg) ](https://bintray.com/sfxcode/maven/sapphire-core/_latestVersion)
 
 
 ###ControlsFX Dependency
