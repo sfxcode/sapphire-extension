@@ -1,10 +1,9 @@
-import _root_.bintray.BintrayPlugin.autoImport._
 
 name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.5.5"
+version := "0.5.6"
 
 scalaVersion := "2.11.8"
 
@@ -29,17 +28,17 @@ resolvers += "bintray" at "https://jcenter.bintray.com"
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "3.8.4" % "test"
+libraryDependencies += "org.specs2" %% "specs2-core" % "3.8.5" % "test"
 
 libraryDependencies += "org.json4s" %% "json4s-native" % "3.4.0" % "test"
 
 // Compile
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.1.5"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.1.6"
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.8"
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.10"
 
-libraryDependencies += "org.controlsfx" % "controlsfx" % "8.40.11" intransitive()
+libraryDependencies += "org.controlsfx" % "controlsfx" % "8.40.12" intransitive()
 
 libraryDependencies += "de.jensd" % "fontawesomefx" % "8.9"
 
