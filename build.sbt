@@ -9,6 +9,7 @@ crossScalaVersions := Seq( "2.11.8", "2.12.0-RC1")
 
 scalaVersion <<= crossScalaVersions { versions => versions.head }
 
+
 scalacOptions += "-deprecation"
 
 javacOptions += "-Dorg.apache.deltaspike.ProjectStage=Test"
