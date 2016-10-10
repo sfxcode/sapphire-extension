@@ -5,7 +5,7 @@ addSbtPlugin("com.orrsella" % "sbt-stats" % "1.0.5")
 
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.5.0")
 
-addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.3.5")
+addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.4.0")
 
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.2.0")
 
