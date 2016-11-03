@@ -3,9 +3,9 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.5.7"
+version := "0.5.8"
 
-crossScalaVersions := Seq( "2.11.8", "2.12.0-RC1")
+crossScalaVersions := Seq("2.12.0",  "2.11.8")
 
 scalaVersion <<= crossScalaVersions { versions => versions.head }
 
@@ -31,15 +31,15 @@ resolvers += "bintray" at "https://jcenter.bintray.com"
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "3.8.5" % "test"
+libraryDependencies += "org.specs2" %% "specs2-core" % "3.8.6" % "test"
 
-libraryDependencies += "org.json4s" %% "json4s-native" % "3.4.1" % "test"
+libraryDependencies += "org.json4s" %% "json4s-native" % "3.4.2" % "test"
 
 // Compile
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.1.7"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.1.8"
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.11"
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.12"
 
 libraryDependencies += "org.controlsfx" % "controlsfx" % "8.40.12" intransitive()
 

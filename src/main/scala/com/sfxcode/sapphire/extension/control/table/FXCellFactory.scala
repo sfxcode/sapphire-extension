@@ -14,16 +14,16 @@ import scalafx.scene.text.TextAlignment
 abstract class FXCellFactory[S, T] extends Callback[TableColumn[S, T], TableCell[S, T]] with BeanResolver {
 
   @BeanProperty
-  var alignment = TextAlignment.Left
+  var alignment:Any = "left"
 
   @BeanProperty
   var converter: String = _
 
   def updateCell(column: TableColumn[S, T], cell: TableCell[S, T]): TableCell[S, T] = {
-    if (alignment == TextAlignment.Center) {
+    if (alignment == TextAlignment.Center || alignment.toString.equalsIgnoreCase("center")) {
       cell.setAlignment(Pos.Center)
     }
-    else if (alignment == TextAlignment.Right) {
+    else if (alignment == TextAlignment.Right  || alignment.toString.equalsIgnoreCase("right")) {
       cell.setAlignment(Pos.CenterRight)
     }
     else
