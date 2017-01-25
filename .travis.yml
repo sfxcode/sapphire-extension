@@ -20,3 +20,5 @@ addons:
   apt:
     packages:
       - oracle-java8-installer
+script:
+  - sbt ++$TRAVIS_SCALA_VERSION -jvm-opts travis/jvmopts test
