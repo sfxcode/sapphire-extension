@@ -7,7 +7,7 @@ version := "0.5.10"
 
 crossScalaVersions := Seq("2.12.1",  "2.11.8")
 
-scalaVersion <<= crossScalaVersions { versions => versions.head }
+scalaVersion := "2.12.1"
 
 
 scalacOptions += "-deprecation"
@@ -39,7 +39,7 @@ libraryDependencies += "org.json4s" %% "json4s-native" % "3.5.0" % "test"
 
 libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.1.10"
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.14"
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.16"
 
 libraryDependencies += "org.controlsfx" % "controlsfx" % "8.40.12" intransitive()
 
