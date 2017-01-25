@@ -37,7 +37,7 @@ libraryDependencies += "org.json4s" %% "json4s-native" % "3.5.0" % "test"
 
 // Compile
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.1.11-SNAPSHOT"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.1.10"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.16"
 
