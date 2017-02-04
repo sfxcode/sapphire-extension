@@ -3,7 +3,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.5.10"
+version := "0.5.11"
 
 crossScalaVersions := Seq("2.12.1",  "2.11.8")
 
@@ -27,17 +27,20 @@ scalacOptions += "-target:jvm-1.8"
 resolvers += "sonatype-snapshots" at "http://oss.sonatype.org/content/repositories/snapshots"
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
+
+resolvers += "sfxcode-bintray" at "https://dl.bintray.com/sfxcode/maven"
+
 resolvers += "bintray" at "https://jcenter.bintray.com"
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "3.8.6" % "test"
+libraryDependencies += "org.specs2" %% "specs2-core" % "3.8.7" % "test"
 
 libraryDependencies += "org.json4s" %% "json4s-native" % "3.5.0" % "test"
 
 // Compile
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.1.10"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.1.11"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.16"
 
