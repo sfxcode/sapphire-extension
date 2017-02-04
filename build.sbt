@@ -3,7 +3,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.5.11"
+version := "0.5.12"
 
 crossScalaVersions := Seq("2.12.1",  "2.11.8")
 
@@ -40,7 +40,7 @@ libraryDependencies += "org.json4s" %% "json4s-native" % "3.5.0" % "test"
 
 // Compile
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.1.11"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.1.12"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.4.16"
 
