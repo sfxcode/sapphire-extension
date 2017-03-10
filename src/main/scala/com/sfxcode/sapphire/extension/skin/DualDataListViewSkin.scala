@@ -6,8 +6,8 @@ import javafx.scene.control.SkinBase
 
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.control.{DataListView, DualDataListView}
-import de.jensd.fx.glyphs.GlyphsDude
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
+import de.jensd.fx.glyphs.fontawesome.utils.FontAwesomeIconFactory
 
 import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
@@ -29,11 +29,11 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
     styleClass += "content-grid"
   }
 
-  val buttonMoveToTarget: Button = GlyphsDude.createIconButton(FontAwesomeIcon.ANGLE_RIGHT)
-  val buttonMoveToTargetAll: Button = GlyphsDude.createIconButton(FontAwesomeIcon.ANGLE_DOUBLE_RIGHT)
+  val buttonMoveToTarget: Button = FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_RIGHT)
+  val buttonMoveToTargetAll: Button =  FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_DOUBLE_RIGHT)
 
-  val buttonMoveToSource: Button = GlyphsDude.createIconButton(FontAwesomeIcon.ANGLE_LEFT)
-  val buttonMoveToSourceAll: Button = GlyphsDude.createIconButton(FontAwesomeIcon.ANGLE_DOUBLE_LEFT)
+  val buttonMoveToSource: Button =  FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_LEFT)
+  val buttonMoveToSourceAll: Button =  FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_DOUBLE_LEFT)
 
   buttonMoveToTarget.onAction = (e: ActionEvent) => moveToTarget()
   buttonMoveToSource.onAction = (e: ActionEvent) => moveToSource()
