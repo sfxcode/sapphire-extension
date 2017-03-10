@@ -5,7 +5,7 @@ The sapphire extension framework adds additional features to sapphire-core.
 
 ## Version
 
-Scala Version is 2.11.8.
+Scala Version is 2.12.1 / 2.11.8.
 
 ## Download
 
@@ -33,11 +33,5 @@ Apache 2 License.
 ###ControlsFX Dependency
 
 [http://fxexperience.com/controlsfx/](http://fxexperience.com/controlsfx/)
-
-###Optional fxml support by scalafxml.
-
-[https://github.com/vigoo/scalafxml/] (https://github.com/vigoo/scalafxml)
-
-(Optional - you have to import macro paradise to compile @sfxml files)
 
 
