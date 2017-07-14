@@ -5,7 +5,7 @@ The sapphire extension framework adds additional features to sapphire-core.
 
 ## Version
 
-Scala Version is 2.12.1 / 2.11.8.
+Scala Version is 2.12.2 / 2.11.11.
 
 ## Download
 
