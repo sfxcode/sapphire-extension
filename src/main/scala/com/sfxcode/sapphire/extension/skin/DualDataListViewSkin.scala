@@ -5,7 +5,7 @@ import javafx.scene.control.SelectionMode._
 import javafx.scene.control.SkinBase
 
 import com.sfxcode.sapphire.core.value.FXBean
-import com.sfxcode.sapphire.extension.control.{DataListView, DualDataListView}
+import com.sfxcode.sapphire.extension.control.{ DataListView, DualDataListView }
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
 import de.jensd.fx.glyphs.fontawesome.utils.FontAwesomeIconFactory
 
@@ -18,7 +18,6 @@ import scalafx.scene.input.MouseEvent
 import scalafx.scene.layout.Priority._
 import scalafx.scene.layout._
 
-
 class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinBase[DualDataListView[S]](view) {
 
   implicit def observableBufferToList[T <: AnyRef](buffer: ObservableBuffer[FXBean[T]]): Seq[T] = {
@@ -30,10 +29,10 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
   }
 
   val buttonMoveToTarget: Button = FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_RIGHT)
-  val buttonMoveToTargetAll: Button =  FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_DOUBLE_RIGHT)
+  val buttonMoveToTargetAll: Button = FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_DOUBLE_RIGHT)
 
-  val buttonMoveToSource: Button =  FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_LEFT)
-  val buttonMoveToSourceAll: Button =  FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_DOUBLE_LEFT)
+  val buttonMoveToSource: Button = FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_LEFT)
+  val buttonMoveToSourceAll: Button = FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_DOUBLE_LEFT)
 
   buttonMoveToTarget.onAction = (e: ActionEvent) => moveToTarget()
   buttonMoveToSource.onAction = (e: ActionEvent) => moveToSource()
@@ -98,7 +97,7 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
     contentGridPane.add(view.rightDataListView, 2, 0)
   }
 
-  def addGridPaneConstraints(): Unit =  {
+  def addGridPaneConstraints(): Unit = {
     val row = new RowConstraints()
     row.setFillHeight(true)
     row.setVgrow(Priority.Never)

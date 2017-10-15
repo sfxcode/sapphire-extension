@@ -1,6 +1,5 @@
 package com.sfxcode.sapphire.extension.controller
 
-
 import javafx.fxml.FXML
 import javafx.scene.control.TableView
 import javafx.scene.layout.HBox
@@ -11,14 +10,12 @@ import com.sfxcode.sapphire.extension.filter.DataTableFilter
 import com.typesafe.scalalogging.LazyLogging
 
 import scala.reflect.ClassTag
-import scala.reflect.runtime.{universe => ru}
+import scala.reflect.runtime.{ universe => ru }
 import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
 import scalafx.collections.ObservableBuffer
 
-
 abstract class DataTableController extends ViewController with LazyLogging {
-
 
   type R <: AnyRef
 
@@ -43,7 +40,7 @@ abstract class DataTableController extends ViewController with LazyLogging {
     super.didGainVisibilityFirstTime()
     table.setItems(items)
 
-    tableFilter = new  DataTableFilter[R](table, ObjectProperty[ObservableBuffer[FXBean[R]]](this,"",items),ObjectProperty(this,"",searchBox))(ct)
+    tableFilter = new DataTableFilter[R](table, ObjectProperty[ObservableBuffer[FXBean[R]]](this, "", items), ObjectProperty(this, "", searchBox))(ct)
 
     if (shouldAddColunns)
       tableFilter.addColumns()
@@ -58,13 +55,11 @@ abstract class DataTableController extends ViewController with LazyLogging {
 
   def shouldAddColunns = true
 
-
-
   def initTable(tableFilter: DataTableFilter[R]): Unit = {
 
   }
 
-  def selectedItemsDidChange(source:ObservableBuffer[FXBean[R]], changes:Seq[ObservableBuffer.Change[FXBean[R]]]): Unit = {
+  def selectedItemsDidChange(source: ObservableBuffer[FXBean[R]], changes: Seq[ObservableBuffer.Change[FXBean[R]]]): Unit = {
     logger.debug("new values count: %s".format(source.size))
   }
 
@@ -76,7 +71,6 @@ abstract class DataTableController extends ViewController with LazyLogging {
         null
     }))
   }
-
 
 }
 

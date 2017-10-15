@@ -1,6 +1,6 @@
 package com.sfxcode.sapphire.extension.control
 
-import javafx.scene.control.{Control, Label, Skin}
+import javafx.scene.control.{ Control, Label, Skin }
 import javafx.scene.layout.Pane
 
 import com.sfxcode.sapphire.core.Includes._
@@ -27,7 +27,6 @@ class DataListView[S <: AnyRef] extends Control {
 
   val showFooter = BooleanProperty(false)
   val footer = ObjectProperty[Pane](this, "listViewFooter")
-
 
   val footerLabel = ObjectProperty[Label](this, "listViewFooterLabel")
   val footerTextProperty = StringProperty("%s of %s items")
@@ -68,7 +67,6 @@ class DataListView[S <: AnyRef] extends Control {
         footerLabel.value.setText(footerTextProperty.value.format(filter.value.filterResult.size, filter.value.itemValues.size))
     })
   })
-
 
   private def sortedItems(values: ObservableBuffer[FXBean[S]]): ObservableBuffer[FXBean[S]] = {
     var result = values

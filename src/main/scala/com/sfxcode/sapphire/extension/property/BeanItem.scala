@@ -1,7 +1,7 @@
 package com.sfxcode.sapphire.extension.property
 
-import java.time.{ZoneId, LocalDateTime, Instant, LocalDate}
-import java.util.{Optional, Date}
+import java.time.{ ZoneId, LocalDateTime, Instant, LocalDate }
+import java.util.{ Optional, Date }
 import javafx.beans.value.ObservableValue
 
 import com.sfxcode.sapphire.core.value._
@@ -11,7 +11,7 @@ import org.controlsfx.control.PropertySheet.Item
 import scala.reflect.runtime.universe._
 import scalafx.collections.ObservableBuffer
 
-class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name:String="", category: String="", description: String="") extends Item {
+class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = "") extends Item {
   val conf = ConfigFactory.load()
 
   override def getType: Class[_] = {
@@ -56,12 +56,12 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name:String="", categ
 
   override def isEditable = true
 
-  def asLocalDate(date:java.util.Date): LocalDate =  {
+  def asLocalDate(date: java.util.Date): LocalDate = {
     val instant = Instant.ofEpochMilli(date.getTime)
     LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate
   }
 
-  def asDate(date:LocalDate):java.util.Date = {
+  def asDate(date: LocalDate): java.util.Date = {
     val instant = date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant
     Date.from(instant)
   }
@@ -71,7 +71,7 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name:String="", categ
 
 object BeanItem {
 
-  def apply(bean: FXBean[_ <: AnyRef], key: String, name:String="", category: String = "", description: String = ""): BeanItem = {
+  def apply(bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = ""): BeanItem = {
     new BeanItem(bean, key, name, category, description)
   }
 
@@ -94,7 +94,7 @@ class BeanItems {
 
   def getItems = itemBuffer
 
-  def addItem(key: String, name:String="", category: String = "", description: String = ""): Unit = {
+  def addItem(key: String, name: String = "", category: String = "", description: String = ""): Unit = {
     itemBuffer.add(BeanItem(bean, key, name, category, description))
   }
 
@@ -106,13 +106,12 @@ class BeanItems {
 
 object BeanItems {
 
-  def apply():BeanItems = new BeanItems()
+  def apply(): BeanItems = new BeanItems()
 
-  def apply(bean: FXBean[_ <: AnyRef]):BeanItems = {
+  def apply(bean: FXBean[_ <: AnyRef]): BeanItems = {
     val result = new BeanItems()
     result.updateBean(bean)
     result
   }
 }
-
 

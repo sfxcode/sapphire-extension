@@ -1,8 +1,8 @@
 package com.sfxcode.sapphire.extension.concurrent.akka
 
-import java.util.concurrent.{ExecutorService, ThreadFactory}
+import java.util.concurrent.{ ExecutorService, ThreadFactory }
 
-import akka.dispatch.{ExecutorServiceConfigurator, DispatcherPrerequisites, ExecutorServiceFactory}
+import akka.dispatch.{ ExecutorServiceConfigurator, DispatcherPrerequisites, ExecutorServiceFactory }
 import com.typesafe.config.Config
 
 class SwingEventThreadExecutorServiceConfigurator(config: Config, prerequisites: DispatcherPrerequisites) extends ExecutorServiceConfigurator(config, prerequisites) {

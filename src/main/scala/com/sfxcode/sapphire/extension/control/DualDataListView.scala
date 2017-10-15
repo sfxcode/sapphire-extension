@@ -1,11 +1,10 @@
 package com.sfxcode.sapphire.extension.control
 
-import javafx.scene.control.{Control, Skin}
+import javafx.scene.control.{ Control, Skin }
 
 import com.sfxcode.sapphire.extension.skin.DualDataListViewSkin
 
-
-class DualDataListView [S<:AnyRef] extends Control {
+class DualDataListView[S <: AnyRef] extends Control {
 
   lazy val css = getClass.getResource("dualdatalistview.css").toExternalForm
 
@@ -15,23 +14,20 @@ class DualDataListView [S<:AnyRef] extends Control {
 
   val rightDataListView = new DataListView[S]()
 
-
   protected override def createDefaultSkin: Skin[DualDataListView[S]] = {
     new DualDataListViewSkin[S](this)
   }
 
   override def getUserAgentStylesheet: String = css
 
-  def setItems(left:Iterable[S], right:Iterable[S]=List[S]()): Unit = {
+  def setItems(left: Iterable[S], right: Iterable[S] = List[S]()): Unit = {
     leftDataListView.setItems(left)
     rightDataListView.setItems(right)
   }
 
-  def setCellProperty(value:String): Unit =  {
+  def setCellProperty(value: String): Unit = {
     leftDataListView.cellProperty.set(value)
     rightDataListView.cellProperty.set(value)
   }
-
-
 
 }

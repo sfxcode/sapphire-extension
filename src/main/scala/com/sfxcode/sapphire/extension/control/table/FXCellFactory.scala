@@ -1,8 +1,8 @@
 package com.sfxcode.sapphire.extension.control.table
 
-import javafx.util.{StringConverter, Callback}
-import javafx.scene.control.{TableCell, TableColumn}
-import javafx.scene.control.cell.{TextFieldTableCell, CheckBoxTableCell}
+import javafx.util.{ StringConverter, Callback }
+import javafx.scene.control.{ TableCell, TableColumn }
+import javafx.scene.control.cell.{ TextFieldTableCell, CheckBoxTableCell }
 import com.sfxcode.sapphire.core.cdi.BeanResolver
 import com.sfxcode.sapphire.core.cdi.provider.ConverterProvider
 
@@ -14,7 +14,7 @@ import scalafx.scene.text.TextAlignment
 abstract class FXCellFactory[S, T] extends Callback[TableColumn[S, T], TableCell[S, T]] with BeanResolver {
 
   @BeanProperty
-  var alignment:Any = "left"
+  var alignment: Any = "left"
 
   @BeanProperty
   var converter: String = _
@@ -22,11 +22,9 @@ abstract class FXCellFactory[S, T] extends Callback[TableColumn[S, T], TableCell
   def updateCell(column: TableColumn[S, T], cell: TableCell[S, T]): TableCell[S, T] = {
     if (alignment == TextAlignment.Center || alignment.toString.equalsIgnoreCase("center")) {
       cell.setAlignment(Pos.Center)
-    }
-    else if (alignment == TextAlignment.Right  || alignment.toString.equalsIgnoreCase("right")) {
+    } else if (alignment == TextAlignment.Right || alignment.toString.equalsIgnoreCase("right")) {
       cell.setAlignment(Pos.CenterRight)
-    }
-    else
+    } else
       cell.setAlignment(Pos.CenterLeft)
 
     if (converter != null) {
@@ -35,7 +33,7 @@ abstract class FXCellFactory[S, T] extends Callback[TableColumn[S, T], TableCell
       }
     }
 
-    def getConverterForName(name:String):StringConverter[T] = {
+    def getConverterForName(name: String): StringConverter[T] = {
       val converterProvider = getBean[ConverterProvider]()
       converterProvider.getConverterByName(name)
     }

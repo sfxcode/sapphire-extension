@@ -4,19 +4,18 @@ import javafx.scene.layout.Pane
 
 import com.sfxcode.sapphire.core.control.FXValueFactory
 import com.sfxcode.sapphire.core.value.FXBean
-import com.sfxcode.sapphire.extension.control.table.{FXTextFieldCellFactory, TableColumnFactory}
+import com.sfxcode.sapphire.extension.control.table.{ FXTextFieldCellFactory, TableColumnFactory }
 
 import scala.collection.mutable
 import scala.reflect.ClassTag
-import scala.reflect.runtime.{universe => ru}
+import scala.reflect.runtime.{ universe => ru }
 import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
 import scalafx.collections.ObservableBuffer
-import scalafx.scene.control.{TableView, _}
+import scalafx.scene.control.{ TableView, _ }
 import scalafx.scene.text.TextAlignment
 
-class DataTableFilter[ S <: AnyRef] (table: TableView[FXBean[S]],items: ObjectProperty[ObservableBuffer[FXBean[S]]], pane:ObjectProperty[Pane])
-                                       (implicit ct: ClassTag[S]) extends DataFilter[S](items, pane) {
+class DataTableFilter[S <: AnyRef](table: TableView[FXBean[S]], items: ObjectProperty[ObservableBuffer[FXBean[S]]], pane: ObjectProperty[Pane])(implicit ct: ClassTag[S]) extends DataFilter[S](items, pane) {
 
   // columns
   val columnMapping = new mutable.HashMap[String, TableColumn[FXBean[S], _]]()
@@ -37,12 +36,11 @@ class DataTableFilter[ S <: AnyRef] (table: TableView[FXBean[S]],items: ObjectPr
 
   filter()
 
-  override def itemsChanged(oldItems:ObservableBuffer[FXBean[S]], newItems:ObservableBuffer[FXBean[S]]): Unit = {
+  override def itemsChanged(oldItems: ObservableBuffer[FXBean[S]], newItems: ObservableBuffer[FXBean[S]]): Unit = {
     items.value.onChange(filter())
     reset()
     table.autosize()
   }
-
 
   def reload(shouldReset: Boolean = false): Unit = {
     table.setItems(null)
@@ -80,9 +78,9 @@ class DataTableFilter[ S <: AnyRef] (table: TableView[FXBean[S]],items: ObjectPr
     columnMapping.get(property)
   }
 
-  def getTable:TableView[FXBean[S]] = table
+  def getTable: TableView[FXBean[S]] = table
 
-  def getItems:ObservableBuffer[FXBean[S]] = table.items.value
+  def getItems: ObservableBuffer[FXBean[S]] = table.items.value
 
   def hideColumn(name: String*) = name.foreach(name => getColumn(name).foreach(c => c.setVisible(false)))
 
