@@ -47,14 +47,14 @@ libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.2.3"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.6"
 
-libraryDependencies += "org.controlsfx" % "controlsfx" % "9.0.0" intransitive()
+libraryDependencies += "org.controlsfx" % "controlsfx" % "8.40.14" intransitive()
 
-libraryDependencies += "de.jensd" % "fontawesomefx-commons" % "9.0.0"
-libraryDependencies += "de.jensd" % "fontawesomefx-controls" % "9.0.0"
+libraryDependencies += "de.jensd" % "fontawesomefx-commons" % "8.15"
+libraryDependencies += "de.jensd" % "fontawesomefx-controls" % "8.15"
 
 libraryDependencies += "de.jensd" % "fontawesomefx-fontawesome" % "4.7.0"
 libraryDependencies += "de.jensd" % "fontawesomefx-materialicons" % "2.2.0"
-
+libraryDependencies += "de.jensd" % "fontawesomefx-materialdesignfont" % "1.7.22"
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
