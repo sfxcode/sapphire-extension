@@ -3,7 +3,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-version := "0.6.5"
+version := "0.6.6"
 
 crossScalaVersions := Seq("2.12.3",  "2.11.11")
 
