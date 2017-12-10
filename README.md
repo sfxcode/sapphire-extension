@@ -5,7 +5,17 @@ The sapphire extension framework adds additional features to sapphire-core.
 
 ## Version
 
-Scala Version is 2.12.3 / 2.11.11.
+Scala Version is 2.12.4
+
+## Demo
+
+Simple Demo can be found in the it directory.
+
+Start in SBT Console:
+
+```
+it:runMain com.sfxcode.sapphire.extension.demo.Application
+```
 
 ## Download
 
