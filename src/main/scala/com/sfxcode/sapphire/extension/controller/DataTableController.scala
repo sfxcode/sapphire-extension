@@ -10,7 +10,7 @@ import com.sfxcode.sapphire.extension.filter.DataTableFilter
 import com.typesafe.scalalogging.LazyLogging
 
 import scala.reflect.ClassTag
-import scala.reflect.runtime.{ universe => ru }
+import scala.reflect.runtime.{universe => ru}
 import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
 import scalafx.collections.ObservableBuffer
@@ -22,7 +22,6 @@ abstract class DataTableController extends ViewController with LazyLogging {
   def ct: ClassTag[R]
 
   // reflection
-  val mirror = ru.runtimeMirror(ct.runtimeClass.getClassLoader)
   val members = mirror.classSymbol(ct.runtimeClass).asType.typeSignature.members.toList.reverse
   logger.debug(members.collect({ case x if x.isTerm => x.asTerm }).filter(t => t.isVal || t.isVar).map(m => m.name.toString).toString())
 
