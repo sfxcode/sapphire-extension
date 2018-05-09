@@ -20,7 +20,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
   val conf = ConfigFactory.load()
   implicit def objectPropertyToValue[T <: Any](property: ObjectProperty[T]): T = property.get
 
-  protected val controlList = ObservableBuffer[Node]()
+  protected val controlList: ObservableBuffer[Node] = ObservableBuffer[Node]()
   protected val controlFilterMap = new mutable.HashMap[Control, Any]()
   protected val controlFilterPropertyMap = new mutable.HashMap[Control, String]()
   protected val valueMap = new mutable.HashMap[String, Any]()
@@ -28,7 +28,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
   protected val filterControlNameMapping = new mutable.HashMap[Control, String]()
   protected val filterNameControlMapping = new mutable.HashMap[String, Control]()
 
-  val filterResult = ObservableBuffer[FXBean[S]]()
+  val filterResult: ObservableBuffer[FXBean[S]] = ObservableBuffer[FXBean[S]]()
 
   itemValues.onChange(
     filter())
@@ -41,8 +41,19 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
   items.onChange((_, oldValue, newValue) => itemsChanged(oldValue, newValue))
 
   def itemsChanged(oldItems: ObservableBuffer[FXBean[S]], newItems: ObservableBuffer[FXBean[S]]): Unit = {
-    items.value.onChange(filter())
-    filter()
+    oldItems.onChange()
+    newItems.onChange(filter())
+    itemsHasChanged()
+  }
+
+  def itemsHasChanged() {}
+
+  def updateItems(newItems: ObservableBuffer[FXBean[S]], resetFilter: Boolean = false): Unit = {
+    itemsProperty.set(newItems)
+    if (resetFilter)
+      reset()
+    else
+      filter()
   }
 
   pane.onChange((_, oldValue, newValue) => paneChanged(oldValue, newValue))
@@ -55,7 +66,9 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
 
   def filterControlPane: Pane = pane.value
 
-  def itemsProperty = items
+  def itemsProperty: ObjectProperty[ObservableBuffer[FXBean[S]]] = items
+
+
 
   def itemValues: ObservableBuffer[FXBean[S]] = items.value
 

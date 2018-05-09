@@ -1,10 +1,10 @@
 package com.sfxcode.sapphire.extension.demo.controller.navigation
 
-import javafx.event.ActionEvent
-
 import com.sfxcode.sapphire.extension.demo.controller.AbstractBaseController
 import com.sfxcode.sapphire.extension.demo.controller.form._
-import com.sfxcode.sapphire.extension.demo.controller.table.{ FriendTableController, PersonTableController, SimplePersonTableController }
+import com.sfxcode.sapphire.extension.demo.controller.master.PersonMasterController
+import com.sfxcode.sapphire.extension.demo.controller.table.{FriendTableController, PersonTableController, SimplePersonTableController}
+import javafx.event.ActionEvent
 
 class DefaultNavigationController extends AbstractBaseController {
   lazy val formController = getController[FormController]()
@@ -56,4 +56,15 @@ class TableNavigationController extends AbstractBaseController {
     workspaceManager.updatePaneContent(friendTableController)
   }
 }
+
+class MasterNavigationController extends AbstractBaseController {
+  lazy val personMasterController = getController[PersonMasterController]()
+
+  def actionShowPersonMasterController(event: ActionEvent) {
+    workspaceManager.updatePaneContent(personMasterController)
+  }
+
+}
+
+
 

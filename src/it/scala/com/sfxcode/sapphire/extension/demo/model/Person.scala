@@ -40,6 +40,10 @@ object PersonDatabase {
 
   val persons = read[List[Person]](fromJson("/data.json"))
 
+  val smallPersonTable = {
+    persons.take(10)
+  }
+
   val bigPersonTable = {
     var result = ArrayBuffer[Person]()
     (1 to 25).foreach(i => {

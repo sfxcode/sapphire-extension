@@ -36,19 +36,10 @@ class DataTableFilter[S <: AnyRef](table: TableView[FXBean[S]], items: ObjectPro
 
   filter()
 
-  override def itemsChanged(oldItems: ObservableBuffer[FXBean[S]], newItems: ObservableBuffer[FXBean[S]]): Unit = {
-    items.value.onChange(filter())
-    reset()
+  override def itemsHasChanged(): Unit = {
+    super.itemsHasChanged()
     table.autosize()
-  }
-
-  def reload(shouldReset: Boolean = false): Unit = {
-    table.setItems(null)
     table.layout()
-    if (shouldReset)
-      reset()
-    else
-      filter()
   }
 
   def addColumn(key: String, column: TableColumn[FXBean[S], _]): Unit = {

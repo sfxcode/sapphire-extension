@@ -52,8 +52,9 @@
         </MenuBar>
         <HBox prefHeight="34.0" prefWidth="900.0" spacing="5.0" VBox.vgrow="NEVER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
             <children>
-                <Button mnemonicParsing="false" onAction="#actionShowForm" text="FXBean Binding" />
-                <Button mnemonicParsing="false" onAction="#actionShowTables" text="Tables Binding" />
+                <Button mnemonicParsing="false" onAction="#actionShowForm" text="Form Binding" />
+                <Button mnemonicParsing="false" onAction="#actionShowTables" text="Table Binding" />
+                <Button mnemonicParsing="false" onAction="#actionShowMaster" text="Master/Detail" />
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

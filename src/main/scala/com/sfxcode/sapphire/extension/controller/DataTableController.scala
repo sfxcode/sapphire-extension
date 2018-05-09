@@ -1,19 +1,17 @@
 package com.sfxcode.sapphire.extension.controller
 
-import javafx.fxml.FXML
-import javafx.scene.control.TableView
-import javafx.scene.layout.HBox
-
 import com.sfxcode.sapphire.core.controller.ViewController
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.filter.DataTableFilter
 import com.typesafe.scalalogging.LazyLogging
-
-import scala.reflect.ClassTag
-import scala.reflect.runtime.{universe => ru}
+import javafx.fxml.FXML
+import javafx.scene.control.TableView
+import javafx.scene.layout.HBox
 import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
 import scalafx.collections.ObservableBuffer
+
+import scala.reflect.ClassTag
 
 abstract class DataTableController extends ViewController with LazyLogging {
 
@@ -37,9 +35,9 @@ abstract class DataTableController extends ViewController with LazyLogging {
 
   override def didGainVisibilityFirstTime() {
     super.didGainVisibilityFirstTime()
-    table.setItems(items)
 
-    tableFilter = new DataTableFilter[R](table, ObjectProperty[ObservableBuffer[FXBean[R]]](this, "", items), ObjectProperty(this, "", searchBox))(ct)
+    val itemsProperty = ObjectProperty[ObservableBuffer[FXBean[R]]](this, "", items)
+    tableFilter = new DataTableFilter[R](table, itemsProperty, ObjectProperty(this, "", searchBox))(ct)
 
     if (shouldAddColunns)
       tableFilter.addColumns()

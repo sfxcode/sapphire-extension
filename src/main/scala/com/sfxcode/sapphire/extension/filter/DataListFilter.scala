@@ -2,7 +2,6 @@ package com.sfxcode.sapphire.extension.filter
 
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.control.DataListView
-
 import scalafx.Includes._
 
 class DataListFilter[S <: AnyRef](dataList: DataListView[S])
@@ -42,9 +41,14 @@ class DataListFilter[S <: AnyRef](dataList: DataListView[S])
 
   filter()
 
+  override def itemsHasChanged(): Unit = {
+    super.itemsHasChanged()
+    listView.autosize()
+    listView.layout()
+  }
+
   def reload(shouldReset: Boolean = false): Unit = {
     listView.setItems(null)
-    listView.layout()
     if (shouldReset)
       reset()
     else

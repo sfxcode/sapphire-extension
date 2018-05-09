@@ -17,7 +17,7 @@ object Application extends FXApp {
   ExtensionResolver.add()
 
   override def applicationStage: Stage = new PrimaryStage {
-    title = "Sapphire Form Demo"
+    title = "Sapphire Demo App"
     scene = new Scene {
 
     }
