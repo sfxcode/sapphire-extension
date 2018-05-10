@@ -1,7 +1,7 @@
 package com.sfxcode.sapphire.extension.controller
 
 import com.sfxcode.sapphire.core.controller.ViewController
-import com.sfxcode.sapphire.core.value.{FXBean, FXBeanAdapter, KeyBindings}
+import com.sfxcode.sapphire.core.value.{ FXBean, FXBeanAdapter, KeyBindings }
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.Node
@@ -10,7 +10,7 @@ import scalafx.Includes._
 
 import scala.reflect.ClassTag
 
-abstract class BaseEditorController extends ViewController  {
+abstract class BaseEditorController extends ViewController {
 
   type R <: AnyRef
 
@@ -30,7 +30,6 @@ abstract class BaseEditorController extends ViewController  {
     formAdapter.addBindings(bindings)
   }
 
-
   def updateBindings(bindings: KeyBindings)
 
   def updateBean(bean: FXBean[R]): Unit = {
@@ -40,13 +39,13 @@ abstract class BaseEditorController extends ViewController  {
   }
 
   def actionSave(event: ActionEvent): Unit = {
-    editableBean.foreach(b =>save(b.bean))
+    editableBean.foreach(b => save(b.bean))
   }
 
   def actionRevert(event: ActionEvent): Unit = {
     editableBean.foreach(fxBean => fxBean.revert())
   }
 
-  def save(beanValue:R)
+  def save(beanValue: R)
 
 }

@@ -2,7 +2,7 @@ package com.sfxcode.sapphire.extension.controller
 
 import javafx.event.ActionEvent
 
-abstract class BaseDetailController extends BaseEditorController  {
+abstract class BaseDetailController extends BaseEditorController {
 
   var masterTableController: Option[BaseMasterController] = None
 

@@ -3,7 +3,7 @@ package com.sfxcode.sapphire.extension.demo.controller.navigation
 import com.sfxcode.sapphire.extension.demo.controller.AbstractBaseController
 import com.sfxcode.sapphire.extension.demo.controller.form._
 import com.sfxcode.sapphire.extension.demo.controller.master.PersonMasterController
-import com.sfxcode.sapphire.extension.demo.controller.table.{FriendTableController, PersonTableController, SimplePersonTableController}
+import com.sfxcode.sapphire.extension.demo.controller.table.{ FriendTableController, PersonTableController, SimplePersonTableController }
 import javafx.event.ActionEvent
 
 class DefaultNavigationController extends AbstractBaseController {
@@ -65,6 +65,4 @@ class MasterNavigationController extends AbstractBaseController {
   }
 
 }
-
-
 
