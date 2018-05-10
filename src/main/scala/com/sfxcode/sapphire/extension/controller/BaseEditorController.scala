@@ -30,6 +30,7 @@ abstract class BaseEditorController extends ViewController  {
     formAdapter.addBindings(bindings)
   }
 
+
   def updateBindings(bindings: KeyBindings)
 
   def updateBean(bean: FXBean[R]): Unit = {
