@@ -68,8 +68,6 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
 
   def itemsProperty: ObjectProperty[ObservableBuffer[FXBean[S]]] = items
 
-
-
   def itemValues: ObservableBuffer[FXBean[S]] = items.value
 
   def addSearchField(propertyKey: String): TextField = addSearchField(propertyKey, propertyKey)

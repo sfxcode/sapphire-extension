@@ -1,9 +1,9 @@
 package com.sfxcode.sapphire.extension.demo.controller.master
 
 import com.sfxcode.sapphire.core.Includes._
-import com.sfxcode.sapphire.extension.controller.{BaseDetailController, BaseMasterController}
+import com.sfxcode.sapphire.extension.controller.{ BaseDetailController, BaseMasterController }
 import com.sfxcode.sapphire.extension.demo.controller.MainWindowController
-import com.sfxcode.sapphire.extension.demo.model.{Person, PersonDatabase}
+import com.sfxcode.sapphire.extension.demo.model.{ Person, PersonDatabase }
 import com.sfxcode.sapphire.extension.filter.DataTableFilter
 
 import scala.reflect._
