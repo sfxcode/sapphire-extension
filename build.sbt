@@ -33,11 +33,11 @@ libraryDependencies += "org.specs2" %% "specs2-core" % "4.2.0" % "test"
 // libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test"
 
 
-libraryDependencies += "org.json4s" %% "json4s-native" % "3.5.3" % "provided"
+libraryDependencies += "org.json4s" %% "json4s-native" % "3.5.4" % "provided"
 
 // Compile
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.3.2"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.3.3"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.12"
 
