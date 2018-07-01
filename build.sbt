@@ -28,7 +28,7 @@ resolvers += "bintray" at "https://jcenter.bintray.com"
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "4.2.0" % "test"
+libraryDependencies += "org.specs2" %% "specs2-core" % "4.3.0" % "test"
 
 // libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test"
 
@@ -39,7 +39,7 @@ libraryDependencies += "org.json4s" %% "json4s-native" % "3.5.4" % "provided"
 
 libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.3.3"
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.12"
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.13"
 
 libraryDependencies += "org.controlsfx" % "controlsfx" % "8.40.14" intransitive()
 
@@ -49,6 +49,9 @@ libraryDependencies += "de.jensd" % "fontawesomefx-controls" % "8.15"
 libraryDependencies += "de.jensd" % "fontawesomefx-fontawesome" % "4.7.0-5"
 libraryDependencies += "de.jensd" % "fontawesomefx-materialicons" % "2.2.0-5"
 libraryDependencies += "de.jensd" % "fontawesomefx-materialdesignfont" % "1.7.22-4"
+libraryDependencies += "de.jensd" % "fontawesomefx-emojione" % "2.2.7-2"
+libraryDependencies += "de.jensd" % "fontawesomefx-icons525" % "3.0.0-4"
+libraryDependencies += "de.jensd" % "fontawesomefx-octicons" % "4.3.0-5"
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 

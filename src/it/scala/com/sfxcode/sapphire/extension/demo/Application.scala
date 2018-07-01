@@ -19,7 +19,8 @@ object Application extends FXApp {
   override def applicationStage: Stage = new PrimaryStage {
     title = "Sapphire Demo App"
     scene = new Scene {
-
+      minWidth = 800
+      minHeight = 600
     }
   }
 }
@@ -34,6 +35,13 @@ class ApplicationController extends AppController with LazyLogging {
     logger.debug("start " + this)
     replaceSceneContent(controller)
   }
+
+  def replacePrimarySceneContent(): Unit = {
+    val newMainWindowController = getController[MainWindowController]()
+    replaceSceneContent(newMainWindowController)
+
+  }
+
 
 }
 
