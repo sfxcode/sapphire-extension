@@ -42,6 +42,5 @@ class ApplicationController extends AppController with LazyLogging {
 
   }
 
-
 }
 

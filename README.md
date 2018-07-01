@@ -34,13 +34,13 @@ Apache 2 License.
 
 ## Technology Stack
 
-###sapphire-core
+### sapphire-core
 
 
 [ ![Download](https://api.bintray.com/packages/sfxcode/maven/sapphire-core/images/download.svg) ](https://bintray.com/sfxcode/maven/sapphire-core/_latestVersion)
 
 
-###ControlsFX Dependency
+### ControlsFX Dependency
 
 [http://fxexperience.com/controlsfx/](http://fxexperience.com/controlsfx/)
 

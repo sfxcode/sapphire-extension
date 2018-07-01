@@ -3,11 +3,11 @@ package com.sfxcode.sapphire.extension.demo.controller
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.MenuBar
-import javafx.scene.layout.{AnchorPane, HBox}
+import javafx.scene.layout.{ AnchorPane, HBox }
 import com.sfxcode.sapphire.core.controller.ViewController
 import com.sfxcode.sapphire.core.scene.ContentManager
 import com.sfxcode.sapphire.extension.demo.ApplicationController
-import com.sfxcode.sapphire.extension.demo.controller.navigation.{DefaultNavigationController, MasterNavigationController, TableNavigationController}
+import com.sfxcode.sapphire.extension.demo.controller.navigation.{ DefaultNavigationController, MasterNavigationController, TableNavigationController }
 import org.controlsfx.control.StatusBar
 import scalafx.Includes._
 
