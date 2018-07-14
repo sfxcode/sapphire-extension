@@ -28,18 +28,15 @@ resolvers += "bintray" at "https://jcenter.bintray.com"
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "4.3.0" % "test"
-
-// libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test"
-
+libraryDependencies += "org.specs2" %% "specs2-core" % "4.3.2" % "test"
 
 libraryDependencies += "org.json4s" %% "json4s-native" % "3.5.4" % "provided"
 
 // Compile
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.3.3"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.3.4"
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.13"
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.14"
 
 libraryDependencies += "org.controlsfx" % "controlsfx" % "8.40.14" intransitive()
 
