@@ -2,13 +2,16 @@ package com.sfxcode.sapphire.extension.filter
 
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.control.DataListView
+import javafx.beans.property.ReadOnlyObjectProperty
 import scalafx.Includes._
+import scalafx.collections.ObservableBuffer
+import scalafx.scene.control.{ListView, TextField}
 
 class DataListFilter[S <: AnyRef](dataList: DataListView[S])
   extends DataFilter[S](dataList.items, dataList.header) {
   var sortFiltered = true
 
-  var searchField = addSearchField(dataList.cellProperty.get)
+  var searchField: TextField = addSearchField(dataList.cellProperty.get)
   searchField.setPromptText(dataList.filterPromptProperty.get)
 
   dataList.filterPromptProperty.onChange((_, oldValue, newValue) => searchField.setPromptText(newValue))
@@ -55,12 +58,12 @@ class DataListFilter[S <: AnyRef](dataList: DataListView[S])
       filter()
   }
 
-  def listView = dataList.listView
+  def listView: ListView[FXBean[S]] = dataList.listView
 
   def selectedBean: FXBean[S] = listView.selectionModel().selectedItemProperty().get()
 
-  def selectedItem = listView.selectionModel().selectedItemProperty()
+  def selectedItem: ReadOnlyObjectProperty[FXBean[S]] = listView.selectionModel().selectedItemProperty()
 
-  def selectedItems = listView.selectionModel().selectedItems
+  def selectedItems: ObservableBuffer[FXBean[S]] = listView.selectionModel().selectedItems
 
 }

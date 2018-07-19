@@ -2,10 +2,9 @@ package com.sfxcode.sapphire.extension.filter
 
 import javafx.scene.Node
 import javafx.scene.layout.Pane
-
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.filter.FilterType._
-import com.typesafe.config.ConfigFactory
+import com.typesafe.config.{Config, ConfigFactory}
 import com.typesafe.scalalogging.LazyLogging
 import org.controlsfx.control.textfield.TextFields
 
@@ -14,10 +13,10 @@ import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
 import scalafx.collections.ObservableBuffer
 import scalafx.event.ActionEvent
-import scalafx.scene.control.{ ComboBox, Control, TextField }
+import scalafx.scene.control.{ComboBox, Control, TextField}
 
 class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]], pane: ObjectProperty[Pane]) extends LazyLogging {
-  val conf = ConfigFactory.load()
+  val conf: Config = ConfigFactory.load()
   implicit def objectPropertyToValue[T <: Any](property: ObjectProperty[T]): T = property.get
 
   protected val controlList: ObservableBuffer[Node] = ObservableBuffer[Node]()
@@ -181,7 +180,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
     filter()
   }
 
-  private def filterFunction(function: FilterValue, property: String, valueKey: String): (FXBean[S] => Boolean) = {
+  private def filterFunction(function: FilterValue, property: String, valueKey: String): FXBean[S] => Boolean = {
     if (function == FilterType.FilterContains)
       containsFunction(property, valueKey)
     else if (function == FilterType.FilterContainsIgnoreCase)
@@ -194,19 +193,19 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
       b => false
   }
 
-  private def containsFunction(property: String, valueKey: String): (FXBean[S] => Boolean) = {
+  private def containsFunction(property: String, valueKey: String): FXBean[S] => Boolean = {
     b => getFilterString(b, property).contains(valueMap(valueKey).toString)
   }
 
-  private def containsLowerCaseFunction(property: String, valueKey: String): (FXBean[S] => Boolean) = {
+  private def containsLowerCaseFunction(property: String, valueKey: String): FXBean[S] => Boolean = {
     b => getFilterString(b, property).toLowerCase.contains(valueMap(valueKey).toString.toLowerCase)
   }
 
-  private def equalsFunction(property: String, valueKey: String): (FXBean[S] => Boolean) = {
+  private def equalsFunction(property: String, valueKey: String): FXBean[S] => Boolean = {
     b => getFilterString(b, property).equals(valueMap(valueKey))
   }
 
-  private def equalsLowerCaseFunction(property: String, valueKey: String): (FXBean[S] => Boolean) = {
+  private def equalsLowerCaseFunction(property: String, valueKey: String): FXBean[S] => Boolean = {
     b => getFilterString(b, property).toLowerCase.equals(valueMap(valueKey).toString.toLowerCase)
   }
 
