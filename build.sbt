@@ -1,9 +1,13 @@
+import sbt.url
 
 name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
 scalaVersion := "2.12.6"
+
+crossScalaVersions := Seq("2.12.6", "2.11.12")
+
 
 
 scalacOptions += "-deprecation"
@@ -18,23 +22,15 @@ lazy val sapphire_extension_root = Project(id = "sapphire-extension", base = fil
 
 // resolvers
 
-resolvers += "sonatype-snapshots" at "http://oss.sonatype.org/content/repositories/snapshots"
-
-resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
-
-resolvers += "sfxcode-bintray" at "https://dl.bintray.com/sfxcode/maven"
-
-resolvers += "bintray" at "https://jcenter.bintray.com"
-
 // Test
 
 libraryDependencies += "org.specs2" %% "specs2-core" % "4.3.2" % "test"
 
-libraryDependencies += "org.json4s" %% "json4s-native" % "3.5.4" % "provided"
+libraryDependencies += "org.json4s" %% "json4s-native" % "3.6.0" % "provided"
 
 // Compile
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.3.4"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.3.5"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.14"
 
@@ -52,10 +48,37 @@ libraryDependencies += "de.jensd" % "fontawesomefx-octicons" % "4.3.0-5"
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 
-bintrayReleaseOnPublish in ThisBuild := true
-
 enablePlugins(BuildInfoPlugin)
 
 buildInfoPackage := "com.sfxcode.sapphire.extension"
 
 buildInfoOptions += BuildInfoOption.BuildTime
+
+
+// publish
+
+releaseCrossBuild := true
+
+bintrayReleaseOnPublish in ThisBuild := true
+
+publishMavenStyle := true
+
+homepage := Some(url("https://github.com/sfxcode/sapphire-core"))
+
+scmInfo := Some(
+  ScmInfo(
+    url("https://github.com/sfxcode/sapphire-core"),
+    "scm:https://github.com/sfxcode/sapphire-core.git"
+  )
+)
+
+developers := List(
+  Developer(
+    id    = "sfxcode",
+    name  = "Tom Lamers",
+    email = "tom@sfxcode.com",
+    url   = url("https://github.com/sfxcode")
+  )
+)
+
+

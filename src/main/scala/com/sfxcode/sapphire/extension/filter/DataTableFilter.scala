@@ -3,16 +3,16 @@ package com.sfxcode.sapphire.extension.filter
 import javafx.scene.layout.Pane
 import com.sfxcode.sapphire.core.control.FXValueFactory
 import com.sfxcode.sapphire.core.value.FXBean
-import com.sfxcode.sapphire.extension.control.table.{FXTextFieldCellFactory, TableColumnFactory}
+import com.sfxcode.sapphire.extension.control.table.{ FXTextFieldCellFactory, TableColumnFactory }
 import javafx.beans.property.ReadOnlyObjectProperty
 
 import scala.collection.mutable
 import scala.reflect.ClassTag
-import scala.reflect.runtime.{universe => ru}
+import scala.reflect.runtime.{ universe => ru }
 import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
 import scalafx.collections.ObservableBuffer
-import scalafx.scene.control.{TableView, _}
+import scalafx.scene.control.{ TableView, _ }
 import scalafx.scene.text.TextAlignment
 
 class DataTableFilter[S <: AnyRef](table: TableView[FXBean[S]], items: ObjectProperty[ObservableBuffer[FXBean[S]]], pane: ObjectProperty[Pane])(implicit ct: ClassTag[S]) extends DataFilter[S](items, pane) {

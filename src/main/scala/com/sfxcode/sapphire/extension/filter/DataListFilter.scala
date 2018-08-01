@@ -5,7 +5,7 @@ import com.sfxcode.sapphire.extension.control.DataListView
 import javafx.beans.property.ReadOnlyObjectProperty
 import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
-import scalafx.scene.control.{ListView, TextField}
+import scalafx.scene.control.{ ListView, TextField }
 
 class DataListFilter[S <: AnyRef](dataList: DataListView[S])
   extends DataFilter[S](dataList.items, dataList.header) {

@@ -4,7 +4,7 @@ import javafx.scene.Node
 import javafx.scene.layout.Pane
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.filter.FilterType._
-import com.typesafe.config.{Config, ConfigFactory}
+import com.typesafe.config.{ Config, ConfigFactory }
 import com.typesafe.scalalogging.LazyLogging
 import org.controlsfx.control.textfield.TextFields
 
@@ -13,7 +13,7 @@ import scalafx.Includes._
 import scalafx.beans.property.ObjectProperty
 import scalafx.collections.ObservableBuffer
 import scalafx.event.ActionEvent
-import scalafx.scene.control.{ComboBox, Control, TextField}
+import scalafx.scene.control.{ ComboBox, Control, TextField }
 
 class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]], pane: ObjectProperty[Pane]) extends LazyLogging {
   val conf: Config = ConfigFactory.load()
