@@ -8,8 +8,6 @@ scalaVersion := "2.12.6"
 
 crossScalaVersions := Seq("2.12.6", "2.11.12")
 
-
-
 scalacOptions += "-deprecation"
 
 javacOptions += "-Dorg.apache.deltaspike.ProjectStage=Test"
@@ -22,17 +20,19 @@ lazy val sapphire_extension_root = Project(id = "sapphire-extension", base = fil
 
 // resolvers
 
+resolvers += Resolver.jcenterRepo
+
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "4.3.2" % "test"
+libraryDependencies += "org.specs2" %% "specs2-core" % "4.3.4" % "test"
 
-libraryDependencies += "org.json4s" %% "json4s-native" % "3.6.0" % "provided"
+libraryDependencies += "org.json4s" %% "json4s-native" % "3.6.1" % "provided"
 
 // Compile
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.3.5"
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.3.6"
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.14"
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.16"
 
 libraryDependencies += "org.controlsfx" % "controlsfx" % "8.40.14" intransitive()
 
