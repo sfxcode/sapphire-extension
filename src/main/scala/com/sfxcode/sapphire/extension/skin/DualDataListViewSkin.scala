@@ -3,12 +3,9 @@ package com.sfxcode.sapphire.extension.skin
 import javafx.beans.binding.Bindings
 import javafx.scene.control.SelectionMode._
 import javafx.scene.control.SkinBase
-
 import com.sfxcode.sapphire.core.value.FXBean
-import com.sfxcode.sapphire.extension.control.{ DataListView, DualDataListView }
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
-import de.jensd.fx.glyphs.fontawesome.utils.FontAwesomeIconFactory
-
+import com.sfxcode.sapphire.extension.control.{DataListView, DualDataListView}
+import org.kordamp.ikonli.javafx.FontIcon
 import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
 import scalafx.event.ActionEvent
@@ -17,6 +14,7 @@ import scalafx.scene.control.Button
 import scalafx.scene.input.MouseEvent
 import scalafx.scene.layout.Priority._
 import scalafx.scene.layout._
+import com.sfxcode.sapphire.extension.control.IconTools._
 
 class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinBase[DualDataListView[S]](view) {
 
@@ -28,11 +26,16 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
     styleClass += "content-grid"
   }
 
-  val buttonMoveToTarget: Button = FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_RIGHT)
-  val buttonMoveToTargetAll: Button = FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_DOUBLE_RIGHT)
+  def createButton(code: String): Button = {
+    val result = new Button()
+    result.setGraphic(new FontIcon(code))
+    result
+  }
 
-  val buttonMoveToSource: Button = FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_LEFT)
-  val buttonMoveToSourceAll: Button = FontAwesomeIconFactory.get().createIconButton(FontAwesomeIcon.ANGLE_DOUBLE_LEFT)
+  val buttonMoveToTarget: Button = decoratedFontIconButton("fa-angle-right")
+  val buttonMoveToTargetAll: Button = decoratedFontIconButton("fa-angle-double-right")
+  val buttonMoveToSource: Button = decoratedFontIconButton("fa-angle-left")
+  val buttonMoveToSourceAll: Button = decoratedFontIconButton("fa-angle-double-left")
 
   buttonMoveToTarget.onAction = (e: ActionEvent) => moveToTarget()
   buttonMoveToSource.onAction = (e: ActionEvent) => moveToSource()

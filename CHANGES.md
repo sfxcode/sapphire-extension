@@ -2,6 +2,13 @@
 
 ## Versions
 
+### 0.8.0
+* sapphire-core 1.4.0
+* drop scala 2.11 support
+* OpenJFX 11
+* drop FontawesomeFX for Ikonli
+
+
 ### 0.7.6
 
 * sapphire-core 1.3.4
