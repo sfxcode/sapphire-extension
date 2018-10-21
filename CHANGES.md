@@ -2,6 +2,11 @@
 
 ## Versions
 
+### 0.8.1
+* sbt 1.2.6
+* sapphire-core 1.4.1
+* Icon Tools
+
 ### 0.8.0
 * sapphire-core 1.4.0
 * drop scala 2.11 support

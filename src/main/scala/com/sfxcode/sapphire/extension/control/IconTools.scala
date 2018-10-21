@@ -5,7 +5,7 @@ import scalafx.scene.control.Button
 
 object IconTools {
 
-  def decoratedFontIconButton(code:String):Button = {
+  def decoratedFontIconButton(code: String): Button = {
     val result = new Button()
     result.setGraphic(new FontIcon(code))
     result

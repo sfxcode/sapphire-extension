@@ -4,7 +4,7 @@ import javafx.beans.binding.Bindings
 import javafx.scene.control.SelectionMode._
 import javafx.scene.control.SkinBase
 import com.sfxcode.sapphire.core.value.FXBean
-import com.sfxcode.sapphire.extension.control.{DataListView, DualDataListView}
+import com.sfxcode.sapphire.extension.control.{ DataListView, DualDataListView }
 import org.kordamp.ikonli.javafx.FontIcon
 import scalafx.Includes._
 import scalafx.collections.ObservableBuffer
