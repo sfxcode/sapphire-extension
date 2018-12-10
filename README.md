@@ -5,7 +5,9 @@ The sapphire extension framework adds additional features to sapphire-core.
 
 ## Version
 
-Scala Version is 2.12.7
+Scala Version is 2.12.8
+
+Java Version is 11.x
 
 ## Demo
 
@@ -21,6 +23,9 @@ it:runMain com.sfxcode.sapphire.extension.demo.Application
 
 [ ![Download](https://api.bintray.com/packages/sfxcode/maven/sapphire-extension/images/download.svg) ](https://bintray.com/sfxcode/maven/sapphire-extension/_latestVersion)
 
+## SceneBuilder
+
+jar for using sapphire-extensions with SceneBuilder can be found in the scenebuilder directory.
 
 ## About
 

@@ -4,7 +4,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-scalaVersion := "2.12.7"
+scalaVersion := "2.12.8"
 
 scalacOptions += "-deprecation"
 
@@ -24,19 +24,19 @@ resolvers += Resolver.jcenterRepo
 
 libraryDependencies += "org.specs2" %% "specs2-core" % "4.3.5" % "test"
 
-libraryDependencies += "org.json4s" %% "json4s-native" % "3.6.1" % "provided"
+libraryDependencies += "org.json4s" %% "json4s-native" % "3.6.2" % "provided"
 
 // Compile
 
 libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.4.1"
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.17"
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.18"
 
 libraryDependencies += "org.controlsfx" % "controlsfx" % "9.0.0" intransitive()
 
-libraryDependencies += "org.kordamp.ikonli" % "ikonli-javafx" % "11.0.0"
+libraryDependencies += "org.kordamp.ikonli" % "ikonli-javafx" % "11.0.2"
 
-libraryDependencies += "org.kordamp.ikonli" % "ikonli-fontawesome-pack" % "11.0.0"
+libraryDependencies += "org.kordamp.ikonli" % "ikonli-fontawesome-pack" % "11.0.2"
 
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
