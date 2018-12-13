@@ -30,7 +30,7 @@ libraryDependencies += "org.json4s" %% "json4s-native" % "3.6.2" % "provided"
 
 libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.4.1"
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.18"
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.19"
 
 libraryDependencies += "org.controlsfx" % "controlsfx" % "9.0.0" intransitive()
 

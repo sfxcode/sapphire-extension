@@ -2,6 +2,11 @@
 
 ## Versions
 
+### 0.8.2
+* sbt 1.2.6
+* sapphire-core 1.4.1
+* akka 2.5.19
+
 ### 0.8.1
 * sbt 1.2.6
 * sapphire-core 1.4.1
