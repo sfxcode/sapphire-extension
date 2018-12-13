@@ -6,6 +6,7 @@
 * sbt 1.2.6
 * sapphire-core 1.4.1
 * akka 2.5.19
+* SceneBuilder jar 0.2.1
 
 ### 0.8.1
 * sbt 1.2.6
