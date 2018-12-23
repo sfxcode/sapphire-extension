@@ -22,7 +22,7 @@ resolvers += Resolver.jcenterRepo
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "4.3." % Test
+libraryDependencies += "org.specs2" %% "specs2-core" % "4.3.6" % Test
 
 libraryDependencies += "org.json4s" %% "json4s-native" % "3.6.2" % Test
 
