@@ -22,15 +22,17 @@ resolvers += Resolver.jcenterRepo
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "4.3.5" % "test"
+libraryDependencies += "org.specs2" %% "specs2-core" % "4.3." % Test
 
-libraryDependencies += "org.json4s" %% "json4s-native" % "3.6.2" % "provided"
+libraryDependencies += "org.json4s" %% "json4s-native" % "3.6.2" % Test
+
+// Provided
+
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.4.3" % Provided
+
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.19" % Provided
 
 // Compile
-
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.4.2"
-
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.19"
 
 libraryDependencies += "org.controlsfx" % "controlsfx" % "9.0.0" intransitive()
 

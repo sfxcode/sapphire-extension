@@ -2,9 +2,12 @@
 
 ## Versions
 
+### 0.8.3
+* sapphire-core 1.4.3
+
 ### 0.8.2
-* sbt 1.2.6
-* sapphire-core 1.4.1
+* sbt 1.2.7
+* sapphire-core 1.4.2
 * akka 2.5.19
 * SceneBuilder jar 0.2.1
 
