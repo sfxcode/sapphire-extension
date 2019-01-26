@@ -2,6 +2,11 @@
 
 ## Versions
 
+### 0.8.4
+* sapphire-core 1.4.5 ([javafx 11.0.2](https://github.com/johanvos/openjdk-jfx/blob/jfx-11/doc-files/release-notes-11.0.2.md))
+* ikonli 11.1.0
+* sbt 1.2.8
+
 ### 0.8.3
 * sapphire-core 1.4.3
 

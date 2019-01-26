@@ -22,13 +22,13 @@ resolvers += Resolver.jcenterRepo
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "4.3.6" % Test
+libraryDependencies += "org.specs2" %% "specs2-core" % "4.4.0" % Test
 
-libraryDependencies += "org.json4s" %% "json4s-native" % "3.6.2" % Test
+libraryDependencies += "org.json4s" %% "json4s-native" % "3.6.3" % Test
 
 // Provided
 
-libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.4.3" % Provided
+libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % "1.4.5" % Provided
 
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.19" % Provided
 
@@ -36,9 +36,11 @@ libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.19" % Provided
 
 libraryDependencies += "org.controlsfx" % "controlsfx" % "9.0.0" intransitive()
 
-libraryDependencies += "org.kordamp.ikonli" % "ikonli-javafx" % "11.0.2"
+val IkonliVersion = "11.1.0"
 
-libraryDependencies += "org.kordamp.ikonli" % "ikonli-fontawesome-pack" % "11.0.2"
+libraryDependencies += "org.kordamp.ikonli" % "ikonli-javafx" % IkonliVersion
+
+libraryDependencies += "org.kordamp.ikonli" % "ikonli-fontawesome-pack" % IkonliVersion
 
 
 licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html"))
