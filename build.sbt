@@ -135,7 +135,7 @@ bintrayReleaseOnPublish in ThisBuild := true
 
 publishMavenStyle := true
 
-homepage := Some(url("https://github.com/sfxcode/sapphire-core"))
+homepage := Some(url("https://github.com/sfxcode/sapphire-extension"))
 
 scmInfo := Some(
   ScmInfo(
