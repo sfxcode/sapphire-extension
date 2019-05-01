@@ -67,6 +67,10 @@ addCommandAlias("run-showcase", "sapphire-extension-showcase/run")
 
 resolvers += Resolver.jcenterRepo
 
+resolvers += "sfxcode-maven" at "https://bintray.com/sfxcode/maven/sapphire-core"
+
+
+
 // Test
 
 libraryDependencies += "org.specs2" %% "specs2-core" % "4.5.1" % Test
