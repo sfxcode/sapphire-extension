@@ -1,8 +1,8 @@
-
 # See http://about.travis-ci.org/docs/user/build-configuration/
 language: scala
 scala:
-- 2.12.6
+  - 2.11.12
+  - 2.12.8
 branches:
   only:
     - master
@@ -11,13 +11,5 @@ notifications:
     recipients:
       - tom@sfxcode.com
 jdk:
-  - oraclejdk8
-before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
-script:
-  - sbt ++$TRAVIS_SCALA_VERSION -jvm-opts travis/jvmopts test
+  - openjdk11
+  - openjdk12
