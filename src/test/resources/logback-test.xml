@@ -7,7 +7,7 @@
       </encoder>
   </appender>
 
-    <logger name="com.sfxcode.sapphire.extension" level="trace" />
+    <logger name="com.sfxcode.sapphire.extension" level="debug" />
 
     <root level="debug">
     <appender-ref ref="STDOUT" />

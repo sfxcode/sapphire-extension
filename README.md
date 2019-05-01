@@ -1,22 +1,22 @@
 sapphire-extension
 ================
 
-The sapphire extension framework adds additional features to sapphire-core.
+The sapphire extension framework adds additional features to [sapphire-core](https://sfxcode.github.io/sapphire-core/).
 
 ## Version
 
 Scala Version is 2.12.8
 
-Java Version is 11.x
+Java Version is 11 / 12
 
-## Demo
+## Showcase
 
 Simple Demo can be found in the it directory.
 
-Start in SBT Console:
+Start from Console:
 
 ```
-it:runMain com.sfxcode.sapphire.extension.demo.Application
+sbt run-showcase
 ```
 
 ## Download
@@ -25,7 +25,7 @@ it:runMain com.sfxcode.sapphire.extension.demo.Application
 
 ## SceneBuilder
 
-jar for using sapphire-extensions with SceneBuilder can be found in the scenebuilder directory.
+jar for using sapphire-extensions with SceneBuilder can be found in the scenebuilder/dist directory.
 
 ## About
 
@@ -45,8 +45,10 @@ Apache 2 License.
 [ ![Download](https://api.bintray.com/packages/sfxcode/maven/sapphire-core/images/download.svg) ](https://bintray.com/sfxcode/maven/sapphire-core/_latestVersion)
 
 
-### ControlsFX Dependency
+### ControlsFX
 
 [http://fxexperience.com/controlsfx/](http://fxexperience.com/controlsfx/)
 
+### Ikonli
 
+[https://aalmiray.github.io/ikonli/](https://aalmiray.github.io/ikonli/)

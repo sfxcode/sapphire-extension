@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<?import com.sfxcode.sapphire.core.control.FXValueFactory?>
+<?import com.sfxcode.sapphire.extension.control.table.FXTextFieldCellFactory?>
+<?import com.sfxcode.sapphire.core.control.FXListCellFactory?>
+<?import com.sfxcode.sapphire.extension.control.table.FXCheckBoxCellFactory?>
+<AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sfxcode.sapphire.extension.showcase.controller.table.SimplePersonTableController">
+    <children>
+        <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <center>
+                <TableView fx:id="table" BorderPane.alignment="CENTER">
+                    <columns>
+                        <TableColumn  text="Name">
+                            <cellValueFactory>
+                                <FXValueFactory property="name" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn  text="Company">
+                            <cellValueFactory>
+                                <FXValueFactory property="company" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn  text="Expression Test">
+                            <cellValueFactory>
+                                <FXValueFactory property="!{_self.age()} / !{_self.gender()}" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn  text="Expression Test CDI">
+                            <cellValueFactory>
+                                <FXValueFactory property="!{simplePersonTableController.testString()}" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn  text="Balance">
+                            <cellValueFactory>
+                                <FXValueFactory property="balance" format="#,##0.00" />
+                            </cellValueFactory>
+                            <cellFactory>
+                                <FXTextFieldCellFactory alignment="right"/>
+                            </cellFactory>
+                        </TableColumn>
+                        <TableColumn  text="Active">
+                            <cellValueFactory>
+                                <FXValueFactory property="isActive" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn  text="Checkbox Test">
+                            <cellValueFactory>
+                                <FXValueFactory property="isActive" />
+                            </cellValueFactory>
+                            <cellFactory>
+                                <FXCheckBoxCellFactory alignment="right"/>
+                            </cellFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+            </center>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </padding>
+         <bottom>
+
+         </bottom>
+        </BorderPane>
+    </children>
+</AnchorPane>

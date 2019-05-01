@@ -2,6 +2,11 @@
 
 ## Versions
 
+### 0.9.0
+* sapphire-core 1.5.0 ([javafx 12.0.1](https://github.com/javafxports/openjdk-jfx/blob/jfx-12/doc-files/release-notes-12.md#release-notes-for-javafx-12))
+* showcase demo (moved)
+* scenebuilder jar sources (only use for preview in scenebuilder)
+
 ### 0.8.4
 * sapphire-core 1.4.5 ([javafx 11.0.2](https://github.com/johanvos/openjdk-jfx/blob/jfx-11/doc-files/release-notes-11.0.2.md))
 * ikonli 11.1.0

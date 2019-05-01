@@ -40,7 +40,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableBuffer[FXBean[S]]]
   items.onChange((_, oldValue, newValue) => itemsChanged(oldValue, newValue))
 
   def itemsChanged(oldItems: ObservableBuffer[FXBean[S]], newItems: ObservableBuffer[FXBean[S]]): Unit = {
-    oldItems.onChange()
+    oldItems.onChange({})
     newItems.onChange(filter())
     itemsHasChanged()
   }
