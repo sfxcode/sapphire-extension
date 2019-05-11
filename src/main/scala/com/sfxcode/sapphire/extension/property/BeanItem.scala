@@ -1,18 +1,17 @@
 package com.sfxcode.sapphire.extension.property
 
-import java.time.{ ZoneId, LocalDateTime, Instant, LocalDate }
-import java.util.{ Optional, Date }
-import javafx.beans.value.ObservableValue
+import java.time.{Instant, LocalDate, LocalDateTime, ZoneId}
+import java.util.{Date, Optional}
 
+import com.sfxcode.sapphire.core.base.ConfigValues
+import javafx.beans.value.ObservableValue
 import com.sfxcode.sapphire.core.value._
-import com.typesafe.config.ConfigFactory
 import org.controlsfx.control.PropertySheet.Item
 
 import scala.reflect.runtime.universe._
 import scalafx.collections.ObservableBuffer
 
-class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = "") extends Item {
-  val conf = ConfigFactory.load()
+class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = "") extends Item with ConfigValues {
 
   override def getType: Class[_] = {
     val memberInfo = FXBeanClassRegistry.memberInfo(bean.bean, key)
@@ -40,7 +39,7 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", ca
 
   override def getCategory = {
     if (category.isEmpty)
-      conf.getString("sapphire.extension.properties.beanItem.defaultCategory")
+      configStringValue("sapphire.extension.properties.beanItem.defaultCategory")
     else
       category
   }
