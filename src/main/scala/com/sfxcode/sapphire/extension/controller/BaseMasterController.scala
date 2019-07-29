@@ -2,8 +2,6 @@ package com.sfxcode.sapphire.extension.controller
 
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.filter.DataTableFilter
-import scalafx.Includes._
-import scalafx.scene.input.MouseEvent
 
 abstract class BaseMasterController extends DataTableController {
 
@@ -12,12 +10,12 @@ abstract class BaseMasterController extends DataTableController {
 
   override def initTable(filter: DataTableFilter[R]): Unit = {
     super.initTable(filter)
-    table.onMouseClicked = (e: MouseEvent) => {
-      if (e.clickCount == 2) {
+    table.setOnMouseClicked(event => {
+      if (event.getClickCount == 2) {
         onDoubleClick(filter.selectedBean)
         lastSelected = filter.getTable.getSelectionModel.selectedIndexProperty().intValue()
       }
-    }
+    })
   }
 
   override def didGainVisibilityFirstTime(): Unit = {

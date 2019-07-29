@@ -8,8 +8,8 @@ import com.sfxcode.sapphire.core.cdi.provider.ConverterProvider
 
 import beans.BeanProperty
 
-import scalafx.geometry.Pos
-import scalafx.scene.text.TextAlignment
+import javafx.geometry.Pos
+import javafx.scene.text.TextAlignment
 
 abstract class FXCellFactory[S, T] extends Callback[TableColumn[S, T], TableCell[S, T]] with BeanResolver {
 
@@ -20,12 +20,12 @@ abstract class FXCellFactory[S, T] extends Callback[TableColumn[S, T], TableCell
   var converter: String = _
 
   def updateCell(column: TableColumn[S, T], cell: TableCell[S, T]): TableCell[S, T] = {
-    if (alignment == TextAlignment.Center || alignment.toString.equalsIgnoreCase("center")) {
-      cell.setAlignment(Pos.Center)
-    } else if (alignment == TextAlignment.Right || alignment.toString.equalsIgnoreCase("right")) {
-      cell.setAlignment(Pos.CenterRight)
+    if (alignment == TextAlignment.CENTER || alignment.toString.equalsIgnoreCase("center")) {
+      cell.setAlignment(Pos.CENTER)
+    } else if (alignment == TextAlignment.RIGHT || alignment.toString.equalsIgnoreCase("right")) {
+      cell.setAlignment(Pos.CENTER_RIGHT)
     } else
-      cell.setAlignment(Pos.CenterLeft)
+      cell.setAlignment(Pos.CENTER_LEFT)
 
     if (converter != null) {
       cell match {

@@ -9,8 +9,8 @@ import com.sfxcode.sapphire.extension.showcase.controller.AbstractBaseController
 import com.sfxcode.sapphire.extension.showcase.model.{ PersonDatabase, Friend }
 import com.typesafe.scalalogging.LazyLogging
 
-import scalafx.beans.property.ObjectProperty
-import scalafx.collections.ObservableBuffer
+import javafx.beans.property.ObjectProperty
+import javafx.collections.ObservableBuffer
 
 class DualListFormController extends AbstractBaseController with LazyLogging {
 

@@ -4,12 +4,11 @@ import com.sfxcode.sapphire.core.controller.ViewController
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.filter.DataTableFilter
 import com.typesafe.scalalogging.LazyLogging
+import javafx.beans.property.SimpleObjectProperty
+import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.scene.control.TableView
 import javafx.scene.layout.HBox
-import scalafx.Includes._
-import scalafx.beans.property.ObjectProperty
-import scalafx.collections.ObservableBuffer
 
 import scala.reflect.ClassTag
 
@@ -31,22 +30,22 @@ abstract class DataTableController extends ViewController with LazyLogging {
 
   var tableFilter: DataTableFilter[R] = _
 
-  def items: ObservableBuffer[FXBean[R]]
+  def items: ObservableList[FXBean[R]]
 
   override def didGainVisibilityFirstTime() {
     super.didGainVisibilityFirstTime()
 
-    val itemsProperty = ObjectProperty[ObservableBuffer[FXBean[R]]](this, "", items)
-    tableFilter = new DataTableFilter[R](table, itemsProperty, ObjectProperty(this, "", searchBox))(ct)
+    val itemsProperty = new SimpleObjectProperty[ObservableList[FXBean[R]]](this, "", items)
+    tableFilter = new DataTableFilter[R](table, itemsProperty, new SimpleObjectProperty(this, "", searchBox))(ct)
 
     if (shouldAddColunns)
       tableFilter.addColumns()
 
     initTable(tableFilter)
 
-    tableFilter.selectedItem.onChange((_, oldValue, newValue) => selectedTableViewItemDidChange(oldValue, newValue))
-    tableFilter.selectedItems.onChange((source, changes) => {
-      selectedItemsDidChange(source, changes)
+    tableFilter.selectedItem.addListener((_, oldValue, newValue) => selectedTableViewItemDidChange(oldValue, newValue))
+    tableFilter.selectedItems.addListener((source) => {
+      selectedItemsDidChange(source.asInstanceOf[ObservableList[FXBean[R]]])
     })
   }
 
@@ -56,7 +55,7 @@ abstract class DataTableController extends ViewController with LazyLogging {
 
   }
 
-  def selectedItemsDidChange(source: ObservableBuffer[FXBean[R]], changes: Seq[ObservableBuffer.Change[FXBean[R]]]): Unit = {
+  def selectedItemsDidChange(source: ObservableList[FXBean[R]]): Unit = {
     logger.debug("new values count: %s".format(source.size))
   }
 

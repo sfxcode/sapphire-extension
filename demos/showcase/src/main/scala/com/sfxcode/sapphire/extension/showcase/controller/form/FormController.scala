@@ -10,7 +10,7 @@ import com.sfxcode.sapphire.extension.showcase.controller.AbstractBaseController
 import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
 
 import scala.util.Random
-import scalafx.Includes._
+import javafx.Includes._
 
 class FormController extends AbstractBaseController {
   @FXML

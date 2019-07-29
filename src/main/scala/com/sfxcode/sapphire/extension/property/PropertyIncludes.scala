@@ -1,6 +1,6 @@
 package com.sfxcode.sapphire.extension.property
 
-import scalafx.beans.property.ObjectProperty
+import javafx.beans.property.ObjectProperty
 
 trait PropertyIncludes {
 

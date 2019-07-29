@@ -3,7 +3,6 @@ package com.sfxcode.sapphire.extension.controller
 import com.sfxcode.sapphire.core.controller.ViewController
 import javafx.fxml.FXML
 import javafx.scene.control._
-import scalafx.Includes._
 
 abstract class BaseTabController extends ViewController {
 
@@ -11,7 +10,7 @@ abstract class BaseTabController extends ViewController {
 
   override def didGainVisibilityFirstTime() {
     super.didGainVisibilityFirstTime()
-    tabPane.getSelectionModel.selectedItemProperty.onChange((_, oldValue, newValue) => {
+    tabPane.getSelectionModel.selectedItemProperty.addListener((_, oldValue, newValue) => {
       tabPaneHasChanged(oldValue, newValue)
     })
   }

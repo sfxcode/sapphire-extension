@@ -6,17 +6,15 @@ import com.sfxcode.sapphire.core.value.FXBean
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 import scala.reflect.runtime.{ universe => ru }
-import scalafx.scene.control.TableColumn
-import scalafx.scene.text.TextAlignment
+import javafx.scene.control.TableColumn
+import javafx.scene.text.TextAlignment
 
 object TableColumnFactory {
   val rightAlignmentList = List("Date", "Calendar", "Int", "Long", "Double", "Float")
 
   def columnFromFactories[S <: AnyRef, T](header: String, valueFactory: FXValueFactory[FXBean[S], T], cellFactory: Option[FXCellFactory[FXBean[S], T]] = None): TableColumn[FXBean[S], T] = {
-    val column = new TableColumn[FXBean[S], T]() {
-      text = header
-      prefWidth = 80
-    }
+    val column = new TableColumn[FXBean[S], T](header)
+    column.setPrefWidth(80)
     column.setCellValueFactory(valueFactory)
     if (cellFactory.isDefined)
       column.setCellFactory(cellFactory.get)
@@ -37,7 +35,7 @@ object TableColumnFactory {
         cellFactory.setConverter(signature.replace("Int", "Integer"))
 
       if (shouldAlignRight(signature))
-        cellFactory.setAlignment(TextAlignment.Right)
+        cellFactory.setAlignment(TextAlignment.RIGHT)
 
       val property = columnPropertyMap.getOrElse(name, name)
       val valueFactory = new FXValueFactory[FXBean[S], T]()

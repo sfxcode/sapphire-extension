@@ -6,8 +6,8 @@ import com.sfxcode.sapphire.core.control.FXListCellFactory
 import com.sfxcode.sapphire.extension.Includes._
 import com.sfxcode.sapphire.extension.control.DataListView
 
-import scalafx.scene.control._
-import scalafx.scene.layout.{ HBox, VBox }
+import javafx.scene.control._
+import javafx.scene.layout.{ HBox, VBox }
 
 class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[DataListView[S]](view) {
 

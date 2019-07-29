@@ -8,7 +8,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-crossScalaVersions := Seq("2.12.8", "2.11.12")
+crossScalaVersions := Seq("2.12.8", "2.13.0")
 
 scalaVersion := crossScalaVersions.value.head
 
@@ -24,9 +24,10 @@ javacOptions in test += "-Dorg.apache.deltaspike.ProjectStage=Test"
 parallelExecution in Test := false
 
 val JavaFXVersion = "12.0.1"
-val SapphireCoreVersion = "1.5.1"
-val Json4sVersion = "3.6.5"
+val SapphireCoreVersion = "1.6.0-SNAPSHOT"
+val Json4sVersion = "3.6.6"
 val LogbackVersion = "1.2.3"
+val IkonliVersion = "11.3.4"
 
 
 val osName = System.getProperty("os.name") match {
@@ -86,13 +87,11 @@ libraryDependencies += "ch.qos.logback" % "logback-classic" % LogbackVersion % P
 
 libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % SapphireCoreVersion % Provided
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.22" % Provided
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.23" % Provided
 
 // Compile
 
 libraryDependencies += "org.controlsfx" % "controlsfx" % "11.0.0" intransitive()
-
-val IkonliVersion = "11.3.3"
 
 libraryDependencies += "org.kordamp.ikonli" % "ikonli-javafx" % IkonliVersion
 

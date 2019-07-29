@@ -11,10 +11,10 @@ import com.sfxcode.sapphire.extension.showcase.controller.AbstractBaseController
 import com.sfxcode.sapphire.extension.showcase.model.{ Friend, PersonDatabase }
 import com.typesafe.scalalogging.LazyLogging
 
-import scalafx.Includes._
-import scalafx.beans.property.ObjectProperty
-import scalafx.collections.ObservableBuffer
-import scalafx.scene.input.MouseEvent
+import javafx.Includes._
+import javafx.beans.property.ObjectProperty
+import javafx.collections.ObservableBuffer
+import javafx.scene.input.MouseEvent
 
 class ListFormController extends AbstractBaseController with LazyLogging {
 

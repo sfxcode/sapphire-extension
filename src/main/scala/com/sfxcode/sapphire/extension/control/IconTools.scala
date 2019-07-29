@@ -1,7 +1,7 @@
 package com.sfxcode.sapphire.extension.control
 
 import org.kordamp.ikonli.javafx.FontIcon
-import scalafx.scene.control.Button
+import javafx.scene.control.Button
 
 object IconTools {
 

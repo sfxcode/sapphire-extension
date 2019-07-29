@@ -3,10 +3,10 @@ package com.sfxcode.sapphire.extension.filter
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.control.DataListView
 import javafx.beans.property.ReadOnlyObjectProperty
-import scalafx.Includes._
-import scalafx.collections.ObservableBuffer
-import scalafx.scene.control.{ ListView, TextField }
+import javafx.collections.ObservableList
+import javafx.scene.control.{ListView, TextField}
 
+import scala.collection.JavaConverters._
 class DataListFilter[S <: AnyRef](dataList: DataListView[S])
   extends DataFilter[S](dataList.items, dataList.header) {
   var sortFiltered = true
@@ -14,9 +14,9 @@ class DataListFilter[S <: AnyRef](dataList: DataListView[S])
   var searchField: TextField = addSearchField(dataList.cellProperty.get)
   searchField.setPromptText(dataList.filterPromptProperty.get)
 
-  dataList.filterPromptProperty.onChange((_, oldValue, newValue) => searchField.setPromptText(newValue))
+  dataList.filterPromptProperty.addListener((_, oldValue, newValue) => searchField.setPromptText(newValue))
 
-  dataList.cellProperty.onChange((_, oldValue, newValue) => cellPropertyChanged(oldValue, newValue))
+  dataList.cellProperty.addListener((_, oldValue, newValue) => cellPropertyChanged(oldValue, newValue))
 
   def cellPropertyChanged(oldValue: String, newValue: String): Unit = {
     controlList.clear()
@@ -28,19 +28,19 @@ class DataListFilter[S <: AnyRef](dataList: DataListView[S])
     filterNameControlMapping.clear()
     searchField.setText("")
 
-    if (dataList.header.value != null)
-      dataList.header.value.getChildren.remove(searchField)
+    if (dataList.header.get != null)
+      dataList.header.get.getChildren.remove(searchField)
 
     searchField = addSearchField(dataList.cellProperty.get)
     searchField.setPromptText(dataList.filterPromptProperty.get)
 
   }
 
-  filterResult.onChange {
+  filterResult.addListener(_ => {
     dataList.listView.getItems.clear()
-    if (filterResult.nonEmpty)
-      filterResult.foreach(v => dataList.listView.getItems.add(v))
-  }
+    if (!filterResult.isEmpty)
+      filterResult.asScala.foreach(v => dataList.listView.getItems.add(v))
+  })
 
   filter()
 
@@ -60,10 +60,10 @@ class DataListFilter[S <: AnyRef](dataList: DataListView[S])
 
   def listView: ListView[FXBean[S]] = dataList.listView
 
-  def selectedBean: FXBean[S] = listView.selectionModel().selectedItemProperty().get()
+  def selectedBean: FXBean[S] = listView.getSelectionModel.selectedItemProperty.get
 
-  def selectedItem: ReadOnlyObjectProperty[FXBean[S]] = listView.selectionModel().selectedItemProperty()
+  def selectedItem: ReadOnlyObjectProperty[FXBean[S]] = listView.getSelectionModel.selectedItemProperty
 
-  def selectedItems: ObservableBuffer[FXBean[S]] = listView.selectionModel().selectedItems
+  def selectedItems: ObservableList[FXBean[S]] = listView.getSelectionModel.getSelectedItems
 
 }

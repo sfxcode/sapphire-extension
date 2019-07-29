@@ -6,10 +6,11 @@ import java.util.{Date, Optional}
 import com.sfxcode.sapphire.core.base.ConfigValues
 import javafx.beans.value.ObservableValue
 import com.sfxcode.sapphire.core.value._
+import javafx.collections.{FXCollections, ObservableList}
 import org.controlsfx.control.PropertySheet.Item
 
+import scala.collection.JavaConverters._
 import scala.reflect.runtime.universe._
-import scalafx.collections.ObservableBuffer
 
 class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = "") extends Item with ConfigValues {
 
@@ -65,7 +66,7 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", ca
     Date.from(instant)
   }
 
-  override def getObservableValue: Optional[ObservableValue[_]] = Optional.of(bean.getProperty(key).delegate.asInstanceOf[ObservableValue[_]])
+  override def getObservableValue: Optional[ObservableValue[_]] = Optional.of(bean.getProperty(key).asInstanceOf[ObservableValue[_]])
 }
 
 object BeanItem {
@@ -74,8 +75,8 @@ object BeanItem {
     new BeanItem(bean, key, name, category, description)
   }
 
-  def beanItems[T <: AnyRef](bean: FXBean[T])(implicit t: TypeTag[T]): ObservableBuffer[Item] = {
-    val result = new ObservableBuffer[Item]()
+  def beanItems[T <: AnyRef](bean: FXBean[T])(implicit t: TypeTag[T]): ObservableList[Item] = {
+    val result = FXCollections.observableArrayList[Item]()
     val symbols = ReflectionTools.getMembers[T]()
     symbols.foreach(s => {
       val key = s.name.toString
@@ -87,7 +88,7 @@ object BeanItem {
 }
 
 class BeanItems {
-  private val itemBuffer = new ObservableBuffer[BeanItem]()
+  private val itemBuffer = FXCollections.observableArrayList[BeanItem]()
 
   private var bean: FXBean[_ <: AnyRef] = _
 
@@ -98,7 +99,7 @@ class BeanItems {
   }
 
   def updateBean(bean: FXBean[_ <: AnyRef]) {
-    itemBuffer.foreach(item => item.bean = bean)
+    itemBuffer.asScala.foreach(item => item.bean = bean)
   }
 
 }

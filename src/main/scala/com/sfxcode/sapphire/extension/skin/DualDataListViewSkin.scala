@@ -6,21 +6,21 @@ import javafx.scene.control.SkinBase
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.control.{ DataListView, DualDataListView }
 import org.kordamp.ikonli.javafx.FontIcon
-import scalafx.Includes._
-import scalafx.collections.ObservableBuffer
-import scalafx.event.ActionEvent
-import scalafx.geometry.Pos
-import scalafx.scene.control.Button
-import scalafx.scene.input.MouseEvent
-import scalafx.scene.layout.Priority._
-import scalafx.scene.layout._
+import javafx.Includes._
+import javafx.collections.ObservableBuffer
+import javafx.event.ActionEvent
+import javafx.geometry.Pos
+import javafx.scene.control.Button
+import javafx.scene.input.MouseEvent
+import javafx.scene.layout.Priority._
+import javafx.scene.layout._
 import com.sfxcode.sapphire.extension.control.IconTools._
 
 class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinBase[DualDataListView[S]](view) {
 
-  implicit def observableBufferToList[T <: AnyRef](buffer: ObservableBuffer[FXBean[T]]): Seq[T] = {
-    buffer.map(item => item.bean).toSeq
-  }
+//  implicit def observableBufferToList[T <: AnyRef](buffer: ObservableBuffer[FXBean[T]]): Seq[T] = {
+//    buffer.map(item => item.bean).toSeq
+//  }
 
   val contentGridPane = new GridPane() {
     styleClass += "content-grid"
@@ -37,29 +37,29 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
   val buttonMoveToSource: Button = decoratedFontIconButton("fa-angle-left")
   val buttonMoveToSourceAll: Button = decoratedFontIconButton("fa-angle-double-left")
 
-  buttonMoveToTarget.onAction = (e: ActionEvent) => moveToTarget()
-  buttonMoveToSource.onAction = (e: ActionEvent) => moveToSource()
-  buttonMoveToTargetAll.onAction = (e: ActionEvent) => moveAllToTarget()
-  buttonMoveToSourceAll.onAction = (e: ActionEvent) => moveAllToSource()
+  buttonMoveToTarget.setOnAction(_ => moveToTarget())
+  buttonMoveToSource.setOnAction(_ => moveToSource())
+  buttonMoveToTargetAll.setOnAction(_ => moveAllToTarget())
+  buttonMoveToSourceAll.setOnAction(_ => moveAllToSource())
 
   def leftItems = view.leftDataListView.getItems
 
-  def leftSelectionModel = view.leftDataListView.listView.selectionModel()
+  def leftSelectionModel = view.leftDataListView.listView.getSelectionModel
 
   def rightItems = view.rightDataListView.getItems
 
-  def rightSelectionModel = view.rightDataListView.listView.selectionModel()
+  def rightSelectionModel = view.rightDataListView.listView.getSelectionModel
 
   leftSelectionModel.setSelectionMode(MULTIPLE)
   rightSelectionModel.setSelectionMode(MULTIPLE)
 
-  leftItems.onChange {
+  leftItems.addListener(_ => {
     bindButtons()
-  }
+  })
 
-  rightItems.onChange {
+  rightItems.addListener(_ => {
     bindButtons()
-  }
+  })
 
   leftSelectionModel.getSelectedItems.onChange {
     bindButtons()

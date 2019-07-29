@@ -6,7 +6,7 @@ import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.Node
 import javafx.scene.layout.Pane
-import scalafx.Includes._
+import javafx.Includes._
 
 import scala.reflect.ClassTag
 

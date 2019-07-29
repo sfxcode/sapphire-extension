@@ -1,16 +1,14 @@
 package com.sfxcode.sapphire.extension.control
 
-import javafx.scene.control.{ Control, Label, Skin }
 import javafx.scene.layout.Pane
-
 import com.sfxcode.sapphire.core.Includes._
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.filter.DataListFilter
 import com.sfxcode.sapphire.extension.skin.DataListViewSkin
-
-import scalafx.beans.property._
-import scalafx.collections.ObservableBuffer
-import scalafx.scene.control.ListView
+import javafx.beans.property._
+import javafx.collections.{FXCollections, ObservableList}
+import javafx.scene.control.{Control, Label, ListView, Skin}
+import scala.collection.JavaConverters._
 
 class DataListView[S <: AnyRef] extends Control {
 
@@ -18,26 +16,26 @@ class DataListView[S <: AnyRef] extends Control {
 
   getStyleClass.add("data-list-view")
 
-  val items = ObjectProperty[ObservableBuffer[FXBean[S]]](this, "listViewItems", ObservableBuffer[FXBean[S]]())
+  val items = new SimpleObjectProperty[ObservableList[FXBean[S]]](this, "listViewItems", FXCollections.observableArrayList[FXBean[S]]())
 
   val listView = new ListView[FXBean[S]]()
 
-  val showHeader = BooleanProperty(true)
-  val header = ObjectProperty[Pane](this, "listViewHeader")
+  val showHeader = new SimpleBooleanProperty(true)
+  val header = new SimpleObjectProperty[Pane](this, "listViewHeader")
 
-  val showFooter = BooleanProperty(false)
-  val footer = ObjectProperty[Pane](this, "listViewFooter")
+  val showFooter = new SimpleBooleanProperty(false)
+  val footer = new SimpleObjectProperty[Pane](this, "listViewFooter")
 
-  val footerLabel = ObjectProperty[Label](this, "listViewFooterLabel")
-  val footerTextProperty = StringProperty("%s of %s items")
+  val footerLabel = new SimpleObjectProperty[Label](this, "listViewFooterLabel")
+  val footerTextProperty = new SimpleStringProperty("%s of %s items")
 
-  val cellProperty = StringProperty("${_self.toString()}")
+  val cellProperty = new SimpleStringProperty("${_self.toString()}")
 
-  val sortProperty = StringProperty("")
-  val shouldSortProperty = BooleanProperty(true)
+  val sortProperty = new SimpleStringProperty("")
+  val shouldSortProperty = new SimpleBooleanProperty(true)
 
-  val filterPromptProperty = StringProperty("type to filter")
-  val filter = ObjectProperty(new DataListFilter[S](this))
+  val filterPromptProperty = new SimpleStringProperty("type to filter")
+  val filter = new SimpleObjectProperty(new DataListFilter[S](this))
 
   protected override def createDefaultSkin: Skin[DataListView[S]] = {
     new DataListViewSkin[S](this)
@@ -50,35 +48,35 @@ class DataListView[S <: AnyRef] extends Control {
   }
 
   def remove(bean: FXBean[S]) {
-    items.value.remove(bean)
+    items.get.remove(bean)
   }
 
   def add(bean: FXBean[S]): Unit = {
-    items.value.remove(bean)
+    items.get.add(bean)
   }
 
-  def getItems: ObservableBuffer[FXBean[S]] = items.value
+  def getItems: ObservableList[FXBean[S]] = items.get
 
-  footer.onChange((_, _, _) => {
-    if (showFooter.value)
-      footerLabel.value.setText(footerTextProperty.value.format(filter.value.filterResult.size, filter.value.itemValues.size))
-    filter.value.filterResult.onChange({
-      if (showFooter.value)
-        footerLabel.value.setText(footerTextProperty.value.format(filter.value.filterResult.size, filter.value.itemValues.size))
+  footer.addListener((_, _, _) => {
+    if (showFooter.get)
+      footerLabel.get.setText(footerTextProperty.get.format(filter.get.filterResult.size, filter.get.itemValues.size))
+    filter.get.filterResult.addListener(_ => {
+      if (showFooter.get)
+        footerLabel.get.setText(footerTextProperty.get.format(filter.get.filterResult.size, filter.get.itemValues.size))
     })
   })
 
-  private def sortedItems(values: ObservableBuffer[FXBean[S]]): ObservableBuffer[FXBean[S]] = {
+  private def sortedItems(values: ObservableList[FXBean[S]]): ObservableList[FXBean[S]] = {
     var result = values
 
-    if (shouldSortProperty.value) {
+    if (shouldSortProperty.get) {
       val sortKey = {
-        if (sortProperty.value == null || sortProperty.value.isEmpty)
-          cellProperty.value
+        if (sortProperty.get == null || sortProperty.get.isEmpty)
+          cellProperty.get
         else
-          sortProperty.value
+          sortProperty.get
       }
-      result = values.sortBy(f => "" + f.getValue(sortKey))
+      result = FXCollections.observableArrayList(values.asScala.sortBy(f => "" + f.getValue(sortKey)).asJava)
     }
     result
   }

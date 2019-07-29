@@ -9,9 +9,9 @@ import com.sfxcode.sapphire.extension.showcase.controller.MainWindowController
 import com.sfxcode.sapphire.extension.scene.ExtensionResolver
 import com.typesafe.scalalogging.LazyLogging
 
-import scalafx.application.JFXApp.PrimaryStage
-import scalafx.scene.Scene
-import scalafx.stage.Stage
+import javafx.application.JFXApp.PrimaryStage
+import javafx.scene.Scene
+import javafx.stage.Stage
 
 object Application extends FXApp {
   ExtensionResolver.add()

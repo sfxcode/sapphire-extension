@@ -6,7 +6,7 @@ import com.sfxcode.sapphire.extension.controller.DataTableController
 import com.sfxcode.sapphire.extension.showcase.controller.MainWindowController
 import com.sfxcode.sapphire.extension.filter.DataTableFilter
 import com.typesafe.scalalogging.LazyLogging
-import scalafx.Includes._
+import javafx.Includes._
 
 abstract class AbstractTableViewController extends DataTableController with LazyLogging {
 

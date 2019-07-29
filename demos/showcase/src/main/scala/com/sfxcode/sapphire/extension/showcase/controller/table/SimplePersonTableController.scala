@@ -8,10 +8,10 @@ import com.sfxcode.sapphire.core.controller.ViewController
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
 
-import scalafx.collections.ObservableBuffer
+import javafx.collections.ObservableBuffer
 import com.sfxcode.sapphire.core.Includes._
 import com.sfxcode.sapphire.extension.showcase.controller.MainWindowController
-import scalafx.Includes._
+import javafx.Includes._
 
 class SimplePersonTableController extends ViewController {
 

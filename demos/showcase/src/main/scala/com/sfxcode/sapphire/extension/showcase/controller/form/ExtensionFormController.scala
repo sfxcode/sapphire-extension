@@ -9,7 +9,7 @@ import com.sfxcode.sapphire.extension.showcase.controller.AbstractBaseController
 import com.sfxcode.sapphire.extension.showcase.model.BookRating
 
 import scala.util.Random
-import scalafx.Includes._
+import javafx.Includes._
 
 class ExtensionFormController extends AbstractBaseController {
   @FXML

@@ -6,8 +6,7 @@ import com.sfxcode.sapphire.core.cdi.{ ApplicationEnvironment, BeanResolver }
 import com.sfxcode.sapphire.core.scene.NodePropertyResolving
 import org.controlsfx.control.Rating
 
-import scalafx.Includes._
-import scalafx.beans.property.Property
+import javafx.beans.property.Property
 
 class ExtensionResolver extends NodePropertyResolving {
 
