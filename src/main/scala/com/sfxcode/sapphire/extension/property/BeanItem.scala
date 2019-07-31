@@ -1,6 +1,7 @@
 package com.sfxcode.sapphire.extension.property
 
 import java.time.{Instant, LocalDate, LocalDateTime, ZoneId}
+import java.util
 import java.util.{Date, Optional}
 
 import com.sfxcode.sapphire.core.base.ConfigValues
@@ -8,8 +9,8 @@ import javafx.beans.value.ObservableValue
 import com.sfxcode.sapphire.core.value._
 import javafx.collections.{FXCollections, ObservableList}
 import org.controlsfx.control.PropertySheet.Item
+import com.sfxcode.sapphire.core.collections.CollectionExtensions._
 
-import scala.collection.JavaConverters._
 import scala.reflect.runtime.universe._
 
 class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = "") extends Item with ConfigValues {
@@ -22,7 +23,7 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", ca
       memberInfo.javaClass
   }
 
-  def isDateType = FXBeanClassRegistry.memberInfo(bean.bean, key).signature == PropertyType.TypeDate
+  def isDateType: Boolean = FXBeanClassRegistry.memberInfo(bean.bean, key).signature == PropertyType.TypeDate
 
   override def getValue: AnyRef = {
     if (isDateType)
@@ -38,21 +39,21 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", ca
       bean.updateValue(key, value)
   }
 
-  override def getCategory = {
+  override def getCategory: String = {
     if (category.isEmpty)
       configStringValue("sapphire.extension.properties.beanItem.defaultCategory")
     else
       category
   }
 
-  override def getName = {
+  override def getName: String = {
     if (name.isEmpty)
       key
     else
       name
   }
 
-  override def getDescription = description
+  override def getDescription: String = description
 
   override def isEditable = true
 
@@ -87,31 +88,23 @@ object BeanItem {
 
 }
 
-class BeanItems {
+class BeanItems(bean: FXBean[_ <: AnyRef]) {
   private val itemBuffer = FXCollections.observableArrayList[BeanItem]()
 
-  private var bean: FXBean[_ <: AnyRef] = _
-
-  def getItems = itemBuffer
+  def getItems: ObservableList[BeanItem] = itemBuffer
 
   def addItem(key: String, name: String = "", category: String = "", description: String = ""): Unit = {
     itemBuffer.add(BeanItem(bean, key, name, category, description))
   }
 
   def updateBean(bean: FXBean[_ <: AnyRef]) {
-    itemBuffer.asScala.foreach(item => item.bean = bean)
+    itemBuffer.foreach(item => item.bean = bean)
   }
 
 }
 
 object BeanItems {
 
-  def apply(): BeanItems = new BeanItems()
-
-  def apply(bean: FXBean[_ <: AnyRef]): BeanItems = {
-    val result = new BeanItems()
-    result.updateBean(bean)
-    result
-  }
+  def apply(bean: FXBean[_ <: AnyRef] = FXBean(new util.HashMap())): BeanItems = new BeanItems(bean)
 }
 

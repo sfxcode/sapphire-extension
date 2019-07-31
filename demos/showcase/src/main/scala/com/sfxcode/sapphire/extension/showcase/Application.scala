@@ -1,44 +1,30 @@
 package com.sfxcode.sapphire.extension.showcase
 
+import com.sfxcode.sapphire.core.application.FXApp
+import com.sfxcode.sapphire.core.controller.DefaultWindowController
+import com.sfxcode.sapphire.extension.showcase.controller.MainController
+import com.typesafe.scalalogging.LazyLogging
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Named
 
-import com.sfxcode.sapphire.core.cdi.FXApp
-import com.sfxcode.sapphire.core.controller.AppController
-import com.sfxcode.sapphire.extension.showcase.controller.MainWindowController
-import com.sfxcode.sapphire.extension.scene.ExtensionResolver
-import com.typesafe.scalalogging.LazyLogging
-
-import javafx.application.JFXApp.PrimaryStage
-import javafx.scene.Scene
-import javafx.stage.Stage
-
 object Application extends FXApp {
-  ExtensionResolver.add()
-
-  override def applicationStage: Stage = new PrimaryStage {
-    title = "Sapphire Extension Showcase"
-    scene = new Scene {
-      minWidth = 800
-      minHeight = 600
-    }
-  }
+  override def title: String = "Sapphire Extension Showcase"
 }
 
 @Named
 @ApplicationScoped
-class ApplicationController extends AppController with LazyLogging {
+class ApplicationController extends DefaultWindowController with LazyLogging {
 
-  lazy val controller = getController[MainWindowController]()
+  lazy val mainController: MainController = getController[MainController]()
 
   def applicationDidLaunch() {
     logger.debug("start " + this)
-    replaceSceneContent(controller)
+    replaceSceneContent(mainController)
   }
 
   def replacePrimarySceneContent(): Unit = {
-    val newMainWindowController = getController[MainWindowController]()
-    replaceSceneContent(newMainWindowController)
+    val mainController = getController[MainController]()
+    replaceSceneContent(mainController)
 
   }
 

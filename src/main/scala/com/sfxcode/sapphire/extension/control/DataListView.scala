@@ -1,18 +1,18 @@
 package com.sfxcode.sapphire.extension.control
 
 import javafx.scene.layout.Pane
-import com.sfxcode.sapphire.core.Includes._
-import com.sfxcode.sapphire.core.value.FXBean
+import com.sfxcode.sapphire.core.value.{BeanConversions, FXBean}
 import com.sfxcode.sapphire.extension.filter.DataListFilter
 import com.sfxcode.sapphire.extension.skin.DataListViewSkin
 import javafx.beans.property._
 import javafx.collections.{FXCollections, ObservableList}
 import javafx.scene.control.{Control, Label, ListView, Skin}
+
 import scala.collection.JavaConverters._
 
-class DataListView[S <: AnyRef] extends Control {
+class DataListView[S <: AnyRef] extends Control with BeanConversions {
 
-  lazy val css = getClass.getResource("datalistview.css").toExternalForm
+  lazy val css: String = getClass.getResource("datalistview.css").toExternalForm
 
   getStyleClass.add("data-list-view")
 

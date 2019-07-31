@@ -4,10 +4,10 @@ import com.sfxcode.sapphire.core.controller.ViewController
 
 class AbstractBaseController extends ViewController {
 
-  def mainWindowController: MainWindowController = {
-    parent.asInstanceOf[MainWindowController]
+  def mainController: MainController = {
+    parent.asInstanceOf[MainController]
   }
 
-  def workspaceManager = mainWindowController.workspaceManager
+  def workspaceManager = mainController.workspaceManager
 
 }

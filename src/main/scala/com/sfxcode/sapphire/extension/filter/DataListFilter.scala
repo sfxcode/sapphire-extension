@@ -5,6 +5,7 @@ import com.sfxcode.sapphire.extension.control.DataListView
 import javafx.beans.property.ReadOnlyObjectProperty
 import javafx.collections.ObservableList
 import javafx.scene.control.{ListView, TextField}
+import com.sfxcode.sapphire.core.collections.CollectionExtensions._
 
 import scala.collection.JavaConverters._
 class DataListFilter[S <: AnyRef](dataList: DataListView[S])
@@ -39,7 +40,7 @@ class DataListFilter[S <: AnyRef](dataList: DataListView[S])
   filterResult.addListener(_ => {
     dataList.listView.getItems.clear()
     if (!filterResult.isEmpty)
-      filterResult.asScala.foreach(v => dataList.listView.getItems.add(v))
+      filterResult.foreach(v => dataList.listView.getItems.add(v))
   })
 
   filter()

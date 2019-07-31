@@ -13,6 +13,7 @@ import javafx.beans.property.ObjectProperty
 import javafx.collections.{FXCollections, ObservableList}
 import javafx.event.ActionEvent
 import javafx.scene.control.{ComboBox, Control, TextField}
+import com.sfxcode.sapphire.core.collections.CollectionExtensions._
 
 import scala.collection.JavaConverters._
 
@@ -157,14 +158,14 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
         val filter = textField.getText
         if (filter.length > 0) {
           valueMap.put(filterControlNameMapping(textField), filter)
-          filtered = FXCollections.observableArrayList(filtered.asScala.filter(controlFilterMap(textField).asInstanceOf[FXBean[S] => Boolean]).asJava)
+          filtered = filtered.replaceByFilteredValues(controlFilterMap(textField).asInstanceOf[FXBean[S] => Boolean])
         }
       case searchBox: ComboBox[String] =>
         val model = searchBox.getSelectionModel
         if (model.selectedIndexProperty().get() > 0) {
           val item = model.getSelectedItem
           valueMap.put(filterControlNameMapping(searchBox), item)
-          filtered = FXCollections.observableArrayList(filtered.asScala.filter(controlFilterMap(searchBox).asInstanceOf[FXBean[S] => Boolean]).asJava)
+          filtered = filtered.replaceByFilteredValues(controlFilterMap(searchBox).asInstanceOf[FXBean[S] => Boolean])
           logger.debug(item)
         }
       case _ =>

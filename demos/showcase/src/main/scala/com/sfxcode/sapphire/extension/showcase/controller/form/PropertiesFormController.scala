@@ -53,7 +53,7 @@ class PropertiesFormController extends AbstractBaseController {
 
   def setRandomPerson(): Unit = {
     val person: FXBean[Person] = PersonDatabase.testPerson(random.nextInt(100))
-    adapter.beanProperty.value = person
+    adapter.set(person)
 
     beanItems.updateBean(person)
     propertySheet.getItems.setAll(beanItems.getItems)

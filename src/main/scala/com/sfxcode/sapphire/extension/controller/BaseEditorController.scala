@@ -6,7 +6,6 @@ import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.Node
 import javafx.scene.layout.Pane
-import javafx.Includes._
 
 import scala.reflect.ClassTag
 
@@ -35,7 +34,7 @@ abstract class BaseEditorController extends ViewController {
   def updateBean(bean: FXBean[R]): Unit = {
     val value = bean.asInstanceOf[FXBean[R]]
     editableBean = Some(value)
-    formAdapter.beanProperty.value = value
+    formAdapter.set(value)
   }
 
   def actionSave(event: ActionEvent): Unit = {

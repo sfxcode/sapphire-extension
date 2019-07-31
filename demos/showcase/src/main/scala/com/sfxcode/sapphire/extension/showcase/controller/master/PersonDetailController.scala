@@ -2,7 +2,7 @@ package com.sfxcode.sapphire.extension.showcase.controller.master
 
 import com.sfxcode.sapphire.core.value.KeyBindings
 import com.sfxcode.sapphire.extension.controller.{ BaseDetailController, BaseMasterController }
-import com.sfxcode.sapphire.extension.showcase.controller.MainWindowController
+import com.sfxcode.sapphire.extension.showcase.controller.MainController
 import com.sfxcode.sapphire.extension.showcase.model.Person
 
 import scala.reflect._
@@ -13,8 +13,8 @@ class PersonDetailController extends BaseDetailController {
 
   def ct = classTag[R]
 
-  def mainWindowController: MainWindowController = {
-    parent.asInstanceOf[MainWindowController]
+  def mainWindowController: MainController = {
+    parent.asInstanceOf[MainController]
   }
 
   override def navigateToMasterController(masterController: BaseMasterController): Unit = {

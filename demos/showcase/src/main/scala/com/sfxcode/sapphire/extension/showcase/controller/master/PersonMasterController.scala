@@ -1,14 +1,14 @@
 package com.sfxcode.sapphire.extension.showcase.controller.master
 
-import com.sfxcode.sapphire.core.Includes._
-import com.sfxcode.sapphire.extension.controller.{ BaseDetailController, BaseMasterController }
-import com.sfxcode.sapphire.extension.showcase.controller.MainWindowController
-import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
+import com.sfxcode.sapphire.core.value.BeanConversions
+import com.sfxcode.sapphire.extension.controller.{BaseDetailController, BaseMasterController}
+import com.sfxcode.sapphire.extension.showcase.controller.MainController
+import com.sfxcode.sapphire.extension.showcase.model.{Person, PersonDatabase}
 import com.sfxcode.sapphire.extension.filter.DataTableFilter
 
 import scala.reflect._
 
-class PersonMasterController extends BaseMasterController {
+class PersonMasterController extends BaseMasterController with BeanConversions {
   lazy val personDetailController = getController[PersonDetailController]()
 
   type R = Person
@@ -35,11 +35,11 @@ class PersonMasterController extends BaseMasterController {
   }
 
   override def navigateToDetailController(detailController: BaseDetailController): Unit = {
-    parent.asInstanceOf[MainWindowController].workspaceManager.updatePaneContent(detailController)
+    parent.asInstanceOf[MainController].workspaceManager.updatePaneContent(detailController)
   }
 
-  def mainWindowController: MainWindowController = {
-    parent.asInstanceOf[MainWindowController]
+  def mainWindowController: MainController = {
+    parent.asInstanceOf[MainController]
   }
 
 }

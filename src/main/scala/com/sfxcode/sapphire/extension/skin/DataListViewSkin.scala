@@ -1,65 +1,57 @@
 package com.sfxcode.sapphire.extension.skin
 
 import javafx.scene.control.SkinBase
-
 import com.sfxcode.sapphire.core.control.FXListCellFactory
-import com.sfxcode.sapphire.extension.Includes._
 import com.sfxcode.sapphire.extension.control.DataListView
-
 import javafx.scene.control._
-import javafx.scene.layout.{ HBox, VBox }
-
+import javafx.scene.layout.{HBox, VBox}
 class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[DataListView[S]](view) {
 
-  val contentBox = new VBox() {
-    spacing = 5
-    styleClass.+=("content-box")
-  }
+  val contentBox = new VBox()
+  contentBox.setSpacing(5)
+  contentBox.getStyleClass.add("content-box")
 
-  val label = new Label {
-    text = "Footer Label"
-    styleClass.+=("footer-label")
-  }
+  val label = new Label("Footer Label")
+  label.getStyleClass.add("footer-label")
   view.footerLabel.set(label)
 
-  val headerBox = new HBox {
-    styleClass.+=("header-box")
-  }
+  val headerBox = new HBox
+  headerBox.getStyleClass.add ("header-box")
   view.header.set(headerBox)
 
-  val footerBox = new HBox {
-    styleClass.+=("footer-box")
-  }
-  footerBox.children.add(label)
+  val footerBox = new HBox
+  footerBox.getStyleClass.add ("footer-box")
+  footerBox.getChildren.add(label)
   view.footer.set(footerBox)
 
   updateCellFactory()
-  view.cellProperty.onChange(updateCellFactory())
+  view.cellProperty.addListener((_,_,_) => updateView())
 
-  view.header.onChange(updateView())
-  view.showHeader.onChange(updateView())
+  view.header.addListener(_ =>updateView())
 
-  view.footer.onChange(updateView())
-  view.showFooter.onChange(updateView())
+  view.showHeader.addListener((_,_,_) => updateView())
+
+  view.footer.addListener(_ =>updateView())
+  view.showFooter.addListener((_,_,_) => updateView())
 
   getChildren.add(contentBox)
 
   updateView()
 
   def updateView(): Unit = {
-    contentBox.children.clear()
-    if (view.showHeader.get && view.header)
-      contentBox.children.add(view.header)
+    contentBox.getChildren.clear()
+    if (view.showHeader.get && view.header.get != null)
+      contentBox.getChildren.add(view.header.get)
 
-    contentBox.children.add(view.listView)
+    contentBox.getChildren.add(view.listView)
 
-    if (view.showFooter.get && view.footer)
-      contentBox.children.add(view.footer)
+    if (view.showFooter.get && view.footer.get != null)
+      contentBox.getChildren.add(view.footer.get)
   }
 
   def updateCellFactory(): Unit = {
     val cellFactory = new FXListCellFactory[S]
-    cellFactory.setProperty(view.cellProperty.value)
+    cellFactory.setProperty(view.cellProperty.get)
     view.listView.setCellFactory(cellFactory)
   }
 

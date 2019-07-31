@@ -9,9 +9,8 @@ import com.sfxcode.sapphire.core.scene.ContentManager
 import com.sfxcode.sapphire.extension.showcase.ApplicationController
 import com.sfxcode.sapphire.extension.showcase.controller.navigation.{ DefaultNavigationController, MasterNavigationController, TableNavigationController }
 import org.controlsfx.control.StatusBar
-import javafx.Includes._
 
-class MainWindowController extends ViewController {
+class MainController extends ViewController {
   @FXML
   var menuBar: MenuBar = _
 

@@ -3,10 +3,9 @@ package com.sfxcode.sapphire.extension.showcase.controller.table
 import javafx.beans.binding.Bindings
 
 import com.sfxcode.sapphire.extension.controller.DataTableController
-import com.sfxcode.sapphire.extension.showcase.controller.MainWindowController
+import com.sfxcode.sapphire.extension.showcase.controller.MainController
 import com.sfxcode.sapphire.extension.filter.DataTableFilter
 import com.typesafe.scalalogging.LazyLogging
-import javafx.Includes._
 
 abstract class AbstractTableViewController extends DataTableController with LazyLogging {
 
@@ -17,11 +16,11 @@ abstract class AbstractTableViewController extends DataTableController with Lazy
   }
 
   override def didGainVisibility() {
-    mainWindowController.statusBar.textProperty() <== Bindings.format("%d records found", Bindings.size(tableFilter.filterResult))
+    mainWindowController.statusBar.textProperty().bind(Bindings.format("%d records found", Bindings.size(tableFilter.filterResult)))
   }
 
-  def mainWindowController: MainWindowController = {
-    parent.asInstanceOf[MainWindowController]
+  def mainWindowController: MainController = {
+    parent.asInstanceOf[MainController]
   }
 
   def workspaceManager = mainWindowController.workspaceManager

@@ -9,13 +9,12 @@ import com.sfxcode.sapphire.extension.showcase.controller.AbstractBaseController
 import com.sfxcode.sapphire.extension.showcase.model.BookRating
 
 import scala.util.Random
-import javafx.Includes._
 
 class ExtensionFormController extends AbstractBaseController {
   @FXML
   var formPane: Pane = _
 
-  lazy val formAdapter = FXBeanAdapter[BookRating](this, formPane.asInstanceOf[Node])
+  lazy val formAdapter: FXBeanAdapter[BookRating] = FXBeanAdapter[BookRating](this, formPane.asInstanceOf[Node])
 
   val random = new Random()
 
@@ -33,7 +32,7 @@ class ExtensionFormController extends AbstractBaseController {
 
   override def didGainVisibility() {
     super.didGainVisibility()
-    formAdapter.beanProperty.value = FXBean[BookRating](BookRating(3, "Book", 3, 250))
+    formAdapter.set(FXBean[BookRating](BookRating(3, "Book", 3, 250)))
   }
 
 }

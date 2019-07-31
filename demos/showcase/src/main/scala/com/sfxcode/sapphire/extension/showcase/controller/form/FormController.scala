@@ -10,14 +10,13 @@ import com.sfxcode.sapphire.extension.showcase.controller.AbstractBaseController
 import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
 
 import scala.util.Random
-import javafx.Includes._
 
 class FormController extends AbstractBaseController {
   @FXML
   var formPane: Pane = _
 
-  lazy val formAdapter = FXBeanAdapter[Person](this, formPane.asInstanceOf[Node])
-  lazy val adapter = FXBeanAdapter[Person](this)
+  lazy val formAdapter: FXBeanAdapter[Person] = FXBeanAdapter[Person](this, formPane.asInstanceOf[Node])
+  lazy val adapter: FXBeanAdapter[Person] = FXBeanAdapter[Person](this)
 
   val random = new Random()
 
@@ -48,8 +47,8 @@ class FormController extends AbstractBaseController {
 
   def setRandomPerson(): Unit = {
     val person: FXBean[Person] = PersonDatabase.testPerson(random.nextInt(100))
-    formAdapter.beanProperty.value = person
-    adapter.beanProperty.value = person
+    formAdapter.set(person)
+    adapter.set(person)
   }
 
 }

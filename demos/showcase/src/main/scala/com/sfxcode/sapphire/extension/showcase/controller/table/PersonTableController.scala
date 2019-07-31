@@ -1,18 +1,19 @@
 package com.sfxcode.sapphire.extension.showcase.controller.table
 
-import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
+import com.sfxcode.sapphire.core.value.{BeanConversions, FXBean}
+import com.sfxcode.sapphire.extension.showcase.model.{Person, PersonDatabase}
 import com.sfxcode.sapphire.extension.filter.DataTableFilter
-import com.sfxcode.sapphire.core.Includes._
+import javafx.collections.ObservableList
 
 import scala.reflect._
 
-class PersonTableController extends AbstractTableViewController {
+class PersonTableController extends AbstractTableViewController with BeanConversions {
 
   type R = Person
 
-  def ct = classTag[R]
+  def ct: ClassTag[Person] = classTag[R]
 
-  def items = PersonDatabase.bigPersonTable
+  def items: ObservableList[FXBean[Person]] = PersonDatabase.bigPersonTable
 
   override def initTable(tableFilter: DataTableFilter[R]): Unit = {
     super.initTable(tableFilter)

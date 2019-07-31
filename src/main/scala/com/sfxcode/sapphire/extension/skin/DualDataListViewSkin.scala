@@ -2,34 +2,19 @@ package com.sfxcode.sapphire.extension.skin
 
 import javafx.beans.binding.Bindings
 import javafx.scene.control.SelectionMode._
-import javafx.scene.control.SkinBase
-import com.sfxcode.sapphire.core.value.FXBean
-import com.sfxcode.sapphire.extension.control.{ DataListView, DualDataListView }
-import org.kordamp.ikonli.javafx.FontIcon
-import javafx.Includes._
-import javafx.collections.ObservableBuffer
-import javafx.event.ActionEvent
+import javafx.scene.control.{Button, MultipleSelectionModel, SkinBase}
+import com.sfxcode.sapphire.core.value.{BeanConversions, FXBean}
+import com.sfxcode.sapphire.extension.control.{DataListView, DualDataListView}
 import javafx.geometry.Pos
-import javafx.scene.control.Button
-import javafx.scene.input.MouseEvent
-import javafx.scene.layout.Priority._
 import javafx.scene.layout._
 import com.sfxcode.sapphire.extension.control.IconTools._
+import javafx.collections.{FXCollections, ObservableList}
+import com.sfxcode.sapphire.core.scene.SceneExtensions._
 
-class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinBase[DualDataListView[S]](view) {
+class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinBase[DualDataListView[S]](view) with BeanConversions {
 
-//  implicit def observableBufferToList[T <: AnyRef](buffer: ObservableBuffer[FXBean[T]]): Seq[T] = {
-//    buffer.map(item => item.bean).toSeq
-//  }
-
-  val contentGridPane = new GridPane() {
-    styleClass += "content-grid"
-  }
-
-  def createButton(code: String): Button = {
-    val result = new Button()
-    result.setGraphic(new FontIcon(code))
-    result
+  val contentGridPane: GridPane = new GridPane() {
+    getStyleClass.add("content-grid")
   }
 
   val buttonMoveToTarget: Button = decoratedFontIconButton("fa-angle-right")
@@ -42,13 +27,13 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
   buttonMoveToTargetAll.setOnAction(_ => moveAllToTarget())
   buttonMoveToSourceAll.setOnAction(_ => moveAllToSource())
 
-  def leftItems = view.leftDataListView.getItems
+  def leftItems: ObservableList[FXBean[S]] = view.leftDataListView.getItems
 
-  def leftSelectionModel = view.leftDataListView.listView.getSelectionModel
+  def leftSelectionModel: MultipleSelectionModel[FXBean[S]] = view.leftDataListView.listView.getSelectionModel
 
-  def rightItems = view.rightDataListView.getItems
+  def rightItems: ObservableList[FXBean[S]] = view.rightDataListView.getItems
 
-  def rightSelectionModel = view.rightDataListView.listView.getSelectionModel
+  def rightSelectionModel: MultipleSelectionModel[FXBean[S]] = view.rightDataListView.listView.getSelectionModel
 
   leftSelectionModel.setSelectionMode(MULTIPLE)
   rightSelectionModel.setSelectionMode(MULTIPLE)
@@ -61,13 +46,9 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
     bindButtons()
   })
 
-  leftSelectionModel.getSelectedItems.onChange {
-    bindButtons()
-  }
+  leftSelectionModel.getSelectedItems.addListener(_ => bindButtons())
 
-  rightSelectionModel.getSelectedItems.onChange {
-    bindButtons()
-  }
+  rightSelectionModel.getSelectedItems.addListener(_ => bindButtons())
 
   def bindButtons() {
     buttonMoveToTargetAll.disableProperty.bind(Bindings.isEmpty(leftSelectionModel.getSelectedItems))
@@ -77,19 +58,17 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
     buttonMoveToSource.disableProperty.bind(Bindings.isEmpty(rightSelectionModel.getSelectedItems))
   }
 
-  view.leftDataListView.listView.onMouseClicked = (e: MouseEvent) => if (e.clickCount == 2) moveToTarget()
-  view.rightDataListView.listView.onMouseClicked = (e: MouseEvent) => if (e.clickCount == 2) moveToSource()
+  view.leftDataListView.listView.onMouseDoubleClicked(moveToTarget())
+  view.rightDataListView.listView.onMouseDoubleClicked(moveToSource())
 
-  val buttonBox = new VBox {
-    styleClass += "button-box"
-    alignment = Pos.Center
-    spacing = 5
-    fillWidth = true
-    children = List(buttonMoveToTarget, buttonMoveToTargetAll, buttonMoveToSource, buttonMoveToSourceAll)
-  }
+  val buttonBox = new VBox
+  buttonBox.getStyleClass.add("button-box")
+  buttonBox.setAlignment(Pos.CENTER)
+  buttonBox.setSpacing(5)
+  buttonBox.setFillWidth(true)
+  buttonBox.getChildren.addAll(buttonMoveToTarget, buttonMoveToTargetAll, buttonMoveToSource, buttonMoveToSourceAll)
 
   getChildren.add(contentGridPane)
-
   bindButtons()
   updateView()
 
@@ -103,25 +82,25 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
   def addGridPaneConstraints(): Unit = {
     val row = new RowConstraints()
     row.setFillHeight(true)
-    row.setVgrow(Priority.Never)
+    row.setVgrow(Priority.NEVER)
     contentGridPane.getRowConstraints.add(row)
 
     val col1 = new ColumnConstraints
 
     col1.setFillWidth(true)
-    col1.setHgrow(Priority.Always)
+    col1.setHgrow(Priority.ALWAYS)
     col1.setMaxWidth(Double.MaxValue)
     col1.setPrefWidth(200)
 
     val col2 = new ColumnConstraints
     col2.setFillWidth(true)
-    col2.setHgrow(Priority.Never)
+    col2.setHgrow(Priority.NEVER)
     col2.setMaxWidth(50)
     col2.setMinWidth(50)
 
     val col3 = new ColumnConstraints
     col3.setFillWidth(true)
-    col3.setHgrow(Priority.Always)
+    col3.setHgrow(Priority.ALWAYS)
     col3.setMaxWidth(Double.MaxValue)
     col3.setPrefWidth(200)
 
@@ -129,12 +108,12 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
   }
 
   private def moveToTarget() {
-    move(view.leftDataListView, view.rightDataListView, ObservableBuffer(leftSelectionModel.getSelectedItem))
+    move(view.leftDataListView, view.rightDataListView, FXCollections.observableArrayList(leftSelectionModel.getSelectedItem))
     leftSelectionModel.clearSelection()
   }
 
   private def moveToSource() {
-    move(view.rightDataListView, view.leftDataListView, ObservableBuffer(rightSelectionModel.getSelectedItem))
+    move(view.rightDataListView, view.leftDataListView, FXCollections.observableArrayList(rightSelectionModel.getSelectedItem))
     rightSelectionModel.clearSelection()
   }
 
@@ -148,10 +127,10 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinB
     rightSelectionModel.clearSelection()
   }
 
-  def move(source: DataListView[S], target: DataListView[S], items: ObservableBuffer[FXBean[S]]) {
-    val sourceItems = ObservableBuffer(source.getItems)
+  def move(source: DataListView[S], target: DataListView[S], items: ObservableList[FXBean[S]]) {
+    val sourceItems = FXCollections.observableArrayList(source.getItems)
     sourceItems.removeAll(items)
-    val targetItems = ObservableBuffer(target.getItems)
+    val targetItems = FXCollections.observableArrayList(target.getItems)
     targetItems.addAll(items)
     source.setItems(sourceItems)
     target.setItems(targetItems)
