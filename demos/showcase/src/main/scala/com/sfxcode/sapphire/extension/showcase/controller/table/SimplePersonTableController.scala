@@ -4,8 +4,8 @@ import javafx.beans.binding.Bindings
 import javafx.fxml.FXML
 import javafx.scene.control.TableView
 import com.sfxcode.sapphire.core.controller.ViewController
-import com.sfxcode.sapphire.core.value.{BeanConversions, FXBean}
-import com.sfxcode.sapphire.extension.showcase.model.{Person, PersonDatabase}
+import com.sfxcode.sapphire.core.value.{ BeanConversions, FXBean }
+import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
 import com.sfxcode.sapphire.extension.showcase.controller.MainController
 import javafx.collections.ObservableList
 

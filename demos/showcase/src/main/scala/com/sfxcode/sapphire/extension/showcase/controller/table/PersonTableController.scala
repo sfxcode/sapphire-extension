@@ -1,7 +1,7 @@
 package com.sfxcode.sapphire.extension.showcase.controller.table
 
-import com.sfxcode.sapphire.core.value.{BeanConversions, FXBean}
-import com.sfxcode.sapphire.extension.showcase.model.{Person, PersonDatabase}
+import com.sfxcode.sapphire.core.value.{ BeanConversions, FXBean }
+import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
 import com.sfxcode.sapphire.extension.filter.DataTableFilter
 import javafx.collections.ObservableList
 

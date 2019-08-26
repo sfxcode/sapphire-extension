@@ -4,7 +4,7 @@ import javafx.scene.control.SkinBase
 import com.sfxcode.sapphire.core.control.FXListCellFactory
 import com.sfxcode.sapphire.extension.control.DataListView
 import javafx.scene.control._
-import javafx.scene.layout.{HBox, VBox}
+import javafx.scene.layout.{ HBox, VBox }
 class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[DataListView[S]](view) {
 
   val contentBox = new VBox()
@@ -16,23 +16,23 @@ class DataListViewSkin[S <: AnyRef](view: DataListView[S]) extends SkinBase[Data
   view.footerLabel.set(label)
 
   val headerBox = new HBox
-  headerBox.getStyleClass.add ("header-box")
+  headerBox.getStyleClass.add("header-box")
   view.header.set(headerBox)
 
   val footerBox = new HBox
-  footerBox.getStyleClass.add ("footer-box")
+  footerBox.getStyleClass.add("footer-box")
   footerBox.getChildren.add(label)
   view.footer.set(footerBox)
 
   updateCellFactory()
-  view.cellProperty.addListener((_,_,_) => updateView())
+  view.cellProperty.addListener((_, _, _) => updateView())
 
-  view.header.addListener(_ =>updateView())
+  view.header.addListener((_, _, _) => updateView())
 
-  view.showHeader.addListener((_,_,_) => updateView())
+  view.showHeader.addListener((_, _, _) => updateView())
 
-  view.footer.addListener(_ =>updateView())
-  view.showFooter.addListener((_,_,_) => updateView())
+  view.footer.addListener((_, _, _) => updateView())
+  view.showFooter.addListener((_, _, _) => updateView())
 
   getChildren.add(contentBox)
 

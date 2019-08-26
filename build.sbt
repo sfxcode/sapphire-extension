@@ -8,14 +8,9 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-crossScalaVersions := Seq("2.12.8", "2.13.0")
+crossScalaVersions := Seq("2.13.0", "2.12.9")
 
 scalaVersion := crossScalaVersions.value.head
-
-javacOptions ++= Seq(
-  "-target", "1.8",
-  "-source", "1.8",
-  "-Xlint:deprecation")
 
 scalacOptions += "-deprecation"
 
@@ -23,9 +18,9 @@ javacOptions in test += "-Dorg.apache.deltaspike.ProjectStage=Test"
 
 parallelExecution in Test := false
 
-val JavaFXVersion = "12.0.1"
-val SapphireCoreVersion = "1.6.0-SNAPSHOT"
-val Json4sVersion = "3.6.6"
+val JavaFXVersion = "12.0.2"
+val SapphireCoreVersion = "1.6.1"
+val Json4sVersion = "3.6.7"
 val LogbackVersion = "1.2.3"
 val IkonliVersion = "11.3.4"
 
@@ -50,9 +45,11 @@ lazy val demo_showcase = Project(id = "sapphire-extension-showcase",base = file(
   libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % SapphireCoreVersion,
   libraryDependencies += "org.json4s" %% "json4s-native" % Json4sVersion,
   libraryDependencies += "ch.qos.logback" % "logback-classic" % LogbackVersion,
-  mainClass := Some("com.sfxcode.sapphire.extension.showcase.Application")
+  mainClass := Some("com.sfxcode.sapphire.extension.showcase.Application"),
+  scalaVersion := "2.13.0"
 
-).dependsOn(sapphire_extension_root)
+
+).dependsOn(sapphire_extension_root).aggregate(sapphire_extension_root)
 
 lazy val sapphire_extension_scenebuilder = Project(id = "sapphire-extension-scenebuilder",base = file("scenebuilder")).settings(
   name:= "sapphire-extension-scenebuilder",
@@ -74,7 +71,7 @@ resolvers += "sfxcode-maven" at "https://bintray.com/sfxcode/maven/"
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "4.5.1" % Test
+libraryDependencies += "org.specs2" %% "specs2-core" % "4.7.0" % Test
 
 libraryDependencies += "org.json4s" %% "json4s-native" % Json4sVersion % Test
 
@@ -87,7 +84,7 @@ libraryDependencies += "ch.qos.logback" % "logback-classic" % LogbackVersion % P
 
 libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % SapphireCoreVersion % Provided
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.23" % Provided
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.25" % Provided
 
 // Compile
 
@@ -152,4 +149,17 @@ developers := List(
   )
 )
 
+lazy val docs = (project in file("docs"))
+  .enablePlugins(ParadoxSitePlugin)
+  .enablePlugins(ParadoxMaterialThemePlugin)
+  .enablePlugins(GhpagesPlugin)
+  .settings(
+    name := "sapphire extension docs",
+    publish / skip := true,
+    ghpagesNoJekyll := true,
+    git.remoteRepo := "git@github.com:sfxcode/sapphire-extension.git",
+    Compile / paradoxMaterialTheme ~= {
+      _.withRepository(uri("https://github.com/sfxcode/sapphire-extension"))
 
+    }
+  )

@@ -2,7 +2,7 @@ package com.sfxcode.sapphire.extension.showcase.controller.table
 
 import com.sfxcode.sapphire.core.value.BeanConversions
 import javafx.event.ActionEvent
-import com.sfxcode.sapphire.extension.showcase.model.{Friend, PersonDatabase}
+import com.sfxcode.sapphire.extension.showcase.model.{ Friend, PersonDatabase }
 
 import scala.reflect._
 

@@ -4,22 +4,21 @@ import javafx.scene.Node
 import javafx.scene.layout.Pane
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.filter.FilterType._
-import com.typesafe.config.{Config, ConfigFactory}
+import com.typesafe.config.{ Config, ConfigFactory }
 import com.typesafe.scalalogging.LazyLogging
 import org.controlsfx.control.textfield.TextFields
 
 import scala.collection.mutable
 import javafx.beans.property.ObjectProperty
-import javafx.collections.{FXCollections, ObservableList}
-import javafx.event.ActionEvent
-import javafx.scene.control.{ComboBox, Control, TextField}
+import javafx.collections.{ FXCollections, ObservableList }
+import javafx.scene.control.{ ComboBox, Control, TextField }
 import com.sfxcode.sapphire.core.collections.CollectionExtensions._
 
 import scala.collection.JavaConverters._
 
 class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], pane: ObjectProperty[Pane]) extends LazyLogging {
   val conf: Config = ConfigFactory.load()
-  implicit def objectPropertyToValue[T <: Any](property: ObjectProperty[T]): T = property.get
+  //implicit def objectPropertyToValue[T <: Any](property: ObjectProperty[T]): T = property.get
 
   protected val controlList: ObservableList[Node] = FXCollections.observableArrayList[Node]()
   protected val controlFilterMap = new mutable.HashMap[Control, Any]()
@@ -31,22 +30,22 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
 
   val filterResult = FXCollections.observableArrayList[FXBean[S]]()
 
-  itemValues.addListener(_ => {
+  itemValues.addChangeListener(_ => {
     filter()
   })
 
-  items.addListener(_ => {
-    itemValues.addListener(_ => {filter()})
+  items.addListener((_, _, _) => {
+    itemValues.addChangeListener(_ => { filter() })
     filter()
   })
 
   items.addListener((_, oldValue, newValue) => itemsChanged(oldValue, newValue))
 
   def itemsChanged(oldItems: ObservableList[FXBean[S]], newItems: ObservableList[FXBean[S]]): Unit = {
-    oldItems.addListener(_ => {
-
-    })
-    newItems.addListener(_ => {
+    //    oldItems.addListener(_ => {
+    //
+    //    })
+    newItems.addChangeListener(_ => {
       filter()
     })
     itemsHasChanged()
@@ -72,7 +71,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
 
   def filterControlPane: Pane = pane.getValue
 
-  def itemsProperty = items
+  def itemsProperty: ObjectProperty[ObservableList[FXBean[S]]] = items
 
   def itemValues: ObservableList[FXBean[S]] = items.getValue
 
@@ -135,7 +134,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
       controlFilterMap.remove(c)
       controlFilterPropertyMap.remove(c)
       controlList.remove(c)
-      pane.getChildren.remove(c)
+      pane.get.getChildren.remove(c)
     })
   }
 

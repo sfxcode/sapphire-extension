@@ -9,6 +9,7 @@ import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.scene.control.TableView
 import javafx.scene.layout.HBox
+import com.sfxcode.sapphire.core.collections.CollectionExtensions._
 
 import scala.reflect.ClassTag
 
@@ -44,7 +45,7 @@ abstract class DataTableController extends ViewController with LazyLogging {
     initTable(tableFilter)
 
     tableFilter.selectedItem.addListener((_, oldValue, newValue) => selectedTableViewItemDidChange(oldValue, newValue))
-    tableFilter.selectedItems.addListener(_ => {
+    tableFilter.selectedItems.addChangeListener(_ => {
       selectedItemsDidChange(tableFilter.selectedItems)
     })
   }

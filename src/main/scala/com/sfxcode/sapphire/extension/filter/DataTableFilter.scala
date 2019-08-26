@@ -3,16 +3,17 @@ package com.sfxcode.sapphire.extension.filter
 import javafx.scene.layout.Pane
 import com.sfxcode.sapphire.core.control.FXValueFactory
 import com.sfxcode.sapphire.core.value.FXBean
-import com.sfxcode.sapphire.extension.control.table.{FXTextFieldCellFactory, TableColumnFactory}
+import com.sfxcode.sapphire.extension.control.table.{ FXTextFieldCellFactory, TableColumnFactory }
 import javafx.beans.property.ReadOnlyObjectProperty
 
 import scala.collection.mutable
 import scala.reflect.ClassTag
-import scala.reflect.runtime.{universe => ru}
+import scala.reflect.runtime.{ universe => ru }
 import javafx.beans.property.ObjectProperty
 import javafx.collections.ObservableList
-import javafx.scene.control.{TableView, _}
+import javafx.scene.control.{ TableView, _ }
 import javafx.scene.text.TextAlignment
+import com.sfxcode.sapphire.core.collections.CollectionExtensions._
 
 class DataTableFilter[S <: AnyRef](table: TableView[FXBean[S]], items: ObjectProperty[ObservableList[FXBean[S]]], pane: ObjectProperty[Pane])(implicit ct: ClassTag[S]) extends DataFilter[S](items, pane) {
 
@@ -27,7 +28,7 @@ class DataTableFilter[S <: AnyRef](table: TableView[FXBean[S]], items: ObjectPro
   private val members = mirror.classSymbol(ct.runtimeClass).asType.typeSignature.members.toList.reverse
   logger.debug(members.collect({ case x if x.isTerm => x.asTerm }).filter(t => t.isVal || t.isVar).map(m => m.name.toString).toString())
 
-  filterResult.addListener(_ => {
+  filterResult.addChangeListener(_ => {
     table.getItems.clear()
     table.getItems.addAll(filterResult)
     table.sort()

@@ -6,12 +6,12 @@ import javafx.fxml.FXML
 import javafx.scene.control.ComboBox
 import com.sfxcode.sapphire.extension.control.DataListView
 import com.sfxcode.sapphire.extension.showcase.controller.AbstractBaseController
-import com.sfxcode.sapphire.extension.showcase.model.{Friend, Person, PersonDatabase}
+import com.sfxcode.sapphire.extension.showcase.model.{ Friend, Person, PersonDatabase }
 import com.typesafe.scalalogging.LazyLogging
-import javafx.collections.{FXCollections, ObservableList}
+import javafx.collections.{ FXCollections, ObservableList }
 
 import scala.collection.JavaConverters._
-class ListFormController extends AbstractBaseController with BeanConversions  with LazyLogging {
+class ListFormController extends AbstractBaseController with BeanConversions with LazyLogging {
 
   type R = Friend
 
@@ -25,7 +25,7 @@ class ListFormController extends AbstractBaseController with BeanConversions  wi
   var dataList: DataListView[R] = _
 
   val personsMap: Map[String, Person] = PersonDatabase.smallPersonList.map(value => (value.bean.name, value)).toMap
-  val buffer:ObservableList[String] = FXCollections.observableArrayList[String]
+  val buffer: ObservableList[String] = FXCollections.observableArrayList[String]
   buffer.addAll(personsMap.keys.toList.asJava)
 
   override def didGainVisibilityFirstTime(): Unit = {
@@ -44,7 +44,7 @@ class ListFormController extends AbstractBaseController with BeanConversions  wi
     dataList.filterPromptProperty.set("Name")
 
     dataList.setItems(PersonDatabase.friends)
-    dataList.listView.setOnMouseClicked(event => {if (event.getClickCount == 2) deleteSelected()})
+    dataList.listView.setOnMouseClicked(event => { if (event.getClickCount == 2) deleteSelected() })
   }
 
   def deleteSelected() {

@@ -1,13 +1,13 @@
 package com.sfxcode.sapphire.extension.property
 
-import java.time.{Instant, LocalDate, LocalDateTime, ZoneId}
+import java.time.{ Instant, LocalDate, LocalDateTime, ZoneId }
 import java.util
-import java.util.{Date, Optional}
+import java.util.{ Date, Optional }
 
 import com.sfxcode.sapphire.core.base.ConfigValues
 import javafx.beans.value.ObservableValue
 import com.sfxcode.sapphire.core.value._
-import javafx.collections.{FXCollections, ObservableList}
+import javafx.collections.{ FXCollections, ObservableList }
 import org.controlsfx.control.PropertySheet.Item
 import com.sfxcode.sapphire.core.collections.CollectionExtensions._
 

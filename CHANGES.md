@@ -3,7 +3,9 @@
 ## Versions
 
 ### 0.9.1
-* sapphire-core 1.5.1
+* sapphire-core 1.6.1
+* Scala 2.13
+* remove scalafx dependencies
 
 ### 0.9.0
 * sapphire-core 1.5.0 ([javafx 12.0.1](https://github.com/javafxports/openjdk-jfx/blob/jfx-12/doc-files/release-notes-12.md#release-notes-for-javafx-12))

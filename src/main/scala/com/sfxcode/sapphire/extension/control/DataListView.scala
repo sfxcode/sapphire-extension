@@ -1,12 +1,13 @@
 package com.sfxcode.sapphire.extension.control
 
 import javafx.scene.layout.Pane
-import com.sfxcode.sapphire.core.value.{BeanConversions, FXBean}
+import com.sfxcode.sapphire.core.value.{ BeanConversions, FXBean }
 import com.sfxcode.sapphire.extension.filter.DataListFilter
 import com.sfxcode.sapphire.extension.skin.DataListViewSkin
 import javafx.beans.property._
-import javafx.collections.{FXCollections, ObservableList}
-import javafx.scene.control.{Control, Label, ListView, Skin}
+import javafx.collections.{ FXCollections, ObservableList }
+import javafx.scene.control.{ Control, Label, ListView, Skin }
+import com.sfxcode.sapphire.core.collections.CollectionExtensions._
 
 import scala.collection.JavaConverters._
 
@@ -60,7 +61,7 @@ class DataListView[S <: AnyRef] extends Control with BeanConversions {
   footer.addListener((_, _, _) => {
     if (showFooter.get)
       footerLabel.get.setText(footerTextProperty.get.format(filter.get.filterResult.size, filter.get.itemValues.size))
-    filter.get.filterResult.addListener(_ => {
+    filter.get.filterResult.addChangeListener(_ => {
       if (showFooter.get)
         footerLabel.get.setText(footerTextProperty.get.format(filter.get.filterResult.size, filter.get.itemValues.size))
     })

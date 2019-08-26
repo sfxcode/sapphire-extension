@@ -22,7 +22,7 @@ object ExtensionResolver extends BeanResolver {
 
   def apply(): ExtensionResolver = new ExtensionResolver()
 
-  def add() = {
+  def add(): Unit = {
     val env = getBean[ApplicationEnvironment]()
     env.nodePropertyResolver.addResolver(ExtensionResolver())
   }

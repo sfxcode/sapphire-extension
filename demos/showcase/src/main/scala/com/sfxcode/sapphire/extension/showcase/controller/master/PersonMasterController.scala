@@ -1,9 +1,9 @@
 package com.sfxcode.sapphire.extension.showcase.controller.master
 
 import com.sfxcode.sapphire.core.value.BeanConversions
-import com.sfxcode.sapphire.extension.controller.{BaseDetailController, BaseMasterController}
+import com.sfxcode.sapphire.extension.controller.{ BaseDetailController, BaseMasterController }
 import com.sfxcode.sapphire.extension.showcase.controller.MainController
-import com.sfxcode.sapphire.extension.showcase.model.{Person, PersonDatabase}
+import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
 import com.sfxcode.sapphire.extension.filter.DataTableFilter
 
 import scala.reflect._
