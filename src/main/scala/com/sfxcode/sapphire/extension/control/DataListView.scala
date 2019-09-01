@@ -7,7 +7,7 @@ import com.sfxcode.sapphire.extension.skin.DataListViewSkin
 import javafx.beans.property._
 import javafx.collections.{ FXCollections, ObservableList }
 import javafx.scene.control.{ Control, Label, ListView, Skin }
-import com.sfxcode.sapphire.core.collections.CollectionExtensions._
+import com.sfxcode.sapphire.core.CollectionExtensions._
 
 import scala.collection.JavaConverters._
 
@@ -77,7 +77,7 @@ class DataListView[S <: AnyRef] extends Control with BeanConversions {
         else
           sortProperty.get
       }
-      result = FXCollections.observableArrayList(values.asScala.sortBy(f => "" + f.getValue(sortKey)).asJava)
+      result = values.asScala.sortBy(f => "" + f.getValue(sortKey))
     }
     result
   }

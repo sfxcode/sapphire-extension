@@ -2,6 +2,10 @@
 
 ## Versions
 
+### 0.9.2
+* sapphire-core 1.6.2
+* added SceneExtensions
+
 ### 0.9.1
 * sapphire-core 1.6.1
 * Scala 2.13

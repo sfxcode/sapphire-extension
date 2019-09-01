@@ -4,12 +4,12 @@ import java.time.{ Instant, LocalDate, LocalDateTime, ZoneId }
 import java.util
 import java.util.{ Date, Optional }
 
-import com.sfxcode.sapphire.core.base.ConfigValues
+import com.sfxcode.sapphire.core.ConfigValues
 import javafx.beans.value.ObservableValue
 import com.sfxcode.sapphire.core.value._
 import javafx.collections.{ FXCollections, ObservableList }
 import org.controlsfx.control.PropertySheet.Item
-import com.sfxcode.sapphire.core.collections.CollectionExtensions._
+import com.sfxcode.sapphire.core.CollectionExtensions._
 
 import scala.reflect.runtime.universe._
 

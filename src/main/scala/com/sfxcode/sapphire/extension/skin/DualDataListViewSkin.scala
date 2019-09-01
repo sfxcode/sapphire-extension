@@ -9,8 +9,8 @@ import javafx.geometry.Pos
 import javafx.scene.layout._
 import com.sfxcode.sapphire.extension.control.IconTools._
 import javafx.collections.{ FXCollections, ObservableList }
-import com.sfxcode.sapphire.core.scene.SceneExtensions._
-import com.sfxcode.sapphire.core.collections.CollectionExtensions._
+import com.sfxcode.sapphire.core.CollectionExtensions._
+import com.sfxcode.sapphire.extension.scene.SceneExtensions._
 
 class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S]) extends SkinBase[DualDataListView[S]](view) with BeanConversions {
 

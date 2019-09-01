@@ -13,7 +13,7 @@ import javafx.beans.property.ObjectProperty
 import javafx.collections.ObservableList
 import javafx.scene.control.{ TableView, _ }
 import javafx.scene.text.TextAlignment
-import com.sfxcode.sapphire.core.collections.CollectionExtensions._
+import com.sfxcode.sapphire.core.CollectionExtensions._
 
 class DataTableFilter[S <: AnyRef](table: TableView[FXBean[S]], items: ObjectProperty[ObservableList[FXBean[S]]], pane: ObjectProperty[Pane])(implicit ct: ClassTag[S]) extends DataFilter[S](items, pane) {
 

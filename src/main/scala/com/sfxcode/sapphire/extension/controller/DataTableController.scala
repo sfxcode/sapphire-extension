@@ -9,7 +9,7 @@ import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.scene.control.TableView
 import javafx.scene.layout.HBox
-import com.sfxcode.sapphire.core.collections.CollectionExtensions._
+import com.sfxcode.sapphire.core.CollectionExtensions._
 
 import scala.reflect.ClassTag
 

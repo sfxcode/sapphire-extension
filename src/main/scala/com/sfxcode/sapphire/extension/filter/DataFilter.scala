@@ -12,7 +12,7 @@ import scala.collection.mutable
 import javafx.beans.property.ObjectProperty
 import javafx.collections.{ FXCollections, ObservableList }
 import javafx.scene.control.{ ComboBox, Control, TextField }
-import com.sfxcode.sapphire.core.collections.CollectionExtensions._
+import com.sfxcode.sapphire.core.CollectionExtensions._
 
 import scala.collection.JavaConverters._
 
