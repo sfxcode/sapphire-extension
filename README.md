@@ -5,9 +5,13 @@ The sapphire extension framework adds additional features to [sapphire-core](htt
 
 ## Version
 
-Scala Version is 2.12.8
+Scala Version is 2.13.0 / 2.12.10
 
 Java Version is 11 / 12
+
+## Documentation
+
+[https://sfxcode.github.io/sapphire-extension/](https://sfxcode.github.io/sapphire-extension/)
 
 ## Showcase
 
@@ -31,7 +35,8 @@ jar for using sapphire-extensions with SceneBuilder can be found in the scenebui
 
 This Framework is actually work in progress.
 
-Feel free to use it on top of sapphire-core, but it is less tested and not as stable as sapphire core.
+Feel free to use it on top of sapphire-core, but it is less tested and
+not as stable as sapphire core. I use it in several real world projects.
 
 ## Licence
 
@@ -41,6 +46,7 @@ Apache 2 License.
 
 ### sapphire-core
 
+[Documentation](https://sfxcode.github.io/sapphire-core)
 
 [ ![Download](https://api.bintray.com/packages/sfxcode/maven/sapphire-core/images/download.svg) ](https://bintray.com/sfxcode/maven/sapphire-core/_latestVersion)
 

@@ -8,7 +8,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-crossScalaVersions := Seq("2.13.0", "2.12.9")
+crossScalaVersions := Seq("2.13.0", "2.12.10")
 
 scalaVersion := crossScalaVersions.value.head
 
@@ -19,7 +19,7 @@ javacOptions in test += "-Dorg.apache.deltaspike.ProjectStage=Test"
 parallelExecution in Test := false
 
 val JavaFXVersion = "12.0.2"
-val SapphireCoreVersion = "1.6.2"
+val SapphireCoreVersion = "1.6.6"
 val Json4sVersion = "3.6.7"
 val LogbackVersion = "1.2.3"
 val IkonliVersion = "11.3.4"

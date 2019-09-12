@@ -2,6 +2,10 @@
 
 ## Versions
 
+### 0.9.3
+* sapphire-core 1.6.6
+* Docs updated
+
 ### 0.9.2
 * sapphire-core 1.6.2
 * added SceneExtensions
