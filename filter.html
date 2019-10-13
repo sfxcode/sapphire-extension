@@ -20,7 +20,7 @@
 
 <meta name="description" content="sapphire extension docs">
 <link rel="shortcut icon" href="assets/images/favicon.png">
-<title>Sapphire Extension</title>
+<title>DataFilter · Sapphire Extension</title>
 <link rel="stylesheet" href="assets/stylesheets/application.451f80e5.css">
 <link rel="stylesheet" href="lib/material__tabs/dist/mdc.tabs.min.css">
 <link rel="stylesheet" href="lib/prettify/prettify.css">
@@ -52,7 +52,12 @@ code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}
 </div>
 <div class="md-flex__cell md-flex__cell--stretch">
 <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+<span class="md-header-nav__topic">
 Sapphire Extension
+</span>
+<span class="md-header-nav__topic">
+DataFilter
+</span>
 </div>
 </div>
 <div class="md-flex__cell md-flex__cell--shrink">
@@ -130,15 +135,18 @@ sfxcode/sapphire-extension
 
 </div>
 <ul>
-  <li><a href="filter.html" class="page">DataFilter</a></li>
+  <li><a href="filter.html" class="active page">DataFilter</a></li>
 </ul>
 <nav class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">Table of contents</label>
 <ul>
-  <li><a href="index.html#sapphire-extension" class="header">Sapphire Extension</a>
+  <li><a href="filter.html#datafilter" class="header">DataFilter</a>
   <ul>
-    <li><a href="index.html#features" class="header">Features</a></li>
-    <li><a href="index.html#technology-stack" class="header">Technology Stack</a></li>
+    <li><a href="filter.html#searchfield" class="header">SearchField</a></li>
+    <li><a href="filter.html#searchbox" class="header">SearchBox</a></li>
+    <li><a href="filter.html#example" class="header">Example</a></li>
+    <li><a href="filter.html#datalistfilter" class="header">DataListFilter</a></li>
+    <li><a href="filter.html#datatablefilter" class="header">DataTableFilter</a></li>
   </ul></li>
 </ul>
 </nav>
@@ -160,10 +168,13 @@ sfxcode/sapphire-extension
 <nav class="md-nav md-nav--secondary">
 <label class="md-nav__title" for="__toc">Table of contents</label>
 <ul>
-  <li><a href="index.html#sapphire-extension" class="header">Sapphire Extension</a>
+  <li><a href="filter.html#datafilter" class="header">DataFilter</a>
   <ul>
-    <li><a href="index.html#features" class="header">Features</a></li>
-    <li><a href="index.html#technology-stack" class="header">Technology Stack</a></li>
+    <li><a href="filter.html#searchfield" class="header">SearchField</a></li>
+    <li><a href="filter.html#searchbox" class="header">SearchBox</a></li>
+    <li><a href="filter.html#example" class="header">Example</a></li>
+    <li><a href="filter.html#datalistfilter" class="header">DataListFilter</a></li>
+    <li><a href="filter.html#datatablefilter" class="header">DataTableFilter</a></li>
   </ul></li>
 </ul>
 </nav>
@@ -174,28 +185,22 @@ sfxcode/sapphire-extension
 <div class="md-content">
 <article class="md-content__inner md-typeset">
 <div class="md-content__searchable">
-<h1><a href="#sapphire-extension" name="sapphire-extension" class="anchor"><span class="anchor-link"></span></a>Sapphire Extension</h1>
-<p>Sapphire Extensions provide some useful classes for dealing with tables, editors, data lists and many more.</p>
-<h2><a href="#features" name="features" class="anchor"><span class="anchor-link"></span></a>Features</h2>
-<ul>
-  <li>TableView Extensions (CellFactory, ColumnFactory &hellip;)</li>
-  <li>ViewController Extensions (DataTable, Master / Detail, TabView &hellip;)</li>
-  <li>ListView Extensions (DataListView, DualDataListView)</li>
-  <li>Filter (TableView, ListView)</li>
-  <li>ThirdParty Integration (controls-fx, ikonli)</li>
-  <li>BeanItems (combines sapphire-core FXBean with controls-fx  PropertySheet)</li>
-</ul>
-<h2><a href="#technology-stack" name="technology-stack" class="anchor"><span class="anchor-link"></span></a>Technology Stack</h2>
-<h3><a href="#sapphire-core" name="sapphire-core" class="anchor"><span class="anchor-link"></span></a>sapphire-core</h3>
-<p><a href="https://sfxcode.github.io/sapphire-core">Documentation</a></p>
-<p><a href="https://bintray.com/sfxcode/maven/sapphire-core/_latestVersion"> <img src="https://api.bintray.com/packages/sfxcode/maven/sapphire-core/images/download.svg" alt="Download" /> </a></p>
-<h3><a href="#controlsfx" name="controlsfx" class="anchor"><span class="anchor-link"></span></a>ControlsFX</h3>
-<p><a href="http://fxexperience.com/controlsfx/">http://fxexperience.com/controlsfx/</a></p>
-<h3><a href="#ikonli" name="ikonli" class="anchor"><span class="anchor-link"></span></a>Ikonli</h3>
-<p><a href="https://aalmiray.github.io/ikonli/">https://aalmiray.github.io/ikonli/</a></p>
+<h1><a href="#datafilter" name="datafilter" class="anchor"><span class="anchor-link"></span></a>DataFilter</h1>
+<p>DataFilter connect JavaFX controls with collection based data used in tables and lists. Changes on the controls are reflected in data filtering.</p>
+<p>DataFilter provide functions for adding search controls.</p>
+<h3><a href="#searchfield" name="searchfield" class="anchor"><span class="anchor-link"></span></a>SearchField</h3>
+<h3><a href="#searchbox" name="searchbox" class="anchor"><span class="anchor-link"></span></a>SearchBox</h3>
+<h3><a href="#example" name="example" class="anchor"><span class="anchor-link"></span></a>Example</h3>
+<pre class="prettyprint"><a class="icon go-to-source" href="https://github.com/sfxcode/sapphire-extension/tree/v1.0.0/demos/showcase/src/main/scala/com/sfxcode/sapphire/extension/showcase/controller/table/PersonTableController.scala#L23-L25" target="_blank" title="Go to snippet source"></a><code class="language-scala">tableFilter.addSearchField(&quot;addressFilter&quot;, &quot;address&quot;).setPromptText(&quot;Address&quot;)
+tableFilter.addSearchBox(&quot;genderFilter&quot;, &quot;gender&quot;, &quot;male/female&quot;)
+tableFilter.addSearchBox(&quot;fruitFilter&quot;, &quot;favoriteFruit&quot;, &quot;all fruits&quot;)</code></pre>
+<h2><a href="#datalistfilter" name="datalistfilter" class="anchor"><span class="anchor-link"></span></a>DataListFilter</h2>
+<p>Implementation of DataFilter for DataListViews.</p>
+<h2><a href="#datatablefilter" name="datatablefilter" class="anchor"><span class="anchor-link"></span></a>DataTableFilter</h2>
+<p>Implementation of DataFilter for TableViews.</p>
 </div>
 <div>
-<a href="https://github.com/sfxcode/sapphire-extension/tree/v1.0.0/docs/src/main/paradox/index.md" title="Edit this page" class="md-source-file md-edit">
+<a href="https://github.com/sfxcode/sapphire-extension/tree/v1.0.0/docs/src/main/paradox/filter.md" title="Edit this page" class="md-source-file md-edit">
 Edit this page
 </a>
 </div>
@@ -211,17 +216,17 @@ Edit this page
 <footer class="md-footer">
 <div class="md-footer-nav">
 <nav class="md-footer-nav__inner md-grid">
-<a href="filter.html" title="DataFilter" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+<a href="index.html" title="Sapphire Extension" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+<div class="md-flex__cell md-flex__cell--shrink">
+<i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+</div>
 <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
 <span class="md-flex__ellipsis">
 <span class="md-footer-nav__direction">
-Next
+Previous
 </span>
-DataFilter
+Sapphire Extension
 </span>
-</div>
-<div class="md-flex__cell md-flex__cell--shrink">
-<i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
 </div>
 </a>
 </nav>
