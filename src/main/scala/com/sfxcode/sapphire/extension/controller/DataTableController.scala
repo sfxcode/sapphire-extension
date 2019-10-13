@@ -46,7 +46,7 @@ abstract class DataTableController extends ViewController with LazyLogging {
 
     tableFilter.selectedItem.addListener((_, oldValue, newValue) => selectedTableViewItemDidChange(oldValue, newValue))
     tableFilter.selectedItems.addChangeListener(_ => {
-      selectedItemsDidChange(tableFilter.selectedItems)
+      selectedTableViewItemsDidChange(tableFilter.selectedItems)
     })
   }
 
@@ -56,7 +56,7 @@ abstract class DataTableController extends ViewController with LazyLogging {
 
   }
 
-  def selectedItemsDidChange(source: ObservableList[FXBean[R]]): Unit = {
+  def selectedTableViewItemsDidChange(source: ObservableList[FXBean[R]]): Unit = {
     logger.debug("new values count: %s".format(source.size))
   }
 

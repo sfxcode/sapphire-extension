@@ -8,7 +8,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-crossScalaVersions := Seq("2.13.0", "2.12.10")
+crossScalaVersions := Seq("2.13.1", "2.12.10")
 
 scalaVersion := crossScalaVersions.value.head
 
@@ -37,25 +37,25 @@ lazy val sapphire_extension_root = Project(id = "sapphire-extension", base = fil
   description := "Sapphire Extension"
 )
 
-lazy val demo_showcase = Project(id = "sapphire-extension-showcase",base = file("demos/showcase")).settings(
-  name:= "sapphire-extension-showcase",
+lazy val demo_showcase = Project(id = "sapphire-extension-showcase", base = file("demos/showcase")).settings(
+  scalaVersion := "2.13.1",
+  name := "sapphire-extension-showcase",
   description := "Sapphire Extension Showcase",
   libraryDependencies ++= Seq("base", "controls", "fxml", "graphics", "media", "swing", "web").map(
     m => "org.openjfx" % s"javafx-$m" % JavaFXVersion classifier osName),
   libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % SapphireCoreVersion,
   libraryDependencies += "org.json4s" %% "json4s-native" % Json4sVersion,
   libraryDependencies += "ch.qos.logback" % "logback-classic" % LogbackVersion,
-  mainClass := Some("com.sfxcode.sapphire.extension.showcase.Application"),
-  scalaVersion := "2.13.0"
+  mainClass := Some("com.sfxcode.sapphire.extension.showcase.Application")
 
 
-).dependsOn(sapphire_extension_root).aggregate(sapphire_extension_root)
+).dependsOn(sapphire_extension_root)
 
-lazy val sapphire_extension_scenebuilder = Project(id = "sapphire-extension-scenebuilder",base = file("scenebuilder")).settings(
-  name:= "sapphire-extension-scenebuilder",
+lazy val sapphire_extension_scenebuilder = Project(id = "sapphire-extension-scenebuilder", base = file("scenebuilder")).settings(
+  name := "sapphire-extension-scenebuilder",
   description := "Sapphire Extension Scenebuilder",
   crossPaths := false,
-    libraryDependencies ++= Seq("base", "controls", "fxml", "graphics", "media", "swing", "web").map(
+  libraryDependencies ++= Seq("base", "controls", "fxml", "graphics", "media", "swing", "web").map(
     m => "org.openjfx" % s"javafx-$m" % JavaFXVersion classifier osName)
 )
 
@@ -71,7 +71,7 @@ resolvers += "sfxcode-maven" at "https://bintray.com/sfxcode/maven/"
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "4.7.0" % Test
+libraryDependencies += "org.specs2" %% "specs2-core" % "4.7.1" % Test
 
 libraryDependencies += "org.json4s" %% "json4s-native" % Json4sVersion % Test
 
@@ -115,7 +115,7 @@ pomPostProcess := { node: XmlNode =>
   new RuleTransformer(new RewriteRule {
     override def transform(node: XmlNode): XmlNodeSeq = node match {
       case e: Elem if e.label == "dependency" && e.child.exists(c => c.label == "scope" && c.text == "provided")
-        && e.child.exists(c => c.label == "groupId" && c.text == "org.openjfx")=>
+        && e.child.exists(c => c.label == "groupId" && c.text == "org.openjfx") =>
         val organization = e.child.filter(_.label == "groupId").flatMap(_.text).mkString
         val artifact = e.child.filter(_.label == "artifactId").flatMap(_.text).mkString
         val version = e.child.filter(_.label == "version").flatMap(_.text).mkString
@@ -142,10 +142,10 @@ scmInfo := Some(
 
 developers := List(
   Developer(
-    id    = "sfxcode",
-    name  = "Tom Lamers",
+    id = "sfxcode",
+    name = "Tom Lamers",
     email = "tom@sfxcode.com",
-    url   = url("https://github.com/sfxcode")
+    url = url("https://github.com/sfxcode")
   )
 )
 
@@ -154,6 +154,7 @@ lazy val docs = (project in file("docs"))
   .enablePlugins(ParadoxMaterialThemePlugin)
   .enablePlugins(GhpagesPlugin)
   .settings(
+    scalaVersion := "2.13.1",
     name := "sapphire extension docs",
     publish / skip := true,
     ghpagesNoJekyll := true,

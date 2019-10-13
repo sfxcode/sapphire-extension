@@ -19,9 +19,11 @@ class PersonTableController extends AbstractTableViewController with BeanConvers
     super.initTable(tableFilter)
     tableFilter.hideColumn("tags", "friends", "about", "guid", "picture")
 
+    // #DataFilter
     tableFilter.addSearchField("addressFilter", "address").setPromptText("Address")
     tableFilter.addSearchBox("genderFilter", "gender", "male/female")
     tableFilter.addSearchBox("fruitFilter", "favoriteFruit", "all fruits")
+    // #DataFilter
   }
 
 }

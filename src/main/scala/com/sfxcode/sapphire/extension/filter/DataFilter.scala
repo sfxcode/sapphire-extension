@@ -18,7 +18,6 @@ import scala.collection.JavaConverters._
 
 class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], pane: ObjectProperty[Pane]) extends LazyLogging {
   val conf: Config = ConfigFactory.load()
-  //implicit def objectPropertyToValue[T <: Any](property: ObjectProperty[T]): T = property.get
 
   protected val controlList: ObservableList[Node] = FXCollections.observableArrayList[Node]()
   protected val controlFilterMap = new mutable.HashMap[Control, Any]()

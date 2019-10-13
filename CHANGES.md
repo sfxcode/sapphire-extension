@@ -2,6 +2,10 @@
 
 ## Versions
 
+### 1.0.0
+* DualDataListView by config
+* sapphire-core 1.6.7
+
 ### 0.9.3
 * sapphire-core 1.6.6
 * Docs updated
