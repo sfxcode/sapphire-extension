@@ -2,13 +2,13 @@ package com.sfxcode.sapphire.extension.skin
 
 import javafx.beans.binding.Bindings
 import javafx.scene.control.SelectionMode._
-import javafx.scene.control.{Button, MultipleSelectionModel, SkinBase}
-import com.sfxcode.sapphire.core.value.{BeanConversions, FXBean}
-import com.sfxcode.sapphire.extension.control.{DataListView, DualDataListView}
+import javafx.scene.control.{ Button, MultipleSelectionModel, SkinBase }
+import com.sfxcode.sapphire.core.value.{ BeanConversions, FXBean }
+import com.sfxcode.sapphire.extension.control.{ DataListView, DualDataListView }
 import javafx.geometry.Pos
 import javafx.scene.layout._
 import com.sfxcode.sapphire.extension.control.IconTools._
-import javafx.collections.{FXCollections, ObservableList}
+import javafx.collections.{ FXCollections, ObservableList }
 import com.sfxcode.sapphire.core.CollectionExtensions._
 import com.sfxcode.sapphire.core.ConfigValues
 import com.sfxcode.sapphire.extension.scene.SceneExtensions._

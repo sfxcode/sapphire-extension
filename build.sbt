@@ -18,7 +18,7 @@ javacOptions in test += "-Dorg.apache.deltaspike.ProjectStage=Test"
 
 parallelExecution in Test := false
 
-val JavaFXVersion = "12.0.2"
+val JavaFXVersion = "13.0.1"
 val SapphireCoreVersion = "1.6.7"
 val Json4sVersion = "3.6.7"
 val LogbackVersion = "1.2.3"
@@ -71,7 +71,7 @@ resolvers += "sfxcode-maven" at "https://bintray.com/sfxcode/maven/"
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "4.7.1" % Test
+libraryDependencies += "org.specs2" %% "specs2-core" % "4.8.0" % Test
 
 libraryDependencies += "org.json4s" %% "json4s-native" % Json4sVersion % Test
 
@@ -84,7 +84,7 @@ libraryDependencies += "ch.qos.logback" % "logback-classic" % LogbackVersion % P
 
 libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % SapphireCoreVersion % Provided
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.25" % Provided
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.5.26" % Provided
 
 // Compile
 
