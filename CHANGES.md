@@ -2,6 +2,10 @@
 
 ## Versions
 
+### 1.0.1
+* sapphire-core 1.6.9
+* JavaFX 13.0.2
+
 ### 1.0.0
 * DualDataListView by config
 * sapphire-core 1.6.7

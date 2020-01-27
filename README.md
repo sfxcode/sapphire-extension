@@ -7,7 +7,7 @@ The sapphire extension framework adds additional features to [sapphire-core](htt
 
 Scala Version is 2.13.0 / 2.12.10
 
-Java Version is 11 / 12
+Java Version is 13.x
 
 ## Documentation
 
