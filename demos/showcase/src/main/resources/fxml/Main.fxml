@@ -53,7 +53,7 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <HBox prefHeight="34.0" prefWidth="900.0" spacing="5.0" VBox.vgrow="NEVER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+        <HBox prefHeight="34.0" prefWidth="900.0" spacing="5.0" VBox.vgrow="NEVER" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
             <children>
                 <Button mnemonicParsing="false" onAction="#actionShowForm" text="Form Binding" />
                 <Button mnemonicParsing="false" onAction="#actionShowTables" text="Table Binding" />
