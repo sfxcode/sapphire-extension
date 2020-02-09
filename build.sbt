@@ -19,7 +19,7 @@ javacOptions in test += "-Dorg.apache.deltaspike.ProjectStage=Test"
 parallelExecution in Test := false
 
 val JavaFXVersion = "13.0.2"
-val SapphireCoreVersion = "1.6.9"
+val SapphireCoreVersion = "1.7.1"
 val Json4sVersion = "3.6.7"
 val LogbackVersion = "1.2.3"
 val IkonliVersion = "11.3.5"
@@ -84,7 +84,7 @@ libraryDependencies += "ch.qos.logback" % "logback-classic" % LogbackVersion % P
 
 libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % SapphireCoreVersion % Provided
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.6.2" % Provided
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.6.3" % Provided
 
 // Compile
 

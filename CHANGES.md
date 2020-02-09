@@ -2,6 +2,9 @@
 
 ## Versions
 
+### 1.0.2
+* sapphire-core 1.7.1
+
 ### 1.0.1
 * sapphire-core 1.6.9
 * JavaFX 13.0.2
