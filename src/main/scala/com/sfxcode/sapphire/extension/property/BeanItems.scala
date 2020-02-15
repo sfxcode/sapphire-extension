@@ -6,7 +6,8 @@ import com.sfxcode.sapphire.core.CollectionExtensions._
 import com.sfxcode.sapphire.core.value._
 import javafx.collections.{ FXCollections, ObservableList }
 import scala.reflect.runtime.universe._
-import scala.jdk.CollectionConverters._
+import scala.collection.JavaConverters._
+
 class BeanItems(bean: FXBean[_ <: AnyRef]) {
   private val itemBuffer = FXCollections.observableArrayList[BeanItem]()
 
