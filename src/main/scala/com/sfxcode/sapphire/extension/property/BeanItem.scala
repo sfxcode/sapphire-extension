@@ -1,26 +1,56 @@
 package com.sfxcode.sapphire.extension.property
 
 import java.time.{ Instant, LocalDate, LocalDateTime, ZoneId }
-import java.util
 import java.util.{ Date, Optional }
 
 import com.sfxcode.sapphire.core.ConfigValues
-import javafx.beans.value.ObservableValue
 import com.sfxcode.sapphire.core.value._
+import javafx.beans.value.ObservableValue
 import javafx.collections.{ FXCollections, ObservableList }
 import org.controlsfx.control.PropertySheet.Item
-import com.sfxcode.sapphire.core.CollectionExtensions._
 
 import scala.reflect.runtime.universe._
 
-class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = "", editable: Boolean = true) extends Item with ConfigValues {
+final class EmptyBeanItemClass
+
+private object EmptyBeanItemClass {
+  val ClazzOf: Class[_ <: EmptyBeanItemClass] = EmptyBeanItemClass().getClass
+
+  def apply(): EmptyBeanItemClass = new EmptyBeanItemClass
+}
+
+class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = "", editable: Boolean = true, clazz: Class[_] = EmptyBeanItemClass.ClazzOf) extends Item with ConfigValues {
+  var classOption: Option[Class[_]] = Some(clazz)
+
+  def getKey: String = key
 
   override def getType: Class[_] = {
-    val memberInfo = FXBeanClassRegistry.memberInfo(bean.bean, key)
-    if (isDateType)
-      classOf[LocalDate]
-    else
-      memberInfo.javaClass
+    if (classOption.isDefined && EmptyBeanItemClass.ClazzOf != classOption.get) {
+      classOption.get
+    } else {
+      val underlying = bean.bean
+      if (underlying.isInstanceOf[Map[String, Any]] || underlying.isInstanceOf[java.util.Map[String, Any]]) {
+        var clazz: Class[_] = classOf[String]
+        val valueOption = Option(bean.getValue(key))
+        if (valueOption.isDefined) {
+          clazz = valueOption.get.getClass
+          if (valueOption.get.isInstanceOf[java.util.Date])
+            classOf[LocalDate]
+        }
+        classOption = Some(clazz)
+        clazz
+      } else {
+        val memberInfo = FXBeanClassRegistry.memberInfo(underlying, key)
+        val clazz = {
+          if (isDateType)
+            classOf[LocalDate]
+          else
+            memberInfo.javaClass
+        }
+        classOption = Some(clazz)
+        clazz
+      }
+    }
   }
 
   def isDateType: Boolean = FXBeanClassRegistry.memberInfo(bean.bean, key).signature == PropertyType.TypeDate
@@ -55,7 +85,7 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", ca
 
   override def getDescription: String = description
 
-  override def isEditable = editable
+  override def isEditable: Boolean = editable
 
   def asLocalDate(date: java.util.Date): LocalDate = {
     val instant = Instant.ofEpochMilli(date.getTime)
@@ -72,8 +102,8 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", ca
 
 object BeanItem {
 
-  def apply(bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = "", editable: Boolean = true): BeanItem = {
-    new BeanItem(bean, key, name, category, description, editable)
+  def apply(bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = "", editable: Boolean = true, clazz: Class[_] = EmptyBeanItemClass.ClazzOf): BeanItem = {
+    new BeanItem(bean, key, name, category, description, editable, clazz)
   }
 
   def beanItems[T <: AnyRef](bean: FXBean[T])(implicit t: TypeTag[T]): ObservableList[Item] = {
@@ -86,25 +116,5 @@ object BeanItem {
     result
   }
 
-}
-
-class BeanItems(bean: FXBean[_ <: AnyRef]) {
-  private val itemBuffer = FXCollections.observableArrayList[BeanItem]()
-
-  def getItems: ObservableList[BeanItem] = itemBuffer
-
-  def addItem(key: String, name: String = "", category: String = "", description: String = "", editable: Boolean = true): Unit = {
-    itemBuffer.add(BeanItem(bean, key, name, category, description, editable))
-  }
-
-  def updateBean(bean: FXBean[_ <: AnyRef]) {
-    itemBuffer.foreach(item => item.bean = bean)
-  }
-
-}
-
-object BeanItems {
-
-  def apply(bean: FXBean[_ <: AnyRef] = FXBean(new util.HashMap())): BeanItems = new BeanItems(bean)
 }
 

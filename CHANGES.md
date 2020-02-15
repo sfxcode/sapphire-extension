@@ -2,6 +2,11 @@
 
 ## Versions
 
+### 1.0.4
+* BeanItem class can be set
+* BeanItems from Map
+* BeanItem(s) tests added
+
 ### 1.0.3
 * sapphire-core 1.7.3
 * BeanItem support editable
