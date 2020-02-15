@@ -19,7 +19,7 @@ javacOptions in test += "-Dorg.apache.deltaspike.ProjectStage=Test"
 parallelExecution in Test := false
 
 val JavaFXVersion = "13.0.2"
-val SapphireCoreVersion = "1.7.1"
+val SapphireCoreVersion = "1.7.3"
 val Json4sVersion = "3.6.7"
 val LogbackVersion = "1.2.3"
 val IkonliVersion = "11.3.5"

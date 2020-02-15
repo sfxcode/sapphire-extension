@@ -4,16 +4,16 @@ import javafx.scene.Node
 import javafx.scene.layout.Pane
 import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.filter.FilterType._
-import com.typesafe.config.{Config, ConfigFactory}
+import com.typesafe.config.{ Config, ConfigFactory }
 import com.typesafe.scalalogging.LazyLogging
 import org.controlsfx.control.textfield.TextFields
 
 import scala.collection.mutable
 import javafx.beans.property.ObjectProperty
-import javafx.collections.{FXCollections, ObservableList}
-import javafx.scene.control.{ComboBox, Control, TextField}
+import javafx.collections.{ FXCollections, ObservableList }
+import javafx.scene.control.{ ComboBox, Control, TextField }
 import com.sfxcode.sapphire.core.CollectionExtensions._
-import com.sfxcode.sapphire.core.el.{DefaultFunctions, FunctionHelper}
+import com.sfxcode.sapphire.core.el.{ DefaultFunctions, FunctionHelper }
 
 import scala.collection.JavaConverters._
 

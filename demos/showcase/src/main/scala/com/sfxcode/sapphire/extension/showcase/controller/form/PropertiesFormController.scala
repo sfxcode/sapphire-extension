@@ -28,7 +28,7 @@ class PropertiesFormController extends AbstractBaseController {
     super.didGainVisibilityFirstTime()
 
     beanItems.addItem("name", "Name", "Basic", "Name")
-    beanItems.addItem("age", "Age", "Basic", "Age")
+    beanItems.addItem("age", "Age", "Basic", "Age", editable = false)
     beanItems.addItem("isActive", "Active", "Extended", "Active")
     beanItems.addItem("registered", "Registered", "Extended", "Registered")
 

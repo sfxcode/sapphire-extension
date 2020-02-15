@@ -2,6 +2,10 @@
 
 ## Versions
 
+### 1.0.3
+* sapphire-core 1.7.3
+* BeanItem support editable
+
 ### 1.0.2
 * sapphire-core 1.7.1
 

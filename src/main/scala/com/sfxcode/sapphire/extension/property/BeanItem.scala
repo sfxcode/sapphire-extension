@@ -13,7 +13,7 @@ import com.sfxcode.sapphire.core.CollectionExtensions._
 
 import scala.reflect.runtime.universe._
 
-class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = "") extends Item with ConfigValues {
+class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = "", editable: Boolean = true) extends Item with ConfigValues {
 
   override def getType: Class[_] = {
     val memberInfo = FXBeanClassRegistry.memberInfo(bean.bean, key)
@@ -55,7 +55,7 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", ca
 
   override def getDescription: String = description
 
-  override def isEditable = true
+  override def isEditable = editable
 
   def asLocalDate(date: java.util.Date): LocalDate = {
     val instant = Instant.ofEpochMilli(date.getTime)
@@ -72,8 +72,8 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", ca
 
 object BeanItem {
 
-  def apply(bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = ""): BeanItem = {
-    new BeanItem(bean, key, name, category, description)
+  def apply(bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = "", editable: Boolean = true): BeanItem = {
+    new BeanItem(bean, key, name, category, description, editable)
   }
 
   def beanItems[T <: AnyRef](bean: FXBean[T])(implicit t: TypeTag[T]): ObservableList[Item] = {
@@ -93,8 +93,8 @@ class BeanItems(bean: FXBean[_ <: AnyRef]) {
 
   def getItems: ObservableList[BeanItem] = itemBuffer
 
-  def addItem(key: String, name: String = "", category: String = "", description: String = ""): Unit = {
-    itemBuffer.add(BeanItem(bean, key, name, category, description))
+  def addItem(key: String, name: String = "", category: String = "", description: String = "", editable: Boolean = true): Unit = {
+    itemBuffer.add(BeanItem(bean, key, name, category, description, editable))
   }
 
   def updateBean(bean: FXBean[_ <: AnyRef]) {
