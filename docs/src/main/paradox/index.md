@@ -3,15 +3,17 @@
 Sapphire Extensions provide some useful classes for dealing with tables,
 editors, data lists and many more.
 
+It depends on [sapphire-core](https://sfxcode.github.io/sapphire-core), ControlsFX and Ikonli.
+
 ## Features
 
 - TableView Extensions (CellFactory, ColumnFactory ...)
 - ViewController Extensions (DataTable, Master / Detail, TabView ...)
 - ListView Extensions (DataListView, DualDataListView)
-- Filter (TableView, ListView)
+- Filter (@ref:[DataFilter](filter/index.md) for TableView, ListView)
 - ThirdParty Integration (controls-fx, ikonli)
-- BeanItems (combines sapphire-core FXBean with controls-fx
-  PropertySheet)
+- @ref:[BeanItems](controlsfx/bean_items.md) (combines sapphire-core FXBean with controls-fx
+  @ref:[PropertySheet](controlsfx/property_sheet.md))
 
 ## Technology Stack
 
@@ -24,14 +26,19 @@ editors, data lists and many more.
 
 ### ControlsFX
 
-[http://fxexperience.com/controlsfx/](http://fxexperience.com/controlsfx/)
+[https://github.com/controlsfx/controlsfx](https://github.com/controlsfx/controlsfx)
 
 ### Ikonli
 
-[https://aalmiray.github.io/ikonli/](https://aalmiray.github.io/ikonli/)
+[http://kordamp.org/ikonli/](http://kordamp.org/ikonli/)
 
 @@@ index
 
-- [DataFilter](filter.md)
+- [index](extensions/index.md)
+- [DataFilter](filter/index.md)
+- [index](controlsfx/index.md)
+- [ikonli](ikonli.md)
+- [sample](sample.md)
+- [changes](changes.md)
 
 @@@

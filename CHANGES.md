@@ -2,6 +2,11 @@
 
 ## Versions
 
+
+### 1.0.5
+* docs updated
+* BeanItem BugFix
+
 ### 1.0.4
 * BeanItem class can be set
 * BeanItems from Map

@@ -162,5 +162,8 @@ lazy val docs = (project in file("docs"))
     Compile / paradoxMaterialTheme ~= {
       _.withRepository(uri("https://github.com/sfxcode/sapphire-extension"))
 
-    }
+    },
+    (Compile / paradoxMarkdownToHtml / excludeFilter) := (Compile / paradoxMarkdownToHtml / excludeFilter).value ||
+      ParadoxPlugin.InDirectoryFilter((Compile / paradox / sourceDirectory).value / "includes")
+
   )

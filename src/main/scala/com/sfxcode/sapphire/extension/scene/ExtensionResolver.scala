@@ -8,6 +8,7 @@ import org.controlsfx.control.Rating
 
 import javafx.beans.property.Property
 
+// #NodePropertyResolving
 class ExtensionResolver extends NodePropertyResolving {
 
   def resolve(node: Node): Option[Property[_]] = {
@@ -17,6 +18,8 @@ class ExtensionResolver extends NodePropertyResolving {
     }
   }
 }
+// #NodePropertyResolving
+
 
 object ExtensionResolver extends BeanResolver {
 

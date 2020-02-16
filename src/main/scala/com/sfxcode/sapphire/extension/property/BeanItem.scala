@@ -25,48 +25,50 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", ca
   def getKey: String = key
 
   override def getType: Class[_] = {
+    var clazz: Class[_] = EmptyBeanItemClass.ClazzOf
     if (classOption.isDefined && EmptyBeanItemClass.ClazzOf != classOption.get) {
-      classOption.get
+      clazz = classOption.get
     } else {
       val underlying = bean.bean
       if (underlying.isInstanceOf[Map[String, Any]] || underlying.isInstanceOf[java.util.Map[String, Any]]) {
-        var clazz: Class[_] = classOf[String]
+        clazz = classOf[String]
         val valueOption = Option(bean.getValue(key))
         if (valueOption.isDefined) {
           clazz = valueOption.get.getClass
-          if (valueOption.get.isInstanceOf[java.util.Date])
-            classOf[LocalDate]
         }
         classOption = Some(clazz)
-        clazz
       } else {
         val memberInfo = FXBeanClassRegistry.memberInfo(underlying, key)
-        val clazz = {
-          if (isDateType)
-            classOf[LocalDate]
-          else
-            memberInfo.javaClass
-        }
+        clazz = memberInfo.javaClass
         classOption = Some(clazz)
-        clazz
       }
     }
+    if (clazz == classOf[Date])
+      classOf[LocalDate]
+    else
+      clazz
   }
 
-  def isDateType: Boolean = FXBeanClassRegistry.memberInfo(bean.bean, key).signature == PropertyType.TypeDate
+  def isDateType: Boolean = classOption.isDefined && classOption.get == classOf[Date]
 
-  override def getValue: AnyRef = {
-    if (isDateType)
-      asLocalDate(bean.getValue(key).asInstanceOf[Date])
+  override def getValue: Any = {
+    val valueOption = Option(bean.getValue(key))
+    if (valueOption.isDefined && isDateType)
+      asLocalDate(valueOption.get.asInstanceOf[Date])
+    else if (valueOption.isDefined)
+      valueOption.get.asInstanceOf[AnyRef]
     else
-      bean.getValue(key).asInstanceOf[AnyRef]
+      valueOption.orNull
   }
 
   override def setValue(value: Any): Unit = {
-    if (isDateType)
-      bean.updateValue(key, asDate(value.asInstanceOf[LocalDate]))
+    val valueOption = Option(value)
+    if (valueOption.isDefined && isDateType && valueOption.get.isInstanceOf[LocalDate])
+      bean.updateValue(key, asDate(valueOption.get.asInstanceOf[LocalDate]))
+    else if (valueOption.isDefined)
+      bean.updateValue(key, valueOption.get)
     else
-      bean.updateValue(key, value)
+      bean.updateValue(key, valueOption.orNull)
   }
 
   override def getCategory: String = {

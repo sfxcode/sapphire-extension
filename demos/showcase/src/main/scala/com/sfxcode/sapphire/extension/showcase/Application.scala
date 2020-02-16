@@ -18,11 +18,14 @@ class ApplicationController extends DefaultWindowController with LazyLogging {
 
   lazy val mainController: MainController = getController[MainController]()
 
+  // #ExtensionResolver
   def applicationDidLaunch() {
     logger.debug("start " + this)
     ExtensionResolver.add()
     replaceSceneContent(mainController)
   }
+  // #ExtensionResolver
+
 
   def replacePrimarySceneContent(): Unit = {
     val mainController = getController[MainController]()
