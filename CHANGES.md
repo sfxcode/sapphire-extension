@@ -2,6 +2,8 @@
 
 ## Versions
 
+### 1.0.6
+* release because of problems with 1.0.5
 
 ### 1.0.5
 * docs updated
