@@ -20,7 +20,6 @@ class ExtensionResolver extends NodePropertyResolving {
 }
 // #NodePropertyResolving
 
-
 object ExtensionResolver extends BeanResolver {
 
   def apply(): ExtensionResolver = new ExtensionResolver()

@@ -51,14 +51,14 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", ca
 
   def isDateType: Boolean = classOption.isDefined && classOption.get == classOf[Date]
 
-  override def getValue: Any = {
+  override def getValue: AnyRef = {
     val valueOption = Option(bean.getValue(key))
     if (valueOption.isDefined && isDateType)
       asLocalDate(valueOption.get.asInstanceOf[Date])
     else if (valueOption.isDefined)
       valueOption.get.asInstanceOf[AnyRef]
     else
-      valueOption.orNull
+      null
   }
 
   override def setValue(value: Any): Unit = {
