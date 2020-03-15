@@ -1,17 +1,17 @@
 package com.sfxcode.sapphire.extension.filter
 
 import javafx.scene.layout.Pane
-import com.sfxcode.sapphire.core.control.FXValueFactory
+import com.sfxcode.sapphire.core.control.{FXTableCellFactory, FXTableValueFactory}
 import com.sfxcode.sapphire.core.value.FXBean
-import com.sfxcode.sapphire.extension.control.table.{ FXTextFieldCellFactory, TableColumnFactory }
+import com.sfxcode.sapphire.extension.control.table.TableColumnFactory
 import javafx.beans.property.ReadOnlyObjectProperty
 
 import scala.collection.mutable
 import scala.reflect.ClassTag
-import scala.reflect.runtime.{ universe => ru }
+import scala.reflect.runtime.{universe => ru}
 import javafx.beans.property.ObjectProperty
 import javafx.collections.ObservableList
-import javafx.scene.control.{ TableView, _ }
+import javafx.scene.control.{TableView, _}
 import javafx.scene.text.TextAlignment
 import com.sfxcode.sapphire.core.CollectionExtensions._
 
@@ -47,7 +47,7 @@ class DataTableFilter[S <: AnyRef](table: TableView[FXBean[S]], items: ObjectPro
     columnMapping.put(key, column)
   }
 
-  def addColumns[T](editable: Boolean = false, numberFormat: String = "#,##0", decimalFormat: String = "#,##0.00") {
+  def addColumns[T](editable: Boolean = false, numberFormat: String = "#,##0", decimalFormat: String = "#,##0.00"): Unit = {
     val columnList = TableColumnFactory.columnListFromMembers[S, T](members, columnHeaderMap.toMap,
       columnPropertyMap.toMap, editable, numberFormat, decimalFormat)
 
@@ -55,9 +55,9 @@ class DataTableFilter[S <: AnyRef](table: TableView[FXBean[S]], items: ObjectPro
   }
 
   def addColumn[T](header: String, property: String, alignment: TextAlignment = TextAlignment.LEFT): TableColumn[FXBean[S], T] = {
-    val valueFactory = new FXValueFactory[FXBean[S], T]()
+    val valueFactory = new FXTableValueFactory[FXBean[S], T]()
     valueFactory.setProperty(columnPropertyMap.getOrElse(property, property))
-    val cellFactory = new FXTextFieldCellFactory[FXBean[S], T]()
+    val cellFactory = new FXTableCellFactory[FXBean[S], T]()
     cellFactory.setAlignment(alignment)
 
     val result = TableColumnFactory.columnFromFactories[S, T](header, valueFactory, Some(cellFactory))

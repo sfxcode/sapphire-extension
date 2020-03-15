@@ -14,12 +14,14 @@ scalaVersion := crossScalaVersions.value.head
 
 scalacOptions += "-deprecation"
 
+compileOrder := CompileOrder.JavaThenScala
+
 javacOptions in test += "-Dorg.apache.deltaspike.ProjectStage=Test"
 
 parallelExecution in Test := false
 
 val JavaFXVersion = "13.0.2"
-val SapphireCoreVersion = "1.7.3"
+val SapphireCoreVersion = "1.8.0"
 val Json4sVersion = "3.6.7"
 val LogbackVersion = "1.2.3"
 val IkonliVersion = "11.3.5"
@@ -46,6 +48,10 @@ lazy val demo_showcase = Project(id = "sapphire-extension-showcase", base = file
   libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % SapphireCoreVersion,
   libraryDependencies += "org.json4s" %% "json4s-native" % Json4sVersion,
   libraryDependencies += "ch.qos.logback" % "logback-classic" % LogbackVersion,
+  resolvers += "sandec" at "https://sandec.bintray.com/repo",
+  libraryDependencies += "com.sandec" % "mdfx" % "0.1.6",
+  libraryDependencies += "com.jfoenix" % "jfoenix" % "9.0.9",
+  libraryDependencies += "org.fxmisc.richtext" % "richtextfx" % "0.10.3",
   mainClass := Some("com.sfxcode.sapphire.extension.showcase.Application")
 
 
@@ -71,7 +77,7 @@ resolvers += "sfxcode-maven" at "https://bintray.com/sfxcode/maven/"
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "4.8.3" % Test
+libraryDependencies += "org.specs2" %% "specs2-core" % "4.9.2" % Test
 
 libraryDependencies += "org.json4s" %% "json4s-native" % Json4sVersion % Test
 
@@ -84,7 +90,7 @@ libraryDependencies += "ch.qos.logback" % "logback-classic" % LogbackVersion % P
 
 libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % SapphireCoreVersion % Provided
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.6.3" % Provided
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.6.4" % Provided
 
 // Compile
 

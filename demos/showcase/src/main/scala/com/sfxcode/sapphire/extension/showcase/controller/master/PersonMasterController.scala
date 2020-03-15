@@ -1,21 +1,22 @@
 package com.sfxcode.sapphire.extension.showcase.controller.master
 
-import com.sfxcode.sapphire.core.value.BeanConversions
-import com.sfxcode.sapphire.extension.controller.{ BaseDetailController, BaseMasterController }
-import com.sfxcode.sapphire.extension.showcase.controller.MainController
-import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
+import com.sfxcode.sapphire.core.value.{BeanConversions, FXBean}
+import com.sfxcode.sapphire.extension.controller.{BaseDetailController, BaseMasterController}
+import com.sfxcode.sapphire.extension.showcase.model.{Person, PersonDatabase}
 import com.sfxcode.sapphire.extension.filter.DataTableFilter
+import com.sfxcode.sapphire.extension.showcase.controller.BaseController
+import javafx.collections.ObservableList
 
 import scala.reflect._
 
-class PersonMasterController extends BaseMasterController with BeanConversions {
+class PersonMasterController extends BaseMasterController with BaseController with BeanConversions {
   lazy val personDetailController = getController[PersonDetailController]()
 
   type R = Person
 
-  def ct = classTag[R]
+  def ct: ClassTag[Person] = classTag[R]
 
-  def items = PersonDatabase.smallPersonTable
+  def items: ObservableList[FXBean[Person]] = PersonDatabase.smallPersonTable
 
   override def didGainVisibilityFirstTime(): Unit = {
     super.didGainVisibilityFirstTime()
@@ -35,11 +36,7 @@ class PersonMasterController extends BaseMasterController with BeanConversions {
   }
 
   override def navigateToDetailController(detailController: BaseDetailController): Unit = {
-    parent.asInstanceOf[MainController].workspaceManager.updatePaneContent(detailController)
-  }
-
-  def mainWindowController: MainController = {
-    parent.asInstanceOf[MainController]
+    updateShowcaseContent(detailController)
   }
 
 }

@@ -6,10 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<?import com.sfxcode.sapphire.core.control.FXValueFactory?>
-<?import com.sfxcode.sapphire.extension.control.table.FXTextFieldCellFactory?>
+<?import com.sfxcode.sapphire.core.control.FXTableValueFactory?>
 <?import com.sfxcode.sapphire.core.control.FXListCellFactory?>
-<?import com.sfxcode.sapphire.extension.control.table.FXCheckBoxCellFactory?>
+<?import com.sfxcode.sapphire.core.control.FXTableCellFactory?>
 <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sfxcode.sapphire.extension.showcase.controller.table.SimplePersonTableController">
     <children>
         <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -18,43 +17,43 @@
                     <columns>
                         <TableColumn  text="Name">
                             <cellValueFactory>
-                                <FXValueFactory property="name" />
+                                <FXTableValueFactory property="name" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn  text="Company">
                             <cellValueFactory>
-                                <FXValueFactory property="company" />
+                                <FXTableValueFactory property="company" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn  text="Expression Test">
                             <cellValueFactory>
-                                <FXValueFactory property="!{_self.age()} / !{_self.gender()}" />
+                                <FXTableValueFactory property="!{_self.age()} / !{_self.gender()}" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn  text="Expression Test CDI">
                             <cellValueFactory>
-                                <FXValueFactory property="!{simplePersonTableController.testString()}" />
+                                <FXTableValueFactory property="!{simplePersonTableController.testString()}" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn  text="Balance">
                             <cellValueFactory>
-                                <FXValueFactory property="balance" format="#,##0.00" />
+                                <FXTableValueFactory property="balance" format="#,##0.00" />
                             </cellValueFactory>
                             <cellFactory>
-                                <FXTextFieldCellFactory alignment="right"/>
+                                <FXTableCellFactory alignment="right"/>
                             </cellFactory>
                         </TableColumn>
                         <TableColumn  text="Active">
                             <cellValueFactory>
-                                <FXValueFactory property="isActive" />
+                                <FXTableValueFactory property="isActive" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn  text="Checkbox Test">
                             <cellValueFactory>
-                                <FXValueFactory property="isActive" />
+                                <FXTableValueFactory property="isActive" />
                             </cellValueFactory>
                             <cellFactory>
-                                <FXCheckBoxCellFactory alignment="right"/>
+                                <FXTableCellFactory simpleClassName="CheckBoxTableCell" alignment="right"/>
                             </cellFactory>
                         </TableColumn>
                     </columns>

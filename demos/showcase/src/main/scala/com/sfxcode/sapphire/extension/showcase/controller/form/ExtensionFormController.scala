@@ -5,12 +5,12 @@ import javafx.scene.Node
 import javafx.scene.layout.Pane
 
 import com.sfxcode.sapphire.core.value.{ FXBean, FXBeanAdapter, KeyBindings }
-import com.sfxcode.sapphire.extension.showcase.controller.AbstractBaseController
+import com.sfxcode.sapphire.extension.showcase.controller.BaseController
 import com.sfxcode.sapphire.extension.showcase.model.BookRating
 
 import scala.util.Random
 
-class ExtensionFormController extends AbstractBaseController {
+class ExtensionFormController extends BaseController {
   @FXML
   var formPane: Pane = _
 

@@ -5,13 +5,13 @@ import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.ComboBox
 import com.sfxcode.sapphire.extension.control.DataListView
-import com.sfxcode.sapphire.extension.showcase.controller.BaseController
+import com.sfxcode.sapphire.extension.showcase.controller.AbstractBaseController
 import com.sfxcode.sapphire.extension.showcase.model.{ Friend, Person, PersonDatabase }
 import com.typesafe.scalalogging.LazyLogging
 import javafx.collections.{ FXCollections, ObservableList }
 
 import scala.collection.JavaConverters._
-class ListFormController extends BaseController with BeanConversions with LazyLogging {
+class ListFormController extends AbstractBaseController with BeanConversions with LazyLogging {
 
   type R = Friend
 

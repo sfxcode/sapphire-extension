@@ -2,7 +2,7 @@ package com.sfxcode.sapphire.extension.showcase.controller
 
 import com.typesafe.scalalogging.LazyLogging
 
-class WelcomeController extends AbstractBaseController with LazyLogging {
+class WelcomeController extends BaseController with LazyLogging {
 
   override def startup(): Unit = {
     logMethod("startup")

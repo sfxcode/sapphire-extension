@@ -1,24 +1,20 @@
 package com.sfxcode.sapphire.extension.showcase.controller.master
 
 import com.sfxcode.sapphire.core.value.KeyBindings
-import com.sfxcode.sapphire.extension.controller.{ BaseDetailController, BaseMasterController }
-import com.sfxcode.sapphire.extension.showcase.controller.MainController
+import com.sfxcode.sapphire.extension.controller.{BaseDetailController, BaseMasterController}
+import com.sfxcode.sapphire.extension.showcase.controller.BaseController
 import com.sfxcode.sapphire.extension.showcase.model.Person
 
 import scala.reflect._
 
-class PersonDetailController extends BaseDetailController {
+class PersonDetailController extends BaseDetailController with BaseController {
 
   type R = Person
 
-  def ct = classTag[R]
-
-  def mainWindowController: MainController = {
-    parent.asInstanceOf[MainController]
-  }
+  def ct: ClassTag[Person] = classTag[R]
 
   override def navigateToMasterController(masterController: BaseMasterController): Unit = {
-    mainWindowController.masterNavigationController.actionShowPersonMasterController(null)
+    updateShowcaseContent(masterController)
   }
 
   def updateBindings(bindings: KeyBindings): Unit = {

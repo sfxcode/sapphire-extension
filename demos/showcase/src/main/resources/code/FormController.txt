@@ -6,12 +6,12 @@ import javafx.scene.Node
 import javafx.scene.layout.Pane
 
 import com.sfxcode.sapphire.core.value.{ FXBean, FXBeanAdapter, KeyBindings }
-import com.sfxcode.sapphire.extension.showcase.controller.BaseController
+import com.sfxcode.sapphire.extension.showcase.controller.AbstractBaseController
 import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
 
 import scala.util.Random
 
-class FormController extends BaseController {
+class FormController extends AbstractBaseController {
   @FXML
   var formPane: Pane = _
 

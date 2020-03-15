@@ -16,7 +16,7 @@ addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.13")
 
 // Paradox handling
 
-addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.6.8")
+addSbtPlugin("com.lightbend.paradox" % "sbt-paradox" % "0.6.9")
 
 addSbtPlugin("io.github.jonas" % "sbt-paradox-material-theme" % "0.6.0")
 

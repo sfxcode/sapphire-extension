@@ -5,14 +5,14 @@ import javafx.fxml.FXML
 import javafx.scene.layout.AnchorPane
 
 import com.sfxcode.sapphire.core.value.{ FXBean, FXBeanAdapter, KeyBindings }
-import com.sfxcode.sapphire.extension.showcase.controller.AbstractBaseController
+import com.sfxcode.sapphire.extension.showcase.controller.BaseController
 import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
 import com.sfxcode.sapphire.extension.property.BeanItems
 import org.controlsfx.control.PropertySheet
 
 import scala.util.Random
 
-class PropertiesFormController extends AbstractBaseController {
+class PropertiesFormController extends BaseController {
 
   @FXML
   var propPane: AnchorPane = _

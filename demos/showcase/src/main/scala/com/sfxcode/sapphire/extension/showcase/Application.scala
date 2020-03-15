@@ -3,7 +3,7 @@ package com.sfxcode.sapphire.extension.showcase
 import com.sfxcode.sapphire.core.application.FXApp
 import com.sfxcode.sapphire.core.controller.DefaultWindowController
 import com.sfxcode.sapphire.extension.scene.ExtensionResolver
-import com.sfxcode.sapphire.extension.showcase.controller.MainController
+import com.sfxcode.sapphire.extension.showcase.controller.ShowcaseViewController
 import com.typesafe.scalalogging.LazyLogging
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Named
@@ -16,22 +16,15 @@ object Application extends FXApp {
 @ApplicationScoped
 class ApplicationController extends DefaultWindowController with LazyLogging {
 
-  lazy val mainController: MainController = getController[MainController]()
+  lazy val showcaseController: ShowcaseViewController = getController[ShowcaseViewController]()
 
   // #ExtensionResolver
   def applicationDidLaunch() {
     logger.debug("start " + this)
     ExtensionResolver.add()
-    replaceSceneContent(mainController)
+    replaceSceneContent(showcaseController)
   }
   // #ExtensionResolver
-
-
-  def replacePrimarySceneContent(): Unit = {
-    val mainController = getController[MainController]()
-    replaceSceneContent(mainController)
-
-  }
 
 }
 

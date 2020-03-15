@@ -1,15 +1,13 @@
 package com.sfxcode.sapphire.extension.showcase.controller.table
 
-import javafx.beans.binding.Bindings
 import javafx.fxml.FXML
 import javafx.scene.control.TableView
-import com.sfxcode.sapphire.core.controller.ViewController
-import com.sfxcode.sapphire.core.value.{ BeanConversions, FXBean }
-import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
-import com.sfxcode.sapphire.extension.showcase.controller.MainController
+import com.sfxcode.sapphire.core.value.{BeanConversions, FXBean}
+import com.sfxcode.sapphire.extension.showcase.controller.BaseController
+import com.sfxcode.sapphire.extension.showcase.model.{Person, PersonDatabase}
 import javafx.collections.ObservableList
 
-class SimplePersonTableController extends ViewController with BeanConversions {
+class SimplePersonTableController extends BaseController with BeanConversions {
 
   @FXML
   var table: TableView[FXBean[Person]] = _
@@ -20,12 +18,6 @@ class SimplePersonTableController extends ViewController with BeanConversions {
     super.didGainVisibilityFirstTime()
     val items: ObservableList[FXBean[Person]] = PersonDatabase.smallPersonList
     table.setItems(items)
-    mainWindowController.statusBar.textProperty().bind(Bindings.format("%d records found", Bindings.size(items)))
-
-  }
-
-  def mainWindowController: MainController = {
-    parent.asInstanceOf[MainController]
   }
 }
 

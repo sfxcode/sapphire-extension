@@ -1,18 +1,18 @@
 package com.sfxcode.sapphire.extension.control.table
 
-import com.sfxcode.sapphire.core.control.FXValueFactory
+import com.sfxcode.sapphire.core.control.{FXTableCellFactory, FXTableValueFactory}
 import com.sfxcode.sapphire.core.value.FXBean
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
-import scala.reflect.runtime.{ universe => ru }
+import scala.reflect.runtime.{universe => ru}
 import javafx.scene.control.TableColumn
 import javafx.scene.text.TextAlignment
 
 object TableColumnFactory {
   val rightAlignmentList = List("Date", "Calendar", "Int", "Long", "Double", "Float")
 
-  def columnFromFactories[S <: AnyRef, T](header: String, valueFactory: FXValueFactory[FXBean[S], T], cellFactory: Option[FXCellFactory[FXBean[S], T]] = None): TableColumn[FXBean[S], T] = {
+  def columnFromFactories[S <: AnyRef, T](header: String, valueFactory: FXTableValueFactory[FXBean[S], T], cellFactory: Option[FXTableCellFactory[FXBean[S], T]] = None): TableColumn[FXBean[S], T] = {
     val column = new TableColumn[FXBean[S], T](header)
     column.setPrefWidth(80)
     column.setCellValueFactory(valueFactory)
@@ -29,7 +29,7 @@ object TableColumnFactory {
     symbols.foreach(symbol => {
       val name = symbol.name.toString.trim
       buffer.+=(name)
-      val cellFactory = new FXTextFieldCellFactory[FXBean[S], T]()
+      val cellFactory = new FXTableCellFactory[FXBean[S], T]()
       val signature = symbol.typeSignature.toString
       if (editable)
         cellFactory.setConverter(signature.replace("Int", "Integer"))
@@ -38,7 +38,7 @@ object TableColumnFactory {
         cellFactory.setAlignment(TextAlignment.RIGHT)
 
       val property = columnPropertyMap.getOrElse(name, name)
-      val valueFactory = new FXValueFactory[FXBean[S], T]()
+      val valueFactory = new FXTableValueFactory[FXBean[S], T]()
       valueFactory.setProperty(property)
       if (editable) {
         if (signature.contains("Int") || signature.contains("Long"))
@@ -56,8 +56,7 @@ object TableColumnFactory {
   private def propertyToHeader(property: String): String = {
     if (property.length == 1)
       return property.toUpperCase
-    val firstUpper = property.charAt(0).toUpper + property.substring(1)
-    var result = new mutable.StringBuilder()
+    val result = new mutable.StringBuilder()
     result.append(property.charAt(0).toUpper)
     property.substring(1).toCharArray.foreach(c => {
       if (c.isUpper)
