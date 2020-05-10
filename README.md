@@ -5,9 +5,9 @@ The sapphire extension framework adds additional features to [sapphire-core](htt
 
 ## Version
 
-Scala Version is 2.13.0 / 2.12.10
+Scala Version is 2.13.x / 2.12.x
 
-Java Version is 13.x
+JavaFX Version is 14.x
 
 ## Documentation
 
