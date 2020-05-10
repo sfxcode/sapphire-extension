@@ -14,9 +14,8 @@ class DualDataListView[S <: AnyRef] extends Control {
 
   val rightDataListView = new DataListView[S]()
 
-  protected override def createDefaultSkin: Skin[DualDataListView[S]] = {
+  protected override def createDefaultSkin: Skin[DualDataListView[S]] =
     new DualDataListViewSkin[S](this)
-  }
 
   override def getUserAgentStylesheet: String = css
 

@@ -17,7 +17,8 @@ import com.sfxcode.sapphire.core.el.{ DefaultFunctions, FunctionHelper }
 
 import scala.collection.JavaConverters._
 
-class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], pane: ObjectProperty[Pane]) extends LazyLogging {
+class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], pane: ObjectProperty[Pane])
+  extends LazyLogging {
   val conf: Config = ConfigFactory.load()
 
   protected val controlList: ObservableList[Node] = FXCollections.observableArrayList[Node]()
@@ -30,14 +31,14 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
 
   val filterResult = FXCollections.observableArrayList[FXBean[S]]()
 
-  itemValues.addChangeListener(_ => {
+  itemValues.addChangeListener { _ =>
     filter()
-  })
+  }
 
-  items.addListener((_, _, _) => {
+  items.addListener { (_, _, _) =>
     itemValues.addChangeListener(_ => { filter() })
     filter()
-  })
+  }
 
   items.addListener((_, oldValue, newValue) => itemsChanged(oldValue, newValue))
 
@@ -45,9 +46,9 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
     //    oldItems.addListener(_ => {
     //
     //    })
-    newItems.addChangeListener(_ => {
+    newItems.addChangeListener { _ =>
       filter()
-    })
+    }
     itemsHasChanged()
   }
 
@@ -77,12 +78,17 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
 
   def addSearchField(propertyKey: String): TextField = addSearchField(propertyKey, propertyKey)
 
-  def addSearchField(name: String, propertyKey: String, filterType: FilterValue = FilterType.FilterContainsIgnoreCase,
-    searchField: TextField = TextFields.createClearableTextField()): TextField = {
+  def addSearchField(
+    name: String,
+    propertyKey: String,
+    filterType: FilterValue = FilterType.FilterContainsIgnoreCase,
+    searchField: TextField = TextFields.createClearableTextField()): TextField =
     addCustomSearchField(name, filterFunction(filterType, propertyKey, name), searchField)
-  }
 
-  def addCustomSearchField(name: String, p: FXBean[S] => Boolean, searchField: TextField = new TextField()): TextField = {
+  def addCustomSearchField(
+    name: String,
+    p: FXBean[S] => Boolean,
+    searchField: TextField = new TextField()): TextField = {
     if (filterControlPane != null)
       filterControlPane.getChildren.add(searchField)
     searchField.setId(name)
@@ -92,7 +98,11 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
     updateMapping(name, searchField).asInstanceOf[TextField]
   }
 
-  def addSearchBox(name: String, propertyKey: String, noSelection: String = conf.getString("sapphire.extension.searchBox.noSelection"), searchBox: ComboBox[String] = new ComboBox[String]()): ComboBox[String] = {
+  def addSearchBox(
+    name: String,
+    propertyKey: String,
+    noSelection: String = conf.getString("sapphire.extension.searchBox.noSelection"),
+    searchBox: ComboBox[String] = new ComboBox[String]()): ComboBox[String] = {
     if (filterControlPane != null)
       filterControlPane.getChildren.add(searchBox)
     searchBox.setId(name)
@@ -105,7 +115,11 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
   }
 
   def updateSearchBoxValues(searchBox: ComboBox[String], noSelection: String, propertyKey: String): Unit = {
-    val distinctList = items.getValue.asScala.filter(b => b.getValue(propertyKey) != null).map(b => b.getValue(propertyKey).toString).distinct.sorted
+    val distinctList = items.getValue.asScala
+      .filter(b => b.getValue(propertyKey) != null)
+      .map(b => b.getValue(propertyKey).toString)
+      .distinct
+      .sorted
     val valueBuffer = FXCollections.observableArrayList[String]()
     valueBuffer.add(noSelection)
     distinctList.toList.foreach(entry => valueBuffer.add(entry))
@@ -113,34 +127,30 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
     searchBox.getSelectionModel.select(0)
   }
 
-  def getSearchField(name: String): TextField = {
+  def getSearchField(name: String): TextField =
     filterNameControlMapping(name).asInstanceOf[TextField]
-  }
 
-  def getSearchBox(name: String): ComboBox[String] = {
+  def getSearchBox(name: String): ComboBox[String] =
     filterNameControlMapping(name).asInstanceOf[ComboBox[String]]
-  }
 
-  def removeFilterControl(control: Control): Unit = {
+  def removeFilterControl(control: Control): Unit =
     filterControlNameMapping.get(control).foreach(s => removeFilterControl(s))
-  }
 
   def removeFilterControl(identifier: String): Unit = {
     val control = filterNameControlMapping.get(identifier)
 
-    control.foreach(c => {
+    control.foreach { c =>
       filterNameControlMapping.remove(identifier)
       filterControlNameMapping.remove(c)
       controlFilterMap.remove(c)
       controlFilterPropertyMap.remove(c)
       controlList.remove(c)
       pane.get.getChildren.remove(c)
-    })
+    }
   }
 
-  def removeAllControls(): Unit = {
+  def removeAllControls(): Unit =
     filterNameControlMapping.keys.foreach(key => removeFilterControl(key))
-  }
 
   private def updateMapping(name: String, control: Control): Control = {
     filterControlNameMapping.put(control, name)
@@ -173,7 +183,8 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
     filterResult.clear()
     filterResult.setAll(filtered)
 
-    logger.debug("filtered [%s] (new size %d) in %d ms".format(this.hashCode(), filtered.size, System.currentTimeMillis() - start))
+    logger.debug(
+      "filtered [%s] (new size %d) in %d ms".format(this.hashCode(), filtered.size, System.currentTimeMillis() - start))
   }
 
   def reset() {
@@ -186,7 +197,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
     filter()
   }
 
-  private def filterFunction(function: FilterValue, property: String, valueKey: String): FXBean[S] => Boolean = {
+  private def filterFunction(function: FilterValue, property: String, valueKey: String): FXBean[S] => Boolean =
     if (function == FilterType.FilterContains)
       containsFunction(property, valueKey)
     else if (function == FilterType.FilterContainsIgnoreCase)
@@ -197,22 +208,21 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
       equalsLowerCaseFunction(property, valueKey)
     else
       b => false
+
+  private def containsFunction(property: String, valueKey: String): FXBean[S] => Boolean = { b =>
+    getFilterString(b, property).contains(valueMap(valueKey).toString)
   }
 
-  private def containsFunction(property: String, valueKey: String): FXBean[S] => Boolean = {
-    b => getFilterString(b, property).contains(valueMap(valueKey).toString)
+  private def containsLowerCaseFunction(property: String, valueKey: String): FXBean[S] => Boolean = { b =>
+    getFilterString(b, property).toLowerCase.contains(valueMap(valueKey).toString.toLowerCase)
   }
 
-  private def containsLowerCaseFunction(property: String, valueKey: String): FXBean[S] => Boolean = {
-    b => getFilterString(b, property).toLowerCase.contains(valueMap(valueKey).toString.toLowerCase)
+  private def equalsFunction(property: String, valueKey: String): FXBean[S] => Boolean = { b =>
+    getFilterString(b, property).equals(valueMap(valueKey))
   }
 
-  private def equalsFunction(property: String, valueKey: String): FXBean[S] => Boolean = {
-    b => getFilterString(b, property).equals(valueMap(valueKey))
-  }
-
-  private def equalsLowerCaseFunction(property: String, valueKey: String): FXBean[S] => Boolean = {
-    b => getFilterString(b, property).toLowerCase.equals(valueMap(valueKey).toString.toLowerCase)
+  private def equalsLowerCaseFunction(property: String, valueKey: String): FXBean[S] => Boolean = { b =>
+    getFilterString(b, property).toLowerCase.equals(valueMap(valueKey).toString.toLowerCase)
   }
 
   private def getFilterString(bean: FXBean[S], property: String): String = {
@@ -220,7 +230,8 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
     value match {
       case d: java.util.Date => DefaultFunctions.defaultDateConverter.toString(d)
       case c: java.util.Calendar => DefaultFunctions.defaultDateConverter.toString(c.getTime)
-      case c: javax.xml.datatype.XMLGregorianCalendar => DefaultFunctions.defaultDateConverter.toString(c.toGregorianCalendar.getTime)
+      case c: javax.xml.datatype.XMLGregorianCalendar =>
+        DefaultFunctions.defaultDateConverter.toString(c.toGregorianCalendar.getTime)
       case v: Any => v.toString
       case _ => ""
     }
@@ -229,8 +240,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
 
 object DataFilter {
 
-  def apply[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], pane: ObjectProperty[Pane]): DataFilter[S] = {
+  def apply[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], pane: ObjectProperty[Pane]): DataFilter[S] =
     new DataFilter[S](items, pane)
 
-  }
 }

@@ -21,7 +21,12 @@ abstract class DataTableController extends ViewController with LazyLogging {
 
   // reflection
   val members = mirror.classSymbol(ct.runtimeClass).asType.typeSignature.members.toList.reverse
-  logger.debug(members.collect({ case x if x.isTerm => x.asTerm }).filter(t => t.isVal || t.isVar).map(m => m.name.toString).toString())
+  logger.debug(
+    members
+      .collect({ case x if x.isTerm => x.asTerm })
+      .filter(t => t.isVal || t.isVar)
+      .map(m => m.name.toString)
+      .toString())
 
   @FXML
   var table: TableView[FXBean[R]] = _
@@ -45,29 +50,24 @@ abstract class DataTableController extends ViewController with LazyLogging {
     initTable(tableFilter)
 
     tableFilter.selectedItem.addListener((_, oldValue, newValue) => selectedTableViewItemDidChange(oldValue, newValue))
-    tableFilter.selectedItems.addChangeListener(_ => {
+    tableFilter.selectedItems.addChangeListener { _ =>
       selectedTableViewItemsDidChange(tableFilter.selectedItems)
-    })
+    }
   }
 
   def shouldAddColunns = true
 
-  def initTable(tableFilter: DataTableFilter[R]): Unit = {
+  def initTable(tableFilter: DataTableFilter[R]): Unit = {}
 
-  }
-
-  def selectedTableViewItemsDidChange(source: ObservableList[FXBean[R]]): Unit = {
+  def selectedTableViewItemsDidChange(source: ObservableList[FXBean[R]]): Unit =
     logger.debug("new values count: %s".format(source.size))
-  }
 
-  def selectedTableViewItemDidChange(oldValue: FXBean[R], newValue: FXBean[R]): Unit = {
+  def selectedTableViewItemDidChange(oldValue: FXBean[R], newValue: FXBean[R]): Unit =
     logger.debug("new value: %s".format({
       if (newValue != null)
         newValue.bean
       else
         null
     }))
-  }
 
 }
-

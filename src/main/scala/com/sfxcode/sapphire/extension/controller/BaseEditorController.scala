@@ -20,7 +20,7 @@ abstract class BaseEditorController extends ViewController {
   @FXML
   var formPane: Pane = _
 
-  lazy val formAdapter: FXBeanAdapter[R] = FXBeanAdapter[R](this, formPane.asInstanceOf[Node])
+  lazy val formAdapter: FXBeanAdapter[R] = FXBeanAdapter[R](viewController = this, parent = formPane.asInstanceOf[Node])
 
   override def didGainVisibilityFirstTime() {
     super.didGainVisibilityFirstTime()
@@ -37,13 +37,11 @@ abstract class BaseEditorController extends ViewController {
     formAdapter.set(value)
   }
 
-  def actionSave(event: ActionEvent): Unit = {
+  def actionSave(event: ActionEvent): Unit =
     editableBean.foreach(b => save(b.bean))
-  }
 
-  def actionRevert(event: ActionEvent): Unit = {
+  def actionRevert(event: ActionEvent): Unit =
     editableBean.foreach(fxBean => fxBean.revert())
-  }
 
   def save(beanValue: R)
 

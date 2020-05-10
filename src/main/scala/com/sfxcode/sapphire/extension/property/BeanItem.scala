@@ -19,7 +19,15 @@ private object EmptyBeanItemClass {
   def apply(): EmptyBeanItemClass = new EmptyBeanItemClass
 }
 
-class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = "", editable: Boolean = true, clazz: Class[_] = EmptyBeanItemClass.ClazzOf) extends Item with ConfigValues {
+class BeanItem(
+  var bean: FXBean[_ <: AnyRef],
+  key: String,
+  name: String = "",
+  category: String = "",
+  description: String = "",
+  editable: Boolean = true,
+  clazz: Class[_] = EmptyBeanItemClass.ClazzOf) extends Item
+  with ConfigValues {
   var classOption: Option[Class[_]] = Some(clazz)
 
   def getKey: String = key
@@ -71,19 +79,17 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", ca
       bean.updateValue(key, valueOption.orNull)
   }
 
-  override def getCategory: String = {
+  override def getCategory: String =
     if (category.isEmpty)
       configStringValue("sapphire.extension.properties.beanItem.defaultCategory")
     else
       category
-  }
 
-  override def getName: String = {
+  override def getName: String =
     if (name.isEmpty)
       key
     else
       name
-  }
 
   override def getDescription: String = description
 
@@ -99,24 +105,30 @@ class BeanItem(var bean: FXBean[_ <: AnyRef], key: String, name: String = "", ca
     Date.from(instant)
   }
 
-  override def getObservableValue: Optional[ObservableValue[_]] = Optional.of(bean.getProperty(key).asInstanceOf[ObservableValue[_]])
+  override def getObservableValue: Optional[ObservableValue[_]] =
+    Optional.of(bean.getProperty(key).asInstanceOf[ObservableValue[_]])
 }
 
 object BeanItem {
 
-  def apply(bean: FXBean[_ <: AnyRef], key: String, name: String = "", category: String = "", description: String = "", editable: Boolean = true, clazz: Class[_] = EmptyBeanItemClass.ClazzOf): BeanItem = {
+  def apply(
+    bean: FXBean[_ <: AnyRef],
+    key: String,
+    name: String = "",
+    category: String = "",
+    description: String = "",
+    editable: Boolean = true,
+    clazz: Class[_] = EmptyBeanItemClass.ClazzOf): BeanItem =
     new BeanItem(bean, key, name, category, description, editable, clazz)
-  }
 
   def beanItems[T <: AnyRef](bean: FXBean[T])(implicit t: TypeTag[T]): ObservableList[Item] = {
     val result = FXCollections.observableArrayList[Item]()
     val symbols = ReflectionTools.getMembers[T]()
-    symbols.foreach(s => {
+    symbols.foreach { s =>
       val key = s.name.toString
       result.add(BeanItem(bean, key))
-    })
+    }
     result
   }
 
 }
-

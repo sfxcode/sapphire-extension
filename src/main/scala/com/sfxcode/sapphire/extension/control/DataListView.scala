@@ -17,7 +17,10 @@ class DataListView[S <: AnyRef] extends Control with BeanConversions {
 
   getStyleClass.add("data-list-view")
 
-  val items = new SimpleObjectProperty[ObservableList[FXBean[S]]](this, "listViewItems", FXCollections.observableArrayList[FXBean[S]]())
+  val items = new SimpleObjectProperty[ObservableList[FXBean[S]]](
+    this,
+    "listViewItems",
+    FXCollections.observableArrayList[FXBean[S]]())
 
   val listView = new ListView[FXBean[S]]()
 
@@ -38,34 +41,31 @@ class DataListView[S <: AnyRef] extends Control with BeanConversions {
   val filterPromptProperty = new SimpleStringProperty("type to filter")
   val filter = new SimpleObjectProperty(new DataListFilter[S](this))
 
-  protected override def createDefaultSkin: Skin[DataListView[S]] = {
+  protected override def createDefaultSkin: Skin[DataListView[S]] =
     new DataListViewSkin[S](this)
-  }
 
   override def getUserAgentStylesheet: String = css
 
-  def setItems(values: Iterable[S]): Unit = {
+  def setItems(values: Iterable[S]): Unit =
     items.set(sortedItems(values))
-  }
 
   def remove(bean: FXBean[S]) {
     items.get.remove(bean)
   }
 
-  def add(bean: FXBean[S]): Unit = {
+  def add(bean: FXBean[S]): Unit =
     items.get.add(bean)
-  }
 
   def getItems: ObservableList[FXBean[S]] = items.get
 
-  footer.addListener((_, _, _) => {
+  footer.addListener { (_, _, _) =>
     if (showFooter.get)
       footerLabel.get.setText(footerTextProperty.get.format(filter.get.filterResult.size, filter.get.itemValues.size))
-    filter.get.filterResult.addChangeListener(_ => {
+    filter.get.filterResult.addChangeListener { _ =>
       if (showFooter.get)
         footerLabel.get.setText(footerTextProperty.get.format(filter.get.filterResult.size, filter.get.itemValues.size))
-    })
-  })
+    }
+  }
 
   private def sortedItems(values: ObservableList[FXBean[S]]): ObservableList[FXBean[S]] = {
     var result = values

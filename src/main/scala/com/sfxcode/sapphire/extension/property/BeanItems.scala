@@ -13,7 +13,13 @@ class BeanItems(bean: FXBean[_ <: AnyRef]) {
 
   def getItems: ObservableList[BeanItem] = itemBuffer
 
-  def addItem(key: String, name: String = "", category: String = "", description: String = "", editable: Boolean = true, clazz: Class[_] = EmptyBeanItemClass.ClazzOf): BeanItem = {
+  def addItem(
+    key: String,
+    name: String = "",
+    category: String = "",
+    description: String = "",
+    editable: Boolean = true,
+    clazz: Class[_] = EmptyBeanItemClass.ClazzOf): BeanItem = {
     val beanItem = BeanItem(bean, key, name, category, description, editable, clazz)
     itemBuffer.add(beanItem)
     beanItem
@@ -21,29 +27,26 @@ class BeanItems(bean: FXBean[_ <: AnyRef]) {
 
   def addItems[T <: AnyRef](implicit t: TypeTag[T]): Unit = {
     val symbols = ReflectionTools.getMembers[T]()
-    symbols.foreach(s => {
+    symbols.foreach { s =>
       val key = s.name.toString
       addItem(key)
-    })
+    }
   }
 
-  def addItemsFromMap(scalaMap: Map[String, Any]): Unit = {
-    scalaMap.keys.foreach(key => {
+  def addItemsFromMap(scalaMap: Map[String, Any]): Unit =
+    scalaMap.keys.foreach { key =>
       val value = scalaMap.get(key)
-      value.foreach(value => {
+      value.foreach { value =>
         addItem(key, clazz = value.getClass)
-      })
-    })
-
-  }
+      }
+    }
 
   def updateBean(bean: FXBean[_ <: AnyRef]) {
     itemBuffer.foreach(item => item.bean = bean)
   }
 
-  def beanItem(key: String): Option[BeanItem] = {
+  def beanItem(key: String): Option[BeanItem] =
     itemBuffer.asScala.find(item => key.equals(item.getKey))
-  }
 
 }
 

@@ -16,12 +16,11 @@ abstract class BaseDetailController extends BaseEditorController {
     actionReturn(event)
   }
 
-  def actionReturn(event: ActionEvent): Unit = {
-    masterTableController.foreach(masterController => {
+  def actionReturn(event: ActionEvent): Unit =
+    masterTableController.foreach { masterController =>
       navigateToMasterController(masterController)
       masterController.table.getSelectionModel.select(masterController.lastSelected)
-    })
-  }
+    }
 
   def navigateToMasterController(masterController: BaseMasterController)
 

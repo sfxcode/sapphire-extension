@@ -10,17 +10,16 @@ abstract class BaseMasterController extends DataTableController {
 
   override def initTable(filter: DataTableFilter[R]): Unit = {
     super.initTable(filter)
-    table.setOnMouseClicked(event => {
+    table.setOnMouseClicked { event =>
       if (event.getClickCount == 2) {
         onDoubleClick(filter.selectedBean)
         lastSelected = filter.getTable.getSelectionModel.selectedIndexProperty().intValue()
       }
-    })
+    }
   }
 
-  override def didGainVisibilityFirstTime(): Unit = {
+  override def didGainVisibilityFirstTime(): Unit =
     super.didGainVisibilityFirstTime()
-  }
 
   override def didGainVisibility() {
     super.didGainVisibility()
@@ -30,20 +29,18 @@ abstract class BaseMasterController extends DataTableController {
 
   def onDoubleClick(bean: FXBean[R]): Unit = {
     logger.debug("double clicked %s".format(bean))
-    detailController.foreach(detailController => {
+    detailController.foreach { detailController =>
       navigateToDetailController(detailController)
       detailController.masterTableController = Some(this)
       updateDetailBean(bean)
-    })
+    }
   }
 
-  def updateDetailBean(bean: FXBean[R]): Unit = {
-    detailController.foreach(detailController => {
+  def updateDetailBean(bean: FXBean[R]): Unit =
+    detailController.foreach { detailController =>
       detailController.updateBean(bean.asInstanceOf[FXBean[detailController.R]])
-    })
-  }
+    }
 
   def navigateToDetailController(detailController: BaseDetailController)
 
 }
-

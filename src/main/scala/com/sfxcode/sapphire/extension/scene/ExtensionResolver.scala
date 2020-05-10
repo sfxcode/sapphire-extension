@@ -11,12 +11,11 @@ import javafx.beans.property.Property
 // #NodePropertyResolving
 class ExtensionResolver extends NodePropertyResolving {
 
-  def resolve(node: Node): Option[Property[_]] = {
+  def resolve(node: Node): Option[Property[_]] =
     node match {
       case rating: Rating => Some(rating.ratingProperty())
       case _ => None
     }
-  }
 }
 // #NodePropertyResolving
 

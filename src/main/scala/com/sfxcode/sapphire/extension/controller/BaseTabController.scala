@@ -10,9 +10,9 @@ abstract class BaseTabController extends ViewController {
 
   override def didGainVisibilityFirstTime() {
     super.didGainVisibilityFirstTime()
-    tabPane.getSelectionModel.selectedItemProperty.addListener((_, oldValue, newValue) => {
+    tabPane.getSelectionModel.selectedItemProperty.addListener { (_, oldValue, newValue) =>
       tabPaneHasChanged(oldValue, newValue)
-    })
+    }
   }
 
   def selectedTab: Tab = tabPane.getSelectionModel.getSelectedItem
@@ -20,4 +20,3 @@ abstract class BaseTabController extends ViewController {
   def tabPaneHasChanged(oldValue: Tab, newValue: Tab)
 
 }
-

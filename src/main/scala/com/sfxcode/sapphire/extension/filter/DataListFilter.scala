@@ -7,8 +7,7 @@ import javafx.collections.ObservableList
 import javafx.scene.control.{ ListView, TextField }
 import com.sfxcode.sapphire.core.CollectionExtensions._
 
-class DataListFilter[S <: AnyRef](dataList: DataListView[S])
-  extends DataFilter[S](dataList.items, dataList.header) {
+class DataListFilter[S <: AnyRef](dataList: DataListView[S]) extends DataFilter[S](dataList.items, dataList.header) {
   var sortFiltered = true
 
   var searchField: TextField = addSearchField(dataList.cellProperty.get)
@@ -36,11 +35,11 @@ class DataListFilter[S <: AnyRef](dataList: DataListView[S])
 
   }
 
-  filterResult.addChangeListener(_ => {
+  filterResult.addChangeListener { _ =>
     dataList.listView.getItems.clear()
     if (!filterResult.isEmpty)
       filterResult.foreach(v => dataList.listView.getItems.add(v))
-  })
+  }
 
   filter()
 
