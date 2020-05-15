@@ -110,7 +110,17 @@ libraryDependencies += "ch.qos.logback" % "logback-classic" % LogbackVersion % P
 
 libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % SapphireCoreVersion % Provided
 
+libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.8.0" % Provided
+
+// concurrent / akka
+
 libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.6.5" % Provided
+
+// report
+
+resolvers += "jasperreports-repo" at "https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts"
+
+libraryDependencies += "net.sf.jasperreports" % "jasperreports" % "6.12.2" % Provided
 
 // Compile
 
