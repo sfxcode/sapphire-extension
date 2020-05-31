@@ -110,7 +110,7 @@ libraryDependencies += "ch.qos.logback" % "logback-classic" % LogbackVersion % P
 
 libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core" % SapphireCoreVersion % Provided
 
-libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.8.0" % Provided
+libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.9.1" % Provided
 
 // concurrent / akka
 

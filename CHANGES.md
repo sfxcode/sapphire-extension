@@ -2,6 +2,11 @@
 
 ## Versions
 
+### 1.0.9
+* Export to PDF with JasperReports
+* FXBeanDataSource (Report Datasource)
+
+
 ### 1.0.7
 * sapphire-core 1.8.0
 * showcase refactoring - now like sapphire-core showcase
