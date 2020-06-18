@@ -20,8 +20,8 @@ javacOptions in test += "-Dorg.apache.deltaspike.ProjectStage=Test"
 parallelExecution in Test := false
 
 val JavaFXVersion       = "14.0.1"
-val SapphireCoreVersion = "1.8.1"
-val Json4sVersion       = "3.6.8"
+val SapphireCoreVersion = "1.8.2"
+val Json4sVersion       = "3.6.9"
 val LogbackVersion      = "1.2.3"
 val IkonliVersion       = "11.5.0"
 
@@ -114,7 +114,7 @@ libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.9.1" % Prov
 
 // concurrent / akka
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.6.5" % Provided
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.6.6" % Provided
 
 // report
 
