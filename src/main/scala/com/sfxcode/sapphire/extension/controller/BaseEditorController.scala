@@ -1,7 +1,7 @@
 package com.sfxcode.sapphire.extension.controller
 
 import com.sfxcode.sapphire.core.controller.ViewController
-import com.sfxcode.sapphire.core.value.{ FXBean, FXBeanAdapter, KeyBindings }
+import com.sfxcode.sapphire.core.value.{FXBean, FXBeanAdapter, KeyBindings}
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.Node

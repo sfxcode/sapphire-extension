@@ -26,7 +26,8 @@ abstract class DataTableController extends ViewController with LazyLogging {
       .collect({ case x if x.isTerm => x.asTerm })
       .filter(t => t.isVal || t.isVar)
       .map(m => m.name.toString)
-      .toString())
+      .toString()
+  )
 
   @FXML
   var table: TableView[FXBean[R]] = _
@@ -50,9 +51,7 @@ abstract class DataTableController extends ViewController with LazyLogging {
     initTable(tableFilter)
 
     tableFilter.selectedItem.addListener((_, oldValue, newValue) => selectedTableViewItemDidChange(oldValue, newValue))
-    tableFilter.selectedItems.addChangeListener { _ =>
-      selectedTableViewItemsDidChange(tableFilter.selectedItems)
-    }
+    tableFilter.selectedItems.addChangeListener(_ => selectedTableViewItemsDidChange(tableFilter.selectedItems))
   }
 
   def shouldAddColunns = true
