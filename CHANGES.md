@@ -6,6 +6,10 @@
 * Export to PDF with JasperReports
 * FXBeanDataSource (Report Datasource)
 
+### 1.0.9
+* sapphire-core 1.8.3
+* PDF Support (JasperReports)
+
 
 ### 1.0.7
 * sapphire-core 1.8.0

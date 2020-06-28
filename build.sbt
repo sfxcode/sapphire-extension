@@ -7,7 +7,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-crossScalaVersions := Seq("2.13.2", "2.12.11")
+crossScalaVersions := Seq("2.13.3", "2.12.11")
 
 scalaVersion := crossScalaVersions.value.head
 
@@ -20,7 +20,7 @@ javacOptions in test += "-Dorg.apache.deltaspike.ProjectStage=Test"
 parallelExecution in Test := false
 
 val JavaFXVersion       = "14.0.1"
-val SapphireCoreVersion = "1.8.2"
+val SapphireCoreVersion = "1.8.3"
 val Json4sVersion       = "3.6.9"
 val LogbackVersion      = "1.2.3"
 val IkonliVersion       = "11.5.0"
@@ -90,7 +90,7 @@ resolvers += "sfxcode-maven" at "https://bintray.com/sfxcode/maven/"
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "4.9.4" % Test
+libraryDependencies += "org.specs2" %% "specs2-core" % "4.10.0" % Test
 
 libraryDependencies += "org.json4s" %% "json4s-native" % Json4sVersion % Test
 
@@ -120,7 +120,7 @@ libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.6.6" % Provided
 
 resolvers += "jasperreports-repo" at "https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts"
 
-libraryDependencies += "net.sf.jasperreports" % "jasperreports" % "6.12.2" % Provided
+libraryDependencies += "net.sf.jasperreports" % "jasperreports" % "6.13.0" % Provided
 
 // Compile
 

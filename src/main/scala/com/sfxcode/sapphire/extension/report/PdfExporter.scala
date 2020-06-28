@@ -7,10 +7,8 @@ import net.sf.jasperreports.`export`._
 import net.sf.jasperreports.engine._
 import net.sf.jasperreports.engine.`export`.JRPdfExporter
 
-case class PdfExporter(
-    jasperUrl: URL,
-    reportContext: JasperReportsContext = DefaultJasperReportsContext.getInstance()
-) extends AbstractExporter(jasperUrl) {
+case class PdfExporter(jasperUrl: URL, reportContext: JasperReportsContext = DefaultJasperReportsContext.getInstance())
+    extends AbstractExporter(jasperUrl) {
   private val exporter = new JRPdfExporter(reportContext)
 
   def exportReport(
