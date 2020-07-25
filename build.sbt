@@ -7,7 +7,7 @@ name := "sapphire-extension"
 
 organization := "com.sfxcode.sapphire"
 
-crossScalaVersions := Seq("2.13.3", "2.12.11")
+crossScalaVersions := Seq("2.13.3", "2.12.12")
 
 scalaVersion := crossScalaVersions.value.head
 
@@ -19,7 +19,7 @@ javacOptions in test += "-Dorg.apache.deltaspike.ProjectStage=Test"
 
 parallelExecution in Test := false
 
-val JavaFXVersion       = "14.0.1"
+val JavaFXVersion       = "14.0.2.1"
 val SapphireCoreVersion = "1.8.3"
 val Json4sVersion       = "3.6.9"
 val LogbackVersion      = "1.2.3"
@@ -114,7 +114,7 @@ libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.9.1" % Prov
 
 // concurrent / akka
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.6.6" % Provided
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.6.8" % Provided
 
 // report
 
@@ -124,7 +124,7 @@ libraryDependencies += "net.sf.jasperreports" % "jasperreports" % "6.13.0" % Pro
 
 // Compile
 
-libraryDependencies += "org.controlsfx" % "controlsfx" % "11.0.1" intransitive ()
+libraryDependencies += "org.controlsfx" % "controlsfx" % "11.0.2" intransitive ()
 
 libraryDependencies += "org.kordamp.ikonli" % "ikonli-javafx" % IkonliVersion
 
@@ -167,6 +167,8 @@ pomPostProcess := { node: XmlNode =>
     }
   }).transform(node).head
 }
+
+scalafmtOnCompile := false
 
 releaseCrossBuild := true
 
