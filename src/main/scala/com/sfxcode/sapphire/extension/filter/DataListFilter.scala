@@ -4,7 +4,7 @@ import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.control.DataListView
 import javafx.beans.property.ReadOnlyObjectProperty
 import javafx.collections.ObservableList
-import javafx.scene.control.{ListView, TextField}
+import javafx.scene.control.{ ListView, TextField }
 import com.sfxcode.sapphire.core.CollectionExtensions._
 
 class DataListFilter[S <: AnyRef](dataList: DataListView[S]) extends DataFilter[S](dataList.items, dataList.header) {

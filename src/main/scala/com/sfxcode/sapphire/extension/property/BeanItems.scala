@@ -4,7 +4,7 @@ import java.util
 
 import com.sfxcode.sapphire.core.CollectionExtensions._
 import com.sfxcode.sapphire.core.value._
-import javafx.collections.{FXCollections, ObservableList}
+import javafx.collections.{ FXCollections, ObservableList }
 import scala.reflect.runtime.universe._
 import scala.collection.JavaConverters._
 
@@ -14,13 +14,12 @@ class BeanItems(bean: FXBean[_ <: AnyRef]) {
   def getItems: ObservableList[BeanItem] = itemBuffer
 
   def addItem(
-      key: String,
-      name: String = "",
-      category: String = "",
-      description: String = "",
-      editable: Boolean = true,
-      clazz: Class[_] = EmptyBeanItemClass.ClazzOf
-  ): BeanItem = {
+    key: String,
+    name: String = "",
+    category: String = "",
+    description: String = "",
+    editable: Boolean = true,
+    clazz: Class[_] = EmptyBeanItemClass.ClazzOf): BeanItem = {
     val beanItem = BeanItem(bean, key, name, category, description, editable, clazz)
     itemBuffer.add(beanItem)
     beanItem

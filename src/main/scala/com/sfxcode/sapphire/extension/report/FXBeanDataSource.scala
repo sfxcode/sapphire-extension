@@ -1,8 +1,8 @@
 package com.sfxcode.sapphire.extension.report
 
-import com.sfxcode.sapphire.core.value.{BeanConversions, FXBean}
+import com.sfxcode.sapphire.core.value.{ BeanConversions, FXBean }
 import javafx.collections.ObservableList
-import net.sf.jasperreports.engine.{JRField, JRRewindableDataSource}
+import net.sf.jasperreports.engine.{ JRField, JRRewindableDataSource }
 
 case class FXBeanDataSource[T <: AnyRef](dataList: List[FXBean[T]]) extends JRRewindableDataSource with Serializable {
   private var index = -1
@@ -16,7 +16,7 @@ case class FXBeanDataSource[T <: AnyRef](dataList: List[FXBean[T]]) extends JRRe
 
   override def getFieldValue(jrField: JRField): AnyRef = {
     val fieldName: String = jrField.getName
-    val bean: FXBean[_]   = dataList(index)
+    val bean: FXBean[_] = dataList(index)
 
     bean.getValue(fieldName).asInstanceOf[AnyRef]
   }

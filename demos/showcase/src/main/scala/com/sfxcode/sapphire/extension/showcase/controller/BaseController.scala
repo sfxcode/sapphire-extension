@@ -13,6 +13,6 @@ trait BaseController extends ViewController {
 
   def showcaseController: ShowcaseViewController = applicationController.showcaseController
 
-  def updateShowcaseContent(controller:ViewController): Unit =
+  def updateShowcaseContent(controller: ViewController): Unit =
     showcaseController.updateShowcaseContent(controller)
 }

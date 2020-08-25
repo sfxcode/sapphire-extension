@@ -1,13 +1,12 @@
 package com.sfxcode.sapphire.extension.showcase.controller
 
 import com.sfxcode.sapphire.core.fxml.FxmlLoader
-import com.sfxcode.sapphire.core.showcase.{ShowcaseController, ShowcaseItem}
+import com.sfxcode.sapphire.core.showcase.{ ShowcaseController, ShowcaseItem }
 import com.sfxcode.sapphire.extension.showcase.controller.font.IconFontController
-import com.sfxcode.sapphire.extension.showcase.controller.form.{DualListFormController, ExtensionFormController, FormController, ListFormController, PropertiesFormController}
+import com.sfxcode.sapphire.extension.showcase.controller.form.{ DualListFormController, ExtensionFormController, FormController, ListFormController, PropertiesFormController }
 import com.sfxcode.sapphire.extension.showcase.controller.master.PersonMasterController
-import com.sfxcode.sapphire.extension.showcase.controller.table.{FriendTableController, PersonTableController, SimplePersonTableController}
+import com.sfxcode.sapphire.extension.showcase.controller.table.{ FriendTableController, PersonTableController, SimplePersonTableController }
 import com.typesafe.scalalogging.LazyLogging
-
 
 @FxmlLoader(path = "/com/sfxcode/sapphire/core/showcase/ShowcaseView.fxml")
 class ShowcaseViewController extends ShowcaseController with LazyLogging {

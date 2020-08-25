@@ -2,9 +2,9 @@ package com.sfxcode.sapphire.extension.showcase.controller.table
 
 import javafx.fxml.FXML
 import javafx.scene.control.TableView
-import com.sfxcode.sapphire.core.value.{BeanConversions, FXBean}
+import com.sfxcode.sapphire.core.value.{ BeanConversions, FXBean }
 import com.sfxcode.sapphire.extension.showcase.controller.BaseController
-import com.sfxcode.sapphire.extension.showcase.model.{Person, PersonDatabase}
+import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
 import javafx.collections.ObservableList
 
 class SimplePersonTableController extends BaseController with BeanConversions {

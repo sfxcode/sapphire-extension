@@ -2,7 +2,7 @@ package com.sfxcode.sapphire.extension.scene
 
 import javafx.scene.Node
 
-import com.sfxcode.sapphire.core.cdi.{ApplicationEnvironment, BeanResolver}
+import com.sfxcode.sapphire.core.cdi.{ ApplicationEnvironment, BeanResolver }
 import com.sfxcode.sapphire.core.scene.NodePropertyResolving
 import org.controlsfx.control.Rating
 
@@ -14,7 +14,7 @@ class ExtensionResolver extends NodePropertyResolving {
   def resolve(node: Node): Option[Property[_]] =
     node match {
       case rating: Rating => Some(rating.ratingProperty())
-      case _              => None
+      case _ => None
     }
 }
 // #NodePropertyResolving

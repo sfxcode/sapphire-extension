@@ -1,10 +1,10 @@
 package com.sfxcode.sapphire.extension.showcase.controller.table
 
-import com.sfxcode.sapphire.core.value.{BeanConversions, FXBean}
+import com.sfxcode.sapphire.core.value.{ BeanConversions, FXBean }
 import com.sfxcode.sapphire.extension.controller.DataTableController
 import com.sfxcode.sapphire.extension.filter.DataTableFilter
 import com.sfxcode.sapphire.extension.showcase.controller.BaseController
-import com.sfxcode.sapphire.extension.showcase.model.{Friend, PersonDatabase}
+import com.sfxcode.sapphire.extension.showcase.model.{ Friend, PersonDatabase }
 import javafx.collections.ObservableList
 import javafx.event.ActionEvent
 
@@ -26,7 +26,6 @@ class FriendTableController extends DataTableController with BaseController with
     super.initTable(tableFilter)
     tableFilter.addSearchField("nameFilter", "name").setPromptText("Name")
   }
-
 
   def actionAddItem(event: ActionEvent): Unit = {
     tableFilter.itemValues.add(items.head)

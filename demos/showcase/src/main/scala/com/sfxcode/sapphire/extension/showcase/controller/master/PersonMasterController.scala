@@ -1,8 +1,8 @@
 package com.sfxcode.sapphire.extension.showcase.controller.master
 
-import com.sfxcode.sapphire.core.value.{BeanConversions, FXBean}
-import com.sfxcode.sapphire.extension.controller.{BaseDetailController, BaseMasterController}
-import com.sfxcode.sapphire.extension.showcase.model.{Person, PersonDatabase}
+import com.sfxcode.sapphire.core.value.{ BeanConversions, FXBean }
+import com.sfxcode.sapphire.extension.controller.{ BaseDetailController, BaseMasterController }
+import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
 import com.sfxcode.sapphire.extension.filter.DataTableFilter
 import com.sfxcode.sapphire.extension.showcase.controller.BaseController
 import javafx.collections.ObservableList

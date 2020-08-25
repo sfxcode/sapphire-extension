@@ -1,7 +1,7 @@
 package com.sfxcode.sapphire.extension.showcase.controller.master
 
 import com.sfxcode.sapphire.core.value.KeyBindings
-import com.sfxcode.sapphire.extension.controller.{BaseDetailController, BaseMasterController}
+import com.sfxcode.sapphire.extension.controller.{ BaseDetailController, BaseMasterController }
 import com.sfxcode.sapphire.extension.showcase.controller.BaseController
 import com.sfxcode.sapphire.extension.showcase.model.Person
 
