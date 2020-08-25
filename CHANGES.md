@@ -7,6 +7,9 @@
 * FXBeanDataSource (Report Datasource)
 * JavaFX 14.0.2.1
 
+### 1.0.10
+* PDF Exporter added some functions
+
 ### 1.0.9
 * sapphire-core 1.8.3
 * PDF Support (JasperReports)
