@@ -25,6 +25,5 @@ Including of custom controls in sapphire-core can be done like this:
 @@@ index
 
 - [property_sheet](property_sheet.md)
-- [bean_items](bean_items.md)
 
 @@@

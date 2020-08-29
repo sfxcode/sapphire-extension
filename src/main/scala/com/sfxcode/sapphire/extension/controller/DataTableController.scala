@@ -13,6 +13,8 @@ import com.sfxcode.sapphire.core.CollectionExtensions._
 
 import scala.reflect.ClassTag
 
+abstract class BaseDataTableController extends DataTableController
+
 abstract class DataTableController extends ViewController with LazyLogging {
 
   type R <: AnyRef
@@ -26,7 +28,8 @@ abstract class DataTableController extends ViewController with LazyLogging {
       .collect({ case x if x.isTerm => x.asTerm })
       .filter(t => t.isVal || t.isVar)
       .map(m => m.name.toString)
-      .toString())
+      .toString()
+  )
 
   @FXML
   var table: TableView[FXBean[R]] = _
