@@ -20,7 +20,7 @@
 
 <meta name="description" content="sapphire extension docs">
 <link rel="shortcut icon" href="../assets/images/favicon.png">
-<title>TableView Extensions · Sapphire Extension</title>
+<title>ViewController Extensions · Sapphire Extension</title>
 <link rel="stylesheet" href="../assets/stylesheets/application.451f80e5.css">
 <link rel="stylesheet" href="../lib/material__tabs/dist/mdc.tabs.min.css">
 <link rel="stylesheet" href="../lib/prettify/prettify.css">
@@ -56,7 +56,7 @@ code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}
 Sapphire Extension
 </span>
 <span class="md-header-nav__topic">
-TableView Extensions
+ViewController Extensions
 </span>
 </div>
 </div>
@@ -135,10 +135,8 @@ sfxcode/sapphire-extension
 
 </div>
 <ul>
-  <li><a href="../extensions/index.html" class="page">JavaFX Extensions</a>
-  <ul>
-    <li><a href="../extensions/table_view.html" class="active page">TableView Extensions</a></li>
-  </ul></li>
+  <li><a href="../view_controller/index.html" class="active page">ViewController Extensions</a></li>
+  <li><a href="../report/index.html" class="page">Reports</a></li>
   <li><a href="../filter/index.html" class="page">DataFilter</a>
   <ul>
     <li><a href="../filter/data_list_filter.html" class="page">DataListFilter</a></li>
@@ -147,39 +145,127 @@ sfxcode/sapphire-extension
   <li><a href="../controlsfx/index.html" class="page">ControlsFX</a>
   <ul>
     <li><a href="../controlsfx/property_sheet.html" class="page">PropertySheet</a></li>
-    <li><a href="../controlsfx/bean_items.html" class="page">BeanItems</a></li>
   </ul></li>
   <li><a href="../ikonli.html" class="page">Ikonli</a></li>
-  <li><a href="../sample.html" class="page">Example</a></li>
+  <li><a href="../sample.html" class="page">Showcase</a></li>
   <li><a href="../changes.html" class="page">Version History</a></li>
 </ul>
 <nav class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">Table of contents</label>
+<ul>
+  <li><a href="../view_controller/index.html#viewcontroller-extensions" class="header">ViewController Extensions</a>
+  <ul>
+    <li><a href="../view_controller/index.html#types" class="header">Types</a></li>
+    <li><a href="../view_controller/index.html#example" class="header">Example</a></li>
+  </ul></li>
+</ul>
 </nav>
 
 </nav>
 <ul style="display: none">
 <li class="md-nav__item md-version" id="project.version">
 <label class="md-nav__link" for="__version">
-<i class="md-icon" title="Version">label_outline</i> 1.0.6
+<i class="md-icon" title="Version">label_outline</i> 1.0.11*
 </label>
 </li>
 </ul>
 </div>
 </div>
 </div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">Table of contents</label>
+<ul>
+  <li><a href="../view_controller/index.html#viewcontroller-extensions" class="header">ViewController Extensions</a>
+  <ul>
+    <li><a href="../view_controller/index.html#types" class="header">Types</a></li>
+    <li><a href="../view_controller/index.html#example" class="header">Example</a></li>
+  </ul></li>
+</ul>
+</nav>
+
+</div>
+</div>
+</div>
 <div class="md-content">
 <article class="md-content__inner md-typeset">
 <div class="md-content__searchable">
-<h1><a href="#tableview-extensions" name="tableview-extensions" class="anchor"><span class="anchor-link"></span></a>TableView Extensions</h1>
+<h1><a href="#viewcontroller-extensions" name="viewcontroller-extensions" class="anchor"><span class="anchor-link"></span></a>ViewController Extensions</h1>
+<p>All ViewController Extensions are subclasses of the sapphire-core <a href="https://sfxcode.github.io/sapphire-core/detail/view_controller.html">ViewController</a>.</p>
+<p>All Controllers are abstract by default. Most of this VievController are used for viewing/editing data mapped in <a href="">FXBeans</a>. Dealing with Generics is done by defining a class tag.</p>
+<p>Example for implementing the definition for a Person class:</p>
+<pre class="prettyprint"><code class="language-scala"><br/> type R = Person
+
+ def ct: ClassTag[Person] = classTag[R]
+ 
+</code></pre>
+<h2><a href="#types" name="types" class="anchor"><span class="anchor-link"></span></a>Types</h2>
+<ul>
+  <li>BaseDataTableController (adds easy table implementation with sorting, filtering, &hellip;)</li>
+  <li>BaseEditorController (updateBean, save, revert, &hellip;)</li>
+  <li>BaseTabController (Tab Selection, &hellip;)</li>
+  <li>BaseMasterController, BaseDetailController (simple master detail handling with navigation)</li>
+</ul>
+<h2><a href="#example" name="example" class="anchor"><span class="anchor-link"></span></a>Example</h2>
+<p>Shows usage of Filters in action.</p>
+<pre class="prettyprint"><a class="icon go-to-source" href="https://github.com/sfxcode/sapphire-extension/tree/master/demos/showcase/src/main/scala/com/sfxcode/sapphire/extension/showcase/controller/table/FriendTableController.scala" target="_blank" title="Go to snippet source"></a><code class="language-scala">package com.sfxcode.sapphire.extension.showcase.controller.table
+
+import com.sfxcode.sapphire.core.value.{ BeanConversions, FXBean }
+import com.sfxcode.sapphire.extension.controller.DataTableController
+import com.sfxcode.sapphire.extension.filter.DataTableFilter
+import com.sfxcode.sapphire.extension.showcase.controller.BaseController
+import com.sfxcode.sapphire.extension.showcase.model.{ Friend, PersonDatabase }
+import javafx.collections.ObservableList
+import javafx.event.ActionEvent
+
+import scala.reflect._
+
+class FriendTableController extends DataTableController with BaseController with BeanConversions {
+
+  type R = Friend
+
+  def ct: ClassTag[Friend] = classTag[R]
+
+  def items: ObservableList[FXBean[Friend]] = PersonDatabase.friends
+
+  override def willGainVisibility(): Unit = {
+    super.willGainVisibility()
+  }
+
+  override def initTable(tableFilter: DataTableFilter[R]): Unit = {
+    super.initTable(tableFilter)
+    tableFilter.addSearchField(&quot;nameFilter&quot;, &quot;name&quot;).setPromptText(&quot;Name&quot;)
+  }
+
+  def actionAddItem(event: ActionEvent): Unit = {
+    tableFilter.itemValues.add(items.head)
+  }
+
+  def actionAddItems(event: ActionEvent): Unit = {
+    tableFilter.itemValues.addAll(items)
+  }
+
+  def actionRemoveAllItems(event: ActionEvent): Unit = {
+    tableFilter.itemValues.clear()
+  }
+
+  def actionReplaceItems(event: ActionEvent): Unit = {
+    tableFilter.itemsProperty.set(items)
+  }
+}
+</code></pre>
+<p><img src="../images/friends_table.png" alt="friends_table.png" /></p>
 </div>
 <div>
-<a href="https://github.com/sfxcode/sapphire-extension/tree/v1.0.6/docs/src/main/paradox/extensions/table_view.md" title="Edit this page" class="md-source-file md-edit">
+<a href="https://github.com/sfxcode/sapphire-extension/tree/master/docs/src/main/paradox/view_controller/index.md" title="Edit this page" class="md-source-file md-edit">
 Edit this page
 </a>
 </div>
 <div class="print-only">
 <span class="md-source-file md-version">
-1.0.6
+1.0.11*
 </span>
 </div>
 </article>
@@ -189,7 +275,7 @@ Edit this page
 <footer class="md-footer">
 <div class="md-footer-nav">
 <nav class="md-footer-nav__inner md-grid">
-<a href="../extensions/index.html" title="JavaFX Extensions" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+<a href="../index.html" title="Sapphire Extension" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
 <div class="md-flex__cell md-flex__cell--shrink">
 <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
 </div>
@@ -198,17 +284,17 @@ Edit this page
 <span class="md-footer-nav__direction">
 Previous
 </span>
-JavaFX Extensions
+Sapphire Extension
 </span>
 </div>
 </a>
-<a href="../filter/index.html" title="DataFilter" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+<a href="../report/index.html" title="Reports" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
 <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
 <span class="md-flex__ellipsis">
 <span class="md-footer-nav__direction">
 Next
 </span>
-DataFilter
+Reports
 </span>
 </div>
 <div class="md-flex__cell md-flex__cell--shrink">

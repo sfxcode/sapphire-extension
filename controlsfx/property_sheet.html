@@ -135,10 +135,8 @@ sfxcode/sapphire-extension
 
 </div>
 <ul>
-  <li><a href="../extensions/index.html" class="page">JavaFX Extensions</a>
-  <ul>
-    <li><a href="../extensions/table_view.html" class="page">TableView Extensions</a></li>
-  </ul></li>
+  <li><a href="../view_controller/index.html" class="page">ViewController Extensions</a></li>
+  <li><a href="../report/index.html" class="page">Reports</a></li>
   <li><a href="../filter/index.html" class="page">DataFilter</a>
   <ul>
     <li><a href="../filter/data_list_filter.html" class="page">DataListFilter</a></li>
@@ -147,23 +145,45 @@ sfxcode/sapphire-extension
   <li><a href="../controlsfx/index.html" class="page">ControlsFX</a>
   <ul>
     <li><a href="../controlsfx/property_sheet.html" class="active page">PropertySheet</a></li>
-    <li><a href="../controlsfx/bean_items.html" class="page">BeanItems</a></li>
   </ul></li>
   <li><a href="../ikonli.html" class="page">Ikonli</a></li>
-  <li><a href="../sample.html" class="page">Example</a></li>
+  <li><a href="../sample.html" class="page">Showcase</a></li>
   <li><a href="../changes.html" class="page">Version History</a></li>
 </ul>
 <nav class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">Table of contents</label>
+<ul>
+  <li><a href="../controlsfx/property_sheet.html#propertysheet" class="header">PropertySheet</a>
+  <ul>
+    <li><a href="../controlsfx/property_sheet.html#beanitems" class="header">BeanItems</a></li>
+  </ul></li>
+</ul>
 </nav>
 
 </nav>
 <ul style="display: none">
 <li class="md-nav__item md-version" id="project.version">
 <label class="md-nav__link" for="__version">
-<i class="md-icon" title="Version">label_outline</i> 1.0.6
+<i class="md-icon" title="Version">label_outline</i> 1.0.11*
 </label>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">Table of contents</label>
+<ul>
+  <li><a href="../controlsfx/property_sheet.html#propertysheet" class="header">PropertySheet</a>
+  <ul>
+    <li><a href="../controlsfx/property_sheet.html#beanitems" class="header">BeanItems</a></li>
+  </ul></li>
+</ul>
+</nav>
+
 </div>
 </div>
 </div>
@@ -172,15 +192,43 @@ sfxcode/sapphire-extension
 <div class="md-content__searchable">
 <h1><a href="#propertysheet" name="propertysheet" class="anchor"><span class="anchor-link"></span></a>PropertySheet</h1><p>PropertySheet is a vertical list of properties that can be edited with a number of pre-build editors. As well as supporting the built-in editors, you can provide custom editors for your specific use cases.</p>
 <p><img src="../images/property_sheet.png" alt="property_sheet.png" /></p>
+<h2><a href="#beanitems" name="beanitems" class="anchor"><span class="anchor-link"></span></a>BeanItems</h2>
+<p>BeanItems is the sapphire implementation of Items in ControlsFX PropertySheet.</p>
+<h3><a href="#usage" name="usage" class="anchor"><span class="anchor-link"></span></a>Usage</h3>
+<ul>
+  <li>Use <a href="https://sfxcode.github.io/sapphire-core//detail/fxbean_adapter.html">FXBeanAdapter</a> for Bean Bindings</li>
+  <li>Init <a href="https://github.com/controlsfx/controlsfx/wiki/ControlsFX-Features#propertysheet">PropertySheet</a></li>
+  <li>Init BeanItems</li>
+</ul>
+<pre class="prettyprint"><a class="icon go-to-source" href="https://github.com/sfxcode/sapphire-extension/tree/master/demos/showcase/src/main/scala/com/sfxcode/sapphire/extension/showcase/controller/form/PropertiesFormController.scala#L23-L25" target="_blank" title="Go to snippet source"></a><code class="language-scala">lazy val adapter = FXBeanAdapter[Person](this)
+val propertySheet = new PropertySheet()
+val beanItems = BeanItems()</code></pre>
+<ul>
+  <li>Init BeanItems Bindings in the didGainVisibilityFirstTime LifeCycle of the <a href="https://sfxcode.github.io/sapphire-core//detail/view_controller.html">ViewController</a></li>
+</ul>
+<pre class="prettyprint"><a class="icon go-to-source" href="https://github.com/sfxcode/sapphire-extension/tree/master/demos/showcase/src/main/scala/com/sfxcode/sapphire/extension/showcase/controller/form/PropertiesFormController.scala#L32-L35" target="_blank" title="Go to snippet source"></a><code class="language-scala">beanItems.addItem(&quot;name&quot;, &quot;Name&quot;, &quot;Basic&quot;, &quot;Name&quot;)
+beanItems.addItem(&quot;age&quot;, &quot;Age&quot;, &quot;Basic&quot;, &quot;Age&quot;, editable = false)
+beanItems.addItem(&quot;isActive&quot;, &quot;Active&quot;, &quot;Extended&quot;, &quot;Active&quot;)
+beanItems.addItem(&quot;registered&quot;, &quot;Registered&quot;, &quot;Extended&quot;, &quot;Registered&quot;)</code></pre>
+<ul>
+  <li>Update BeanItems Data</li>
+</ul>
+<pre class="prettyprint"><a class="icon go-to-source" href="https://github.com/sfxcode/sapphire-extension/tree/master/demos/showcase/src/main/scala/com/sfxcode/sapphire/extension/showcase/controller/form/PropertiesFormController.scala#L59-L65" target="_blank" title="Go to snippet source"></a><code class="language-scala">def setRandomPerson(): Unit = {
+  val person: FXBean[Person] = PersonDatabase.testPerson(random.nextInt(100))
+  adapter.set(person)
+
+  beanItems.updateBean(person)
+  propertySheet.getItems.setAll(beanItems.getItems)
+}</code></pre>
 </div>
 <div>
-<a href="https://github.com/sfxcode/sapphire-extension/tree/v1.0.6/docs/src/main/paradox/controlsfx/property_sheet.md" title="Edit this page" class="md-source-file md-edit">
+<a href="https://github.com/sfxcode/sapphire-extension/tree/master/docs/src/main/paradox/controlsfx/property_sheet.md" title="Edit this page" class="md-source-file md-edit">
 Edit this page
 </a>
 </div>
 <div class="print-only">
 <span class="md-source-file md-version">
-1.0.6
+1.0.11*
 </span>
 </div>
 </article>
@@ -203,13 +251,13 @@ ControlsFX
 </span>
 </div>
 </a>
-<a href="../controlsfx/bean_items.html" title="BeanItems" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+<a href="../ikonli.html" title="Ikonli" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
 <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
 <span class="md-flex__ellipsis">
 <span class="md-footer-nav__direction">
 Next
 </span>
-BeanItems
+Ikonli
 </span>
 </div>
 <div class="md-flex__cell md-flex__cell--shrink">

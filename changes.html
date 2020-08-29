@@ -135,10 +135,8 @@ sfxcode/sapphire-extension
 
 </div>
 <ul>
-  <li><a href="extensions/index.html" class="page">JavaFX Extensions</a>
-  <ul>
-    <li><a href="extensions/table_view.html" class="page">TableView Extensions</a></li>
-  </ul></li>
+  <li><a href="view_controller/index.html" class="page">ViewController Extensions</a></li>
+  <li><a href="report/index.html" class="page">Reports</a></li>
   <li><a href="filter/index.html" class="page">DataFilter</a>
   <ul>
     <li><a href="filter/data_list_filter.html" class="page">DataListFilter</a></li>
@@ -147,10 +145,9 @@ sfxcode/sapphire-extension
   <li><a href="controlsfx/index.html" class="page">ControlsFX</a>
   <ul>
     <li><a href="controlsfx/property_sheet.html" class="page">PropertySheet</a></li>
-    <li><a href="controlsfx/bean_items.html" class="page">BeanItems</a></li>
   </ul></li>
   <li><a href="ikonli.html" class="page">Ikonli</a></li>
-  <li><a href="sample.html" class="page">Example</a></li>
+  <li><a href="sample.html" class="page">Showcase</a></li>
   <li><a href="changes.html" class="active page">Version History</a></li>
 </ul>
 <nav class="md-nav md-nav--secondary">
@@ -168,7 +165,7 @@ sfxcode/sapphire-extension
 <ul style="display: none">
 <li class="md-nav__item md-version" id="project.version">
 <label class="md-nav__link" for="__version">
-<i class="md-icon" title="Version">label_outline</i> 1.0.6
+<i class="md-icon" title="Version">label_outline</i> 1.0.11*
 </label>
 </li>
 </ul>
@@ -200,9 +197,27 @@ sfxcode/sapphire-extension
 <h3><a href="#download" name="download" class="anchor"><span class="anchor-link"></span></a>Download</h3>
 <p><a href="https://bintray.com/sfxcode/maven/sapphire-extension/_latestVersion"> <img src="https://api.bintray.com/packages/sfxcode/maven/sapphire-extension/images/download.svg" alt="Download" /> </a></p>
 <h2><a href="#history" name="history" class="anchor"><span class="anchor-link"></span></a>History</h2>
-<pre class="prettyprint"><a class="icon go-to-source" href="https://github.com/sfxcode/sapphire-extension/tree/v1.0.6/CHANGES.md" target="_blank" title="Go to snippet source"></a><code class="language-md"># Changes #
+<pre class="prettyprint"><a class="icon go-to-source" href="https://github.com/sfxcode/sapphire-extension/tree/master/CHANGES.md" target="_blank" title="Go to snippet source"></a><code class="language-md"># Changes #
 
 ## Versions
+
+### 1.0.10
+* Export to PDF with JasperReports
+* FXBeanDataSource (Report Datasource)
+* JavaFX 14.0.2.1
+
+### 1.0.10
+* PDF Exporter added some functions
+
+### 1.0.9
+* sapphire-core 1.8.3
+* PDF Support (JasperReports)
+
+
+### 1.0.7
+* sapphire-core 1.8.0
+* showcase refactoring - now like sapphire-core showcase
+* FXCellFactory removed =&gt; use FXTableCellFactory from sapphire-core
 
 ### 1.0.6
 * release because of problems with 1.0.5
@@ -285,13 +300,13 @@ sfxcode/sapphire-extension
 </code></pre>
 </div>
 <div>
-<a href="https://github.com/sfxcode/sapphire-extension/tree/v1.0.6/docs/src/main/paradox/changes.md" title="Edit this page" class="md-source-file md-edit">
+<a href="https://github.com/sfxcode/sapphire-extension/tree/master/docs/src/main/paradox/changes.md" title="Edit this page" class="md-source-file md-edit">
 Edit this page
 </a>
 </div>
 <div class="print-only">
 <span class="md-source-file md-version">
-1.0.6
+1.0.11*
 </span>
 </div>
 </article>
@@ -301,7 +316,7 @@ Edit this page
 <footer class="md-footer">
 <div class="md-footer-nav">
 <nav class="md-footer-nav__inner md-grid">
-<a href="sample.html" title="Example" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+<a href="sample.html" title="Showcase" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
 <div class="md-flex__cell md-flex__cell--shrink">
 <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
 </div>
@@ -310,7 +325,7 @@ Edit this page
 <span class="md-footer-nav__direction">
 Previous
 </span>
-Example
+Showcase
 </span>
 </div>
 </a>
