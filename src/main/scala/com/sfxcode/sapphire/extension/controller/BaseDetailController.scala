@@ -22,6 +22,6 @@ abstract class BaseDetailController extends BaseEditorController {
       masterController.table.getSelectionModel.select(masterController.lastSelected)
     }
 
-  def navigateToMasterController(masterController: BaseMasterController)
+  def navigateToMasterController(masterController: BaseMasterController): Unit
 
 }

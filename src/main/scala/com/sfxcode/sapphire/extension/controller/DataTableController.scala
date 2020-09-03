@@ -28,8 +28,7 @@ abstract class DataTableController extends ViewController with LazyLogging {
       .collect({ case x if x.isTerm => x.asTerm })
       .filter(t => t.isVal || t.isVar)
       .map(m => m.name.toString)
-      .toString()
-  )
+      .toString())
 
   @FXML
   var table: TableView[FXBean[R]] = _

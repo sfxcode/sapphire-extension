@@ -2,6 +2,9 @@
 
 ## Versions
 
+### 1.1.0
+* Update to sapphire core 2.0.0
+
 ### 1.0.10
 * Export to PDF with JasperReports
 * FXBeanDataSource (Report Datasource)

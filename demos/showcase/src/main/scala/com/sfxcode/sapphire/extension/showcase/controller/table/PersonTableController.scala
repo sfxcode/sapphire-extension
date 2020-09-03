@@ -1,14 +1,14 @@
 package com.sfxcode.sapphire.extension.showcase.controller.table
 
-import com.sfxcode.sapphire.`extension`.report.{FXBeanDataSource, PdfExporter}
-import com.sfxcode.sapphire.core.value.{BeanConversions, FXBean}
+import com.sfxcode.sapphire.`extension`.report.{ FXBeanDataSource, PdfExporter }
+import com.sfxcode.sapphire.core.value.{ BeanConversions, FXBean }
 import com.sfxcode.sapphire.extension.controller.DataTableController
-import com.sfxcode.sapphire.extension.showcase.model.{Person, PersonDatabase}
+import com.sfxcode.sapphire.extension.showcase.model.{ Person, PersonDatabase }
 import com.sfxcode.sapphire.extension.filter.DataTableFilter
 import com.sfxcode.sapphire.extension.showcase.controller.BaseController
 import javafx.collections.ObservableList
 import javafx.event.ActionEvent
-import better.files.{File, Resource}
+import better.files.{ File, Resource }
 import javafx.scene.control.SelectionMode
 
 import sys.process._
@@ -46,8 +46,7 @@ class PersonTableController extends DataTableController with BaseController with
       val exportResult = exporter.exportReport(
         File.newTemporaryFile(),
         Map("text" -> "All Persons"),
-        FXBeanDataSource.fromObservableList[Person](tableFilter.selectedItems)
-      )
+        FXBeanDataSource.fromObservableList[Person](tableFilter.selectedItems))
       // open report
       if (exportResult.completed) {
         if (System.getProperty("os.name").contains("Mac"))
@@ -57,8 +56,7 @@ class PersonTableController extends DataTableController with BaseController with
       }
       // #Export
 
-    }
-    else {
+    } else {
       logger.warn("empty selection")
     }
 

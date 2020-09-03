@@ -9,7 +9,7 @@ import javafx.collections.{ FXCollections, ObservableList }
 import javafx.scene.control.{ Control, Label, ListView, Skin }
 import com.sfxcode.sapphire.core.CollectionExtensions._
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 class DataListView[S <: AnyRef] extends Control with BeanConversions {
 
@@ -49,9 +49,8 @@ class DataListView[S <: AnyRef] extends Control with BeanConversions {
   def setItems(values: Iterable[S]): Unit =
     items.set(sortedItems(values))
 
-  def remove(bean: FXBean[S]) {
+  def remove(bean: FXBean[S]): Unit =
     items.get.remove(bean)
-  }
 
   def add(bean: FXBean[S]): Unit =
     items.get.add(bean)

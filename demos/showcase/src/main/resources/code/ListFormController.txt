@@ -10,7 +10,7 @@ import com.sfxcode.sapphire.extension.showcase.model.{ Friend, Person, PersonDat
 import com.typesafe.scalalogging.LazyLogging
 import javafx.collections.{ FXCollections, ObservableList }
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 class ListFormController extends AbstractBaseController with BeanConversions with LazyLogging {
 
   type R = Friend
