@@ -6,7 +6,7 @@ import com.sfxcode.sapphire.core.value.FXBean
 import com.sfxcode.sapphire.extension.test.{ Friend, Person, PersonDatabase }
 import com.typesafe.scalalogging.LazyLogging
 import org.specs2.mutable.Specification
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 class BeanItemsSpec extends Specification with LazyLogging {
   sequential

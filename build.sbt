@@ -20,7 +20,7 @@ javacOptions in test += "-Dorg.apache.deltaspike.ProjectStage=Test"
 parallelExecution in Test := false
 
 val JavaFXVersion       = "14.0.2.1"
-val SapphireCoreVersion = "1.8.3"
+val SapphireCoreVersion = "2.0.0"
 val Json4sVersion       = "3.6.9"
 val LogbackVersion      = "1.2.3"
 val IkonliVersion       = "11.5.0"
@@ -39,7 +39,7 @@ lazy val sapphire_extension_root =
 lazy val demo_showcase =
   Project(id = "sapphire-extension-showcase", base = file("demos/showcase"))
     .settings(
-      scalaVersion := "2.13.1",
+      scalaVersion := "2.13.3",
       name := "sapphire-extension-showcase",
       description := "Sapphire Extension Showcase",
       libraryDependencies ++= Seq(
@@ -51,16 +51,16 @@ lazy val demo_showcase =
             "swing",
             "web"
           ).map(m => "org.openjfx" % s"javafx-$m" % JavaFXVersion classifier osName),
-      libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core"  % SapphireCoreVersion,
-      libraryDependencies += "org.json4s"           %% "json4s-native"  % Json4sVersion,
-      libraryDependencies += "ch.qos.logback"       % "logback-classic" % LogbackVersion,
+      libraryDependencies += "com.sfxcode.sapphire" %% "sapphire-core"   % SapphireCoreVersion,
+      libraryDependencies += "org.json4s"           %% "json4s-native"   % Json4sVersion,
+      libraryDependencies += "ch.qos.logback"        % "logback-classic" % LogbackVersion,
       resolvers += "sandec" at "https://sandec.bintray.com/repo",
-      libraryDependencies += "com.sandec"           % "mdfx"          % "0.1.6",
-      libraryDependencies += "com.jfoenix"          % "jfoenix"       % "9.0.9",
-      libraryDependencies += "org.fxmisc.richtext"  % "richtextfx"    % "0.10.3",
-      libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.9.1",
-      libraryDependencies += "net.sf.jasperreports" % "jasperreports" % "6.14.0",
-      libraryDependencies += "xerces"               % "xercesImpl"    % "2.12.0",
+      libraryDependencies += "com.sandec"            % "mdfx"          % "0.1.6",
+      libraryDependencies += "com.jfoenix"           % "jfoenix"       % "9.0.9",
+      libraryDependencies += "org.fxmisc.richtext"   % "richtextfx"    % "0.10.3",
+      libraryDependencies += "com.github.pathikrit" %% "better-files"  % "3.9.1",
+      libraryDependencies += "net.sf.jasperreports"  % "jasperreports" % "6.14.0",
+      libraryDependencies += "xerces"                % "xercesImpl"    % "2.12.0",
       mainClass := Some("com.sfxcode.sapphire.extension.showcase.Application")
     )
     .dependsOn(sapphire_extension_root)
@@ -151,23 +151,24 @@ buildInfoOptions += BuildInfoOption.BuildTime
 
 pomPostProcess := { node: XmlNode =>
   new RuleTransformer(new RewriteRule {
-    override def transform(node: XmlNode): XmlNodeSeq = node match {
-      case e: Elem
-          if e.label == "dependency" && e.child
-              .exists(c => c.label == "scope" && c.text == "provided")
-            && e.child
-              .exists(c => c.label == "groupId" && c.text == "org.openjfx") =>
-        val organization =
-          e.child.filter(_.label == "groupId").flatMap(_.text).mkString
-        val artifact =
-          e.child.filter(_.label == "artifactId").flatMap(_.text).mkString
-        val version =
-          e.child.filter(_.label == "version").flatMap(_.text).mkString
-        Comment(
-          s"provided dependency $organization#$artifact;$version has been omitted"
-        )
-      case _ => node
-    }
+    override def transform(node: XmlNode): XmlNodeSeq =
+      node match {
+        case e: Elem
+            if e.label == "dependency" && e.child
+                .exists(c => c.label == "scope" && c.text == "provided")
+              && e.child
+                .exists(c => c.label == "groupId" && c.text == "org.openjfx") =>
+          val organization =
+            e.child.filter(_.label == "groupId").flatMap(_.text).mkString
+          val artifact =
+            e.child.filter(_.label == "artifactId").flatMap(_.text).mkString
+          val version =
+            e.child.filter(_.label == "version").flatMap(_.text).mkString
+          Comment(
+            s"provided dependency $organization#$artifact;$version has been omitted"
+          )
+        case _ => node
+      }
   }).transform(node).head
 }
 

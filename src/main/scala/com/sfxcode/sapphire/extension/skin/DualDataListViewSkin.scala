@@ -55,7 +55,7 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S])
 
   rightSelectionModel.getSelectedItems.addChangeListener(_ => bindButtons())
 
-  def bindButtons() {
+  def bindButtons(): Unit = {
     buttonMoveToTargetAll.disableProperty.bind(Bindings.isEmpty(leftSelectionModel.getSelectedItems))
     buttonMoveToSourceAll.disableProperty.bind(Bindings.isEmpty(rightSelectionModel.getSelectedItems))
 
@@ -112,7 +112,7 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S])
     contentGridPane.getColumnConstraints.addAll(col1, col2, col3)
   }
 
-  private def moveToTarget() {
+  private def moveToTarget(): Unit = {
     move(
       view.leftDataListView,
       view.rightDataListView,
@@ -120,7 +120,7 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S])
     leftSelectionModel.clearSelection()
   }
 
-  private def moveToSource() {
+  private def moveToSource(): Unit = {
     move(
       view.rightDataListView,
       view.leftDataListView,
@@ -128,17 +128,17 @@ class DualDataListViewSkin[S <: AnyRef](view: DualDataListView[S])
     rightSelectionModel.clearSelection()
   }
 
-  private def moveAllToTarget() {
+  private def moveAllToTarget(): Unit = {
     move(view.leftDataListView, view.rightDataListView, leftSelectionModel.getSelectedItems)
     leftSelectionModel.clearSelection()
   }
 
-  private def moveAllToSource() {
+  private def moveAllToSource(): Unit = {
     move(view.rightDataListView, view.leftDataListView, rightSelectionModel.getSelectedItems)
     rightSelectionModel.clearSelection()
   }
 
-  def move(source: DataListView[S], target: DataListView[S], items: ObservableList[FXBean[S]]) {
+  def move(source: DataListView[S], target: DataListView[S], items: ObservableList[FXBean[S]]): Unit = {
     val sourceItems = FXCollections.observableArrayList(source.getItems)
     sourceItems.removeAll(items)
     val targetItems: ObservableList[FXBean[S]] = FXCollections.observableArrayList(target.getItems)

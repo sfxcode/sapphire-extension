@@ -15,7 +15,7 @@ import javafx.scene.control.{ ComboBox, Control, TextField }
 import com.sfxcode.sapphire.core.CollectionExtensions._
 import com.sfxcode.sapphire.core.el.{ DefaultFunctions, FunctionHelper }
 
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], pane: ObjectProperty[Pane])
   extends LazyLogging {
@@ -48,7 +48,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
     itemsHasChanged()
   }
 
-  def itemsHasChanged() {}
+  def itemsHasChanged(): Unit = {}
 
   def updateItems(newItems: ObservableList[FXBean[S]], resetFilter: Boolean = false): Unit = {
     itemsProperty.set(newItems)
@@ -154,7 +154,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
     control
   }
 
-  def filter() {
+  def filter(): Unit = {
     val start = System.currentTimeMillis()
     var filtered = FXCollections.observableArrayList(items.getValue)
 
@@ -183,7 +183,7 @@ class DataFilter[S <: AnyRef](items: ObjectProperty[ObservableList[FXBean[S]]], 
       "filtered [%s] (new size %d) in %d ms".format(this.hashCode(), filtered.size, System.currentTimeMillis() - start))
   }
 
-  def reset() {
+  def reset(): Unit = {
     controlFilterMap.keySet.foreach {
       case textField: TextField => textField.setText("")
       case searchBox: ComboBox[String] =>

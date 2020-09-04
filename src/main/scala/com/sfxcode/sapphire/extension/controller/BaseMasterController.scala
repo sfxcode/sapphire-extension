@@ -21,7 +21,7 @@ abstract class BaseMasterController extends DataTableController {
   override def didGainVisibilityFirstTime(): Unit =
     super.didGainVisibilityFirstTime()
 
-  override def didGainVisibility() {
+  override def didGainVisibility(): Unit = {
     super.didGainVisibility()
     table.getSelectionModel.selectFirst()
     table.requestFocus()
@@ -41,6 +41,6 @@ abstract class BaseMasterController extends DataTableController {
       detailController.updateBean(bean.asInstanceOf[FXBean[detailController.R]])
     }
 
-  def navigateToDetailController(detailController: BaseDetailController)
+  def navigateToDetailController(detailController: BaseDetailController): Unit
 
 }

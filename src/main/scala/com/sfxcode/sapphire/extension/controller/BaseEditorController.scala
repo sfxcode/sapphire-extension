@@ -22,14 +22,14 @@ abstract class BaseEditorController extends ViewController {
 
   lazy val formAdapter: FXBeanAdapter[R] = FXBeanAdapter[R](viewController = this, parent = formPane.asInstanceOf[Node])
 
-  override def didGainVisibilityFirstTime() {
+  override def didGainVisibilityFirstTime(): Unit = {
     super.didGainVisibilityFirstTime()
     val bindings = KeyBindings()
     updateBindings(bindings)
     formAdapter.addBindings(bindings)
   }
 
-  def updateBindings(bindings: KeyBindings)
+  def updateBindings(bindings: KeyBindings): Unit
 
   def updateBean(bean: FXBean[R]): Unit = {
     val value = bean.asInstanceOf[FXBean[R]]
@@ -43,6 +43,6 @@ abstract class BaseEditorController extends ViewController {
   def actionRevert(event: ActionEvent): Unit =
     editableBean.foreach(fxBean => fxBean.revert())
 
-  def save(beanValue: R)
+  def save(beanValue: R): Unit
 
 }

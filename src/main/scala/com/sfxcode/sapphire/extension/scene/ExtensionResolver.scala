@@ -1,11 +1,9 @@
 package com.sfxcode.sapphire.extension.scene
 
+import com.sfxcode.sapphire.core.application.ApplicationEnvironment
 import javafx.scene.Node
-
-import com.sfxcode.sapphire.core.cdi.{ ApplicationEnvironment, BeanResolver }
 import com.sfxcode.sapphire.core.scene.NodePropertyResolving
 import org.controlsfx.control.Rating
-
 import javafx.beans.property.Property
 
 // #NodePropertyResolving
@@ -19,12 +17,10 @@ class ExtensionResolver extends NodePropertyResolving {
 }
 // #NodePropertyResolving
 
-object ExtensionResolver extends BeanResolver {
+object ExtensionResolver {
 
   def apply(): ExtensionResolver = new ExtensionResolver()
 
-  def add(): Unit = {
-    val env = getBean[ApplicationEnvironment]()
-    env.nodePropertyResolver.addResolver(ExtensionResolver())
-  }
+  def add(): Unit =
+    ApplicationEnvironment.nodePropertyResolver.addResolver(ExtensionResolver())
 }

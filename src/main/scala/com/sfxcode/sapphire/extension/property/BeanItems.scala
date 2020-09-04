@@ -6,7 +6,7 @@ import com.sfxcode.sapphire.core.CollectionExtensions._
 import com.sfxcode.sapphire.core.value._
 import javafx.collections.{ FXCollections, ObservableList }
 import scala.reflect.runtime.universe._
-import scala.collection.JavaConverters._
+import scala.jdk.CollectionConverters._
 
 class BeanItems(bean: FXBean[_ <: AnyRef]) {
   private val itemBuffer = FXCollections.observableArrayList[BeanItem]()
@@ -39,9 +39,8 @@ class BeanItems(bean: FXBean[_ <: AnyRef]) {
       value.foreach(value => addItem(key, clazz = value.getClass))
     }
 
-  def updateBean(bean: FXBean[_ <: AnyRef]) {
+  def updateBean(bean: FXBean[_ <: AnyRef]): Unit =
     itemBuffer.foreach(item => item.bean = bean)
-  }
 
   def beanItem(key: String): Option[BeanItem] =
     itemBuffer.asScala.find(item => key.equals(item.getKey))
