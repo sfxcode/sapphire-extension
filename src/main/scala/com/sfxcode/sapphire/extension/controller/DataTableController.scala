@@ -10,12 +10,14 @@ import javafx.fxml.FXML
 import javafx.scene.control.TableView
 import javafx.scene.layout.HBox
 import com.sfxcode.sapphire.core.CollectionExtensions._
+import scala.reflect.runtime.{ universe => ru }
 
 import scala.reflect.ClassTag
 
 abstract class BaseDataTableController extends DataTableController
 
 abstract class DataTableController extends ViewController with LazyLogging {
+  val mirror: ru.Mirror = ru.runtimeMirror(this.getClass.getClassLoader)
 
   type R <: AnyRef
 

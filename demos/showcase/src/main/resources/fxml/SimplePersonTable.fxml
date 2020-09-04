@@ -25,12 +25,12 @@
                                 <FXTableValueFactory property="company" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn  text="Expression Test">
+                        <TableColumn  text="Expression Test1 ">
                             <cellValueFactory>
                                 <FXTableValueFactory property="!{_self.age()} / !{_self.gender()}" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn  text="Expression Test CDI">
+                        <TableColumn  text="Expression Test 2">
                             <cellValueFactory>
                                 <FXTableValueFactory property="!{simplePersonTableController.testString()}" />
                             </cellValueFactory>

@@ -1,6 +1,6 @@
 package com.sfxcode.sapphire.extension.showcase.controller
 
-import com.sfxcode.sapphire.core.fxml.FxmlLoader
+import com.sfxcode.sapphire.core.fxml.FxmlLocation
 import com.sfxcode.sapphire.core.showcase.{ ShowcaseController, ShowcaseItem }
 import com.sfxcode.sapphire.extension.showcase.controller.font.IconFontController
 import com.sfxcode.sapphire.extension.showcase.controller.form.{
@@ -18,7 +18,7 @@ import com.sfxcode.sapphire.extension.showcase.controller.table.{
 }
 import com.typesafe.scalalogging.LazyLogging
 
-@FxmlLoader(path = "/showcase/ShowcaseView.fxml")
+@FxmlLocation(path = "/showcase/ShowcaseView.fxml")
 class ShowcaseViewController extends ShowcaseController with LazyLogging {
 
   private val welcomeItem = ShowcaseItem("Welcome", "Welcome", () => getController[WelcomeController]())
