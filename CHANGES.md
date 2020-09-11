@@ -2,6 +2,9 @@
 
 ## Versions
 
+### 1.1.1
+* Typesafe BeanItems
+
 ### 1.1.0
 * Update to sapphire core 2.0.0
 

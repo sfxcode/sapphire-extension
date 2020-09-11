@@ -1,15 +1,16 @@
 package com.sfxcode.sapphire.extension.property
 
-import java.util
-
 import com.sfxcode.sapphire.core.CollectionExtensions._
+import com.sfxcode.sapphire.core.application.DefaultsTo
 import com.sfxcode.sapphire.core.value._
 import javafx.collections.{ FXCollections, ObservableList }
-import scala.reflect.runtime.universe._
-import scala.jdk.CollectionConverters._
 
-class BeanItems(bean: FXBean[_ <: AnyRef]) {
+import scala.jdk.CollectionConverters._
+import scala.reflect.runtime.universe._
+
+class BeanItems[T <: AnyRef]() {
   private val itemBuffer = FXCollections.observableArrayList[BeanItem]()
+  private var beanItemBean: FXBean[T] = _
 
   def getItems: ObservableList[BeanItem] = itemBuffer
 
@@ -20,7 +21,7 @@ class BeanItems(bean: FXBean[_ <: AnyRef]) {
     description: String = "",
     editable: Boolean = true,
     clazz: Class[_] = EmptyBeanItemClass.ClazzOf): BeanItem = {
-    val beanItem = BeanItem(bean, key, name, category, description, editable, clazz)
+    val beanItem = BeanItem(beanItemBean, key, name, category, description, editable, clazz)
     itemBuffer.add(beanItem)
     beanItem
   }
@@ -39,15 +40,33 @@ class BeanItems(bean: FXBean[_ <: AnyRef]) {
       value.foreach(value => addItem(key, clazz = value.getClass))
     }
 
-  def updateBean(bean: FXBean[_ <: AnyRef]): Unit =
-    itemBuffer.foreach(item => item.bean = bean)
+  def updateBeanValue(newValue: T): Unit = {
+    beanItemBean = FXBean[T](newValue)
+    itemBuffer.foreach(item => item.bean = beanItemBean)
+  }
+
+  def updateBean(newBean: FXBean[T]): Unit = {
+    beanItemBean = newBean
+    itemBuffer.foreach(item => item.bean = beanItemBean)
+  }
 
   def beanItem(key: String): Option[BeanItem] =
     itemBuffer.asScala.find(item => key.equals(item.getKey))
+
+  def bean: FXBean[T] = beanItemBean
+
+  def beanValue: T = beanItemBean.bean
 
 }
 
 object BeanItems {
 
-  def apply(bean: FXBean[_ <: AnyRef] = FXBean(new util.HashMap())): BeanItems = new BeanItems(bean)
+  def apply[T <: AnyRef]()(implicit e: T DefaultsTo AnyRef): BeanItems[T] = new BeanItems[T]()
+
+  def apply[T <: AnyRef](bean: FXBean[T])(implicit e: T DefaultsTo AnyRef): BeanItems[T] = {
+    val result = new BeanItems[T]()
+    result.updateBean(bean)
+    result
+  }
+
 }
