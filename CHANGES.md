@@ -2,6 +2,11 @@
 
 ## Versions
 
+### 1.1.2
+* JavaFX 14.0.2.1
+* sbt 1.4.0
+* Update to sapphire core 2.0.1
+
 ### 1.1.1
 * Typesafe BeanItems
 

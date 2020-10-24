@@ -19,9 +19,9 @@ javacOptions in test += "-Dorg.apache.deltaspike.ProjectStage=Test"
 
 parallelExecution in Test := false
 
-val JavaFXVersion       = "14.0.2.1"
-val SapphireCoreVersion = "2.0.0"
-val Json4sVersion       = "3.6.9"
+val JavaFXVersion       = "15.0.1"
+val SapphireCoreVersion = "2.0.1"
+val Json4sVersion       = "3.6.10"
 val LogbackVersion      = "1.2.3"
 val IkonliVersion       = "11.5.0"
 
@@ -59,7 +59,7 @@ lazy val demo_showcase =
       libraryDependencies += "com.jfoenix"           % "jfoenix"       % "9.0.9",
       libraryDependencies += "org.fxmisc.richtext"   % "richtextfx"    % "0.10.3",
       libraryDependencies += "com.github.pathikrit" %% "better-files"  % "3.9.1",
-      libraryDependencies += "net.sf.jasperreports"  % "jasperreports" % "6.14.0",
+      libraryDependencies += "net.sf.jasperreports"  % "jasperreports" % "6.15.0",
       libraryDependencies += "xerces"                % "xercesImpl"    % "2.12.0",
       mainClass := Some("com.sfxcode.sapphire.extension.showcase.Application")
     )
@@ -93,7 +93,7 @@ resolvers += "sfxcode-maven" at "https://bintray.com/sfxcode/maven/"
 
 // Test
 
-libraryDependencies += "org.specs2" %% "specs2-core" % "4.10.3" % Test
+libraryDependencies += "org.specs2" %% "specs2-core" % "4.10.5" % Test
 
 libraryDependencies += "org.json4s" %% "json4s-native" % Json4sVersion % Test
 
@@ -117,13 +117,13 @@ libraryDependencies += "com.github.pathikrit" %% "better-files" % "3.9.1" % Prov
 
 // concurrent / akka
 
-libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.6.8" % Provided
+libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.6.10" % Provided
 
 // report
 
 resolvers += "jasperreports-repo" at "https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts"
 
-libraryDependencies += "net.sf.jasperreports" % "jasperreports" % "6.14.0" % Provided
+libraryDependencies += "net.sf.jasperreports" % "jasperreports" % "6.15.0" % Provided
 
 // Compile
 
